@@ -21,7 +21,7 @@ class PrimerRegistro(models.Model):
     empresa = models.CharField(max_length=254)
     registro_patronal = models.CharField(max_length=15)
     comision = models.DecimalField('comisión', max_digits=7, decimal_places=2)
-    ife = models.FileField(upload_to='media/ifes')
+    ife = models.FileField(upload_to='ifes/', blank=True, null=True)
 
     email = models.EmailField()
     numero_de_cuenta = models.CharField('número de cuenta', max_length=16)

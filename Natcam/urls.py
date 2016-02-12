@@ -23,8 +23,8 @@ from usuarios.views import user_login
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
       url(r'^home', 'app.views.primerRegistro', name='agregar_clientes'),
-    url(r'^editar/primer_registro/(?P<pk>\d+)', 'app.views.PrimerRegistroEdit', name='editar_primer_registro'),
-    url(r'^eliminar/(?P<pk>\d+)$', 'app.views.PrimerRegistroDelete', name='eliminar_primer_registro'),
+    url(r'^editar/primer_registro/(?P<pk>\d+)', views.PrimerRegistroEdit, name='editar_primer_registro'),
+    url(r'^eliminar/(?P<pk>\d+)$', views.PrimerRegistroDelete, name='eliminar_primer_registro'),
 
     url(r'^nota_remision/', 'app.views.nota_remision', name='nota'),
     url(r'^clientes/', 'app.views.clientes', name='clientes'),
@@ -37,20 +37,22 @@ urlpatterns = [
     #url(r'^$', 'users.views.userlogin', name='login'),
     #url(r'^salir/$', 'users.views.LogOut', name='logout'),
     url(r'^odc1/(?P<cliente_id>\d+)/', views.orden_compra1, name='odc1'),
-    url(r'^odc2/(?P<cliente_id>\d+)/', 'app.views.orden_compra2', name='odc2'),
-    url(r'^odc3/(?P<cliente_id>\d+)/', 'app.views.orden_compra3', name='odc3'),
-    url(r'^segundo_registro/$', 'app.views.segundoRegistro', name='segundo_registro'),
+    url(r'^odc2/(?P<cliente_id>\d+)/', views.orden_compra2, name='odc2'),
+    url(r'^odc3/(?P<cliente_id>\d+)/', views.orden_compra3, name='odc3'),
+    url(r'^segundo_registro/$', views.segundoRegistro, name='segundo_registro'),
     # url(r'^detail/(?P<object_id>\d+)/$', 'products.views.detail_view', name='detail_view'),
 
-    url(r'^editar/segundo_registro/(?P<pk>\d+)', 'app.views.SegundoRegistroEdit', name='editar_segundo_registro'),
-    url(r'^eliminar/(?P<pk>\d+)$', 'app.views.SegundoRegistroDelete', name='eliminar_segundo_registro'),
-    url(r'^(?P<cliente_id>\d+)$', 'app.views.enviar_email', name='enviar_email'),
-    url(r'^calendario/$', 'app.views.calendario', name='caledario'),
+    url(r'^editar/segundo_registro/(?P<pk>\d+)', views.SegundoRegistroEdit, name='editar_segundo_registro'),
+    url(r'^eliminar/(?P<pk>\d+)$', views.SegundoRegistroDelete, name='eliminar_segundo_registro'),
+    url(r'^(?P<cliente_id>\d+)$', views.enviar_email, name='enviar_email'),
+    url(r'^calendario/$', views.calendario, name='caledario'),
 
     url(r'^dia/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$',views.dia, name='post_detail'),
 
     #cargar pdfs
-    url(r'^cargar_pds/(?P<id>\d+)', 'app.views.cargar_pdfs', name='cargar_pdfs'),
+    url(r'^cargar_pds/(?P<id>\d+)', views.cargar_pdfs, name='cargar_pdfs'),
+    url(r'^cliente/perfil/(?P<id>\d+)', views.cliente_perfil, name='cliente_perfil'),
+
 ]
 
 

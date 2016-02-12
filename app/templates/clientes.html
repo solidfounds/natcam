@@ -59,9 +59,16 @@
                         <td>{{ foo.nombre }}{{ foo.apellidos }}</td>
                         {% for faa in tarjeta %}
                             {% if faa.cliente.id == foo.id %}
-                                <td> {{ faa.caratula }}</td>
-                                <td>{{ faa.tarjeta_de_mejoravit  }}</td>
-
+                                <td>
+                                    <ul class="nav nav-pills">
+                                        <li role="presentation"><a href="{{ MEDIA_URL }}{{ faa.caratula.url }}">caratula</a></li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="nav nav-pills">
+                                        <li role="presentation"><a href="{{ MEDIA_URL }}{{ faa.tarjeta_de_mejoravit.url }}">tarjeta</a></li>
+                                    </ul>
+                                </td>
                                 <td data-ng-controller="CalculatorController">
                                     <button type="button" class="btn btn-primary" data-target="#{{faa.cliente.id}}" data-toggle="modal" data-target=".bd-example-modal-sm"  data-ng-init="montoInicial={{ faa.credito}}" data-ng-click="calculate()">{{ faa.credito }}</button>
                                     <div class="modal fade bs-example-modal-sm" id="{{faa.cliente.id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block contenido %}
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{ primer.nombre }} {{ primer.apellidos }}</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class=" col-md-12 col-lg-12 ">
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>Numero de Seguridad Social:</td>
+                        <td>{{ primer.nss }}</td>
+                      </tr>
+                      <tr>
+                        <td>Telefono:</td>
+                        <td>{{ primer.telefono }}</td>
+                      </tr>
+                      <tr>
+                        <td>Empresa</td>
+                        <td>{{ primer.empresa }}</td>
+                      </tr>
+                      <tr>
+                        <td>Registro Patronal:</td>
+                        <td>{{ primer.registro_patronal }}</td>
+                      </tr>
+                      <tr>
+                        <td>Comision:</td>
+                        <td>{{ primer.comision }}</td>
+                      </tr>
+                      <tr>
+                        <td>Email</td>
+                        <td>{{ primer.email }}</td>
+                      </tr>
+                      <tr>
+                        <td>Numero de Cuenta</td>
+                        <td>{{ primer.numero_de_cuenta }}</td>
+                      </tr>
+                      <tr>
+                        <td>Banco</td>
+                        <td>{{ primer.banco }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <ul class="nav nav-pills">
+                    <li role="presentation"><a href="{{ MEDIA_URL }}{{ primer.ife.url }}">Ife</a></li>
+                      <li role="presentation" ><a href="#">Tarjeta Mejoravit</a></li>
+                      <li role="presentation" ><a href="#">Caratula</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

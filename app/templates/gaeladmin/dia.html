@@ -41,7 +41,7 @@
              <tbody>
                  {% for foo in diass  %}
                      <tr>
-                         <td>{{ foo.cliente }}</td>
+                         <td><a href="{% url 'cliente_perfil' id=foo.id %}">{{ foo.cliente }}{{ foo.cliente.apellidos }}</a></td>
                          <td>{{ foo.odc1 }}</td>
                          <td>{{ foo.odc2  }}</td>
                          <td>{{ foo.odc3 }}</td>

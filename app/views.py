@@ -275,7 +275,7 @@ def enviar_email(request, cliente_id=None):
             allorder = [(p.total_amount) for p in Order.objects.filter(user=cliente_id)]
             subject = '  recommends you reading '
             message = 'Cliente Listo \n\n\'s  datos Orden 1:{}\n\n Orden 2:{}\n\n Orden 3: {}\n\n Total:{}  comments: {} '.format(allorder[0], allorder[1], allorder[2], posta['total_amount__sum'], cd['comments'], )
-            message.attach('ife')
+            #message.attach('ife')
             send_mail(subject, message, 'soldiddfouns@gmail.com', [cd['to']])
             sent = True
             redirect('clientes')
@@ -350,12 +350,12 @@ from  django.utils.html import conditional_escape as esc
 from .forms import BuscarDiaForm
 def calendario(request):
     if request.method == 'POST':
-        cs = BuscarDiaForm(request.POST)
-        if cs.is_valid():
-             datos = cs.fecha.split("-")
-             year = datos[0]
-             month = datos[1]
-             day = datos[2]
+        form = BuscarDiaForm(request.POST)
+        if form.is_valid():
+             fetch = form.cleaned_data['fecha']
+             year = fetch.year
+             month = fetch.month
+             day = fetch.day
              return dia(request, year, month, day)
     else:
         form = BuscarDiaForm()
@@ -366,3 +366,11 @@ def cargar_pdfs(request, id):
     return render(request, 'cargar-pdf/cargar-pdfs.html', {'form':form})
 
 
+def cliente_perfil(request, id):
+    obtenerClientePR = PrimerRegistro.objects.get(id=id)
+    #obtenerClienteSR = SegundoRegistro.objects.get()
+    return render(request, 'perfil/peril-cliente.html', {
+                                                    'primer':obtenerClientePR,
+                                                    #'segundo'
+
+    })
