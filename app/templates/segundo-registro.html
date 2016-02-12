@@ -66,8 +66,16 @@
      {% for mi_cliente in mis_clientes %}
          <tr>
              <td>{{ mi_cliente.cliente }}  {{ mi_cliente.cliente.apellidos}}</td>
-             <td>{{ mi_cliente.caratula.url }} </td>
-             <td>{{ mi_cliente.tarjeta_de_mejoravit  }}</td>
+             <td>
+                 <ul class="nav nav-pills">
+                     <li role="presentation"><a href="{{ MEDIA_URL }} {{ mi_cliente.caratula.url }}">Caratula</a></li>
+                 </ul>
+             </td>
+             <td>
+                 <ul class="nav nav-pills">
+                     <li role="presentation"><a href="{{ MEDIA_URL }}{{ mi_cliente.tarjeta_de_mejoravit  }}">Tarjeta</a></li>
+                 </ul>
+             </td>
              <td>{{ mi_cliente.credito }}</td>
             <td>
                 <div class="dropdown">
