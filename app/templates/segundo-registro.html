@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block css_add %}
+    <style>
+        .True span  {
+      display: none;
+    }
+    .True:after {
+        color: green;
+      content: "Completo";
+    }
+    .False span  {
+      display: none;
+    }
+    .False:after {
+      color: red;
+      content: "Incompleto";
+    }
+    </style>
+    {% load staticfiles %}
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $('#example').DataTable();
+        } );
+    </script>
+{% endblock %}
+{% block contenido %}
+    <button class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar Cliente</button>
+    <hr>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="container">
+            <div class="row">
+            <div class="col-md-2 col-sm-2"></div>
+            <div class="col-md-5 col-sm-4 " >
+                <div class="text-danger mr"><h4 class="ma">Agrega un nuevo cliente.</h4></div>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="divider"></div>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <hr>
+                </form>
+            </div><div class="col-md-4 col-sm-2"></div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="table-responsive">
+    <table class="table  table-bordered" id="example">
+     <thead class="color1">
+     <tr>
+         <th>Cliente</th>
+         <th>Carátula</th>
+         <th>Tarjeta Mejoravit</th>
+         <th>Crédito</th>
+         <th>Acciones</th>
+     </tr>
+     </thead>
+     <tbody>
+     {% for mi_cliente in mis_clientes %}
+         <tr>
+             <td>{{ mi_cliente.cliente }}  {{ mi_cliente.cliente.apellidos}}</td>
+             <td>{{ mi_cliente.caratula.url }} </td>
+             <td>{{ mi_cliente.tarjeta_de_mejoravit  }}</td>
+             <td>{{ mi_cliente.credito }}</td>
+            <td>
+                <div class="dropdown">
+                  <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Acciones <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                      <li><a  href="{% url 'editar_segundo_registro' mi_cliente.pk %}">Editar</a></li>
+                      <li><a href="{% url 'eliminar_segundo_registro' mi_cliente.pk %}">Eliminar</a></li>
+                  </ul>
+                </div>
+            </td>
+     </tr>
+     {% endfor %}
+     </tbody>
+ </table>
+</div>
+{% endblock %}

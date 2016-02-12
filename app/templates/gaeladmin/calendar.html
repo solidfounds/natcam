@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block css_add %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'moment/min/moment.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}"/>
+
+{% endblock %}
+{% block contenido %}
+    <form action="" method="post">
+        {% csrf_token %}
+          <div class="form-group">
+            {{ form.as_p }}
+          </div>
+        <input type="submit"/>
+    </form>
+    <div class="container">
+
+</div>
+{% endblock %}

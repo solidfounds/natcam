@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+
+{% block css_add %}
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Carrito de compras con AngularJS</title>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <!--cdn con la version 1.2.4 de angular.js-->
+    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"></script>
+    <!--cdn con el modulo ngRoute de angular-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>   |
+  <!--cargamos el modulo cart-->
+    {% load staticfiles %}
+  <script type="text/javascript" src="{% static  'cart.js' %}"></script>
+    <style>
+    .noedit{
+        display: none;
+    }
+    </style>
+{% endblock %}
+{% block contenido %}
+    <div ng-app="app">
+      <div ng-controller="homeController">
+        <div class="row">
+          <div class="col-md-6">
+            <h3>Orden de compra 1</h3>
+              {{ data }}
+              <table class="table">
+                  <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <tr ng-repeat="productoTienda in productosTienda">
+                          <td>
+                            <h6>{$ productoTienda.title$}</h6>
+                          </td>
+                          <td>
+                              <a class="btn btn-primary" ng-click="add(productoTienda)">
+                                Precio: {$  productoTienda.price $} Pesos
+                            </a>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+
+          <div class="col-md-6">
+              <div class="bg-success"><h2>{{ cliente.nombre }} {{ cliente.apellidos }}</h2></div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Nombre</th>
+                  <th>Cantidad</th>
+                  <th>Precio unidad</th>
+                  <th>Total producto</th>
+                  <th>Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="prod in udpShopContent" ng-if="udpShopContent"  >
+                  <td>{$ prod.id$}</td>
+                  <td>{$ prod.title$}</td>
+                  <td>{$ prod.quantity$}</td>
+                  <td>{$ roundCurrency(prod.price)$}</td>
+                  <td>{$ roundCurrency(prod.price * prod.quantity)$}</td>
+                  <td><a class="button alert" ng-click="remove(prod.id)">Eliminar</a></td>
+                </tr>
+                <tr>
+                  <td colspan="6">Precio total del carrito: {$  roundCurrency(udpShopTotalPrice) $}</td>
+                <tr>
+                <tr>
+                  <td colspan="6" id="hola">Número total de artículos: {$  udpShopTotalProducts $}  </td>
+                <tr>
+                <tr>
+                  <td colspan="6">
+                    <a type="button" class="btn btn-danger" ng-disabled="udpShopContent.length < 1" class="button alert large-12" ng-click="destroy()">
+                      Reiniciar Carrito
+                    </a>
+                  </td>
+                <tr>
+              </tbody>
+            </table>
+                  <input type="hidden" id="nombre2" value="{$   udpShopContent | json $}">
+              <br>
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+            <form action method="POST" class="checkout-form" >
+                {% csrf_token %}
+                <input type="hidden" name="cartJSONdata"  id="nombre3">
+                    <div class="noedit">
+                        <label for="">Tipo de Orden de Compra </label>
+                        {{ form.orden_compra }}
+                    </div>
+                   <button type="submit" class="btn btn-primary" name="boton02" id="boton02">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+
+      <script type="text/javascript">
+        $(document).ready(function(){
+            $('select option[value="1"]').attr("selected",true);
+
+{#            $('select option[value="1"]').prop('disabled', 'disabled');#}
+            $("#boton02").click(function () {
+            //saco el valor accediendo a un input de tipo text y name = nombre2 y lo asigno a uno con name = nombre3
+            $("#nombre3").val($("#nombre2").val());
+
+            });
+        });
+      </script>
+      <script>
+          //creamos el modulo y le inyectamos el modulo ngRoute y el modulo cart que hemos creado
+            var app = angular.module("app", ['ngRoute','ng-Shop']);
+            app.config(function($routeProvider, $interpolateProvider, $httpProvider)
+            {
+                $interpolateProvider.startSymbol('{$');
+                $interpolateProvider.endSymbol('$}');
+                $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+                $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+            });
+
+
+
+
+            app.controller("homeController", function($scope, $shop, $http) {
+                function userDataPayPal()
+                {
+                    var userData = {};
+                    userData.cmd = "_cart";
+                    userData.upload = "1";
+                    userData.business = "correo_business_paypal";
+                    userData.currencyCode = "EUR";
+                    userData.lc = "EU";
+                    userData.rm = 2;
+                    //url retorno paypal lado server, envia data post
+                    userData.successUrl = "http://localhost/cartAngularServer/return.php";
+                    userData.cancelUrl = "http://localhost/cartAngular/#/";
+                    userData.cbt = "Volver a la tienda";
+                    userData.formClass = "#formPaypal";
+                    return userData;
+                }
+
+                /**
+                * @desc - añade x cantidad de un producto al carrito
+                * @return - object - si es nueva inserción devuelve insert, en otro caso update
+                */
+                $scope.add = function(producto)
+                {
+                    //alert(producto.total); return;
+                    var product = {};
+                    product.id = producto.id;
+                    product.price = producto.price;
+                    product.title = producto.title;
+                    product.category = producto.category;
+                    product.quantity = parseInt(producto.total || 1,10);
+                    $shop.add(product);
+                }
+
+                /**
+                * @desc - elimina un producto del carrito por su id
+                */
+                $scope.remove = function(id)
+                {
+                    if($shop.remove(id))
+                    {
+                        alert("Producto eliminado correctamente");
+                        return;
+                    }
+                    else
+                    {
+                        alert("Ha ocurrido un error eliminando el producto, seguramente porqué no existe");
+                        return;
+                    }
+                }
+                $scope.destroy = function()
+                {
+                    $shop.destroy();
+                }
+
+                $scope.roundCurrency = function(total)
+                {
+                    return total.toFixed(2);
+                }
+
+                /**
+                * @desc - array de objetos con productos para el ejemplo
+                */
+                $scope.productosTienda =[
+                {% for producto in productos %}
+                    {"id": {{producto.pk}}, "title": "{{ producto.name }}", "price": {{ producto.price }}},
+                {% endfor %}
+                    ];
+            });
+
+      </script>
+
+{% endblock %}
+

@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block css_add %}
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Carrito de compras con AngularJS</title>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    {% load staticfiles %}
+
+{% endblock %}
+{% block contenido %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                  <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Sucursal Toluca 1
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panel-body">
+                    <table class="table">
+             <thead>
+              <tr>
+                 <th>Cliente</th>
+                 <th>Compra 1</th>
+                  <th>Compra 2</th>
+                  <th>Compra 3</th>
+                  <th>Pago Cliente</th>
+                  <th>% Asesor</th>
+                  <th>Comisión</th>
+                  <th>Com. Total</th>
+                  <th>Asesor</th>
+                  <th>Ref. Pago</th>
+                  <th>Importe</th>
+              </tr>
+             </thead>
+             <tbody>
+                 {% for foo in diass  %}
+                     <tr>
+                         <td>{{ foo.cliente }}</td>
+                         <td>{{ foo.odc1 }}</td>
+                         <td>{{ foo.odc2  }}</td>
+                         <td>{{ foo.odc3 }}</td>
+                         <td>{{ foo.pag_clie }}</td>
+                         <td>{{ foo.p_asesor }}</td>
+                         <td>{{ foo.comision }}</td>
+                         <td>{{ foo.com_t }}</td>
+                         <td>{{ foo.asesor }}</td>
+                         <td>{{ foo.ref_pago }}</td>
+                         <td>{{ foo.importe }}</td>
+                     </tr>
+                 {% endfor %}
+             </tbody>
+                <tfoot>
+                  <tr>
+                     <th>Cliente</th>
+                     <th>Compra 1</th>
+                      <th>Compra 2</th>
+                      <th>Compra 3</th>
+                      <th>Pago Cliente</th>
+                      <th>% Asesor</th>
+                      <th>Comisión</th>
+                      <th>Com. Total</th>
+                      <th>Asesor</th>
+                      <th>Ref. Pago</th>
+                      <th>Importe</th>
+                  </tr>
+             </tfoot>
+            </table>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                  <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Sucursal Toluca 2
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="panel-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingThree">
+                  <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Sucursal Aguas Calientes
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                  <div class="panel-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+
+            <form action method="POST" class="checkout-form" >
+                {% csrf_token %}
+                <input type="hidden" name="cartJSONdata"  id="nombre3">
+                    <div class="noedit">
+                        <label for="">Tipo de Orden de Compra </label>
+                        {{ form.orden_compra }}
+                    </div>
+                   <button type="submit" class="btn btn-primary" name="boton02" id="boton02">Enviar</button>
+            </form>
+
+{% endblock %}
+

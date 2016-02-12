@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+ {% block contenido %}
+     <form method="post">{% csrf_token %}
+     Estas seguro que deseas eliminar "{{ object }}" ?
+     <button type="submit" class="btn btn-danger">Confirmar</button>
+
+ </form>
+ {% endblock %}

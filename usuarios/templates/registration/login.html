@@ -1,0 +1,29 @@
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Natcam</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <h1>Ingresa tus credenciales</h1>
+            <hr>
+            <form action="." method="post">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <p><input type="submit" class="btn btn-primary"  value="Enviar"></p>
+            </form>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+
+</body>
+</html>

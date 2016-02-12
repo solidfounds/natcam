@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block contenido %}
+
+    <table class="table">
+         <thead>
+          <tr>
+             <th>Orden de Compra</th>
+             <th>Total</th>
+              <th>ver</th>
+          </tr>
+         </thead>
+         <tbody>
+         {% for foo in post %}
+            <tr>
+                <td>{{ foo.orden_compra }}</td>
+                <td>{{ foo.total_amount }}</td>
+            <td><a href="{% url 'odc1' foo.id %}">ver {{foo.id}}</a></td>
+            </tr>
+         {% endfor %}
+         </tbody>
+         <tfoot>
+          <tr>
+             <td>Total</td>
+             <td> {{ posta.total_amount__sum }}</td>
+          </tr>
+         </tfoot>
+    </table>
+
+    {% if sent %}
+        <h1>Email fue coorectamente enviado</h1>
+        <p>"fue guardado" fue correctamente enviado por email.</p>
+    {% else %}
+        <h1>Enviar e-mail y registros gaell</h1>
+        <form  method="post">
+            {% csrf_token %}
+            <div>
+                {{ form.to.label_tag }}
+                {{ form.to }}
+            </div>
+            <div>
+                {{ form.comments.label_tag }}
+                {{ form.comments }}
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-10"></div>
+                <div class="div-col-md-2">
+                    <input type="submit" class="btn btn-primary btn-lg" value="Enviar">
+                </div>
+            </div>
+
+        </form>
+        <hr>
+        <br>
+    {% endif %}
+
+
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+ {% block contenido %}
+             <div class="container">
+             <div class="text-danger mr"><h4 class="ma">Agrega un nuevo cliente.</h4></div>
+             <form  method="post" enctype="multipart/form-data">
+             {% csrf_token %}
+
+               <div class="form-group  row ">
+                 <label class="col-sm-2 form-control-label ">Cliente:</label>
+                 <div class="col-sm-4">
+                     {{ form.cliente }}
+                 </div>
+               </div>
+               <div class="form-group row">
+                 <label class="col-sm-2 form-control-label">Caratula:</label>
+                 <div class="col-sm-4">{{ form.caratula }}
+                 {{ form.caratula.errors }}</div>
+               </div>
+               <div class="form-group  row">
+                 <label class="col-sm-2 form-control-label">Tarjeta de Mejoravit:</label>
+                 <div class="col-sm-6">{{ form.tarjeta_de_mejoravit }}
+                 {{ form.tarjeta_de_mejoravit.errors }}</div>
+               </div>
+
+               <div class="form-group row ">
+                 <label class="col-sm-2 form-control-label">Credito:</label>
+                 <div class="col-sm-4">{{ form.credito }}
+                 {{ form.credito.errors }}</div>
+               </div>
+               <div class="form-group row ">
+                 <label class="col-sm-2 form-control-label">Operador:</label>
+                 <div class="col-sm-4">{{ form.operador }}
+                 {{ form.operador.errors }}</div>
+               </div>
+             <div class="form-group row">
+                 <div class="col-sm-offset-2 col-sm-4">
+                   <button type="submit" class="btn btn-default">Guardar</button>
+                 </div>
+             </div>
+         </form>
+         </div>
+ {% endblock %}

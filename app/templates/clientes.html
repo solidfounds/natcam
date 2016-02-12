@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block css_add %}
+	<style>
+        .False {
+            color: red;
+
+        }
+        .True {
+            color: rgba(76, 224, 62, 0.97);
+
+        }
+	</style>
+    {% load staticfiles %}
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $('#example').DataTable();
+        } );
+    </script>
+    <script type="text/javascript">
+	// For demo to fit into DataTables site builder...
+	$('#example')
+		.removeClass( 'display' )
+		.addClass('table table-striped table-bordered');
+</script>
+{% endblock css_add %}
+
+{% block contenido %}
+
+{% for rea in clienta %}
+    {{ rea.nombre }}
+{% endfor %}
+
+
+    <div class="row" data-ng-app="Clientes">
+        <div class="table-responsive">
+		    <table class="table table-bordered display" id="example">
+		    <thead>
+		      <tr>
+                  <th>ID</th>
+		        <th>Nombre:</th>
+		        <th>Carátula</th>
+		        <th>Tarjeta Mejoravit</th>
+                 <th>Crédito Mejoravit</th>
+		        <th>ODC 1</th>
+		        <th>ODC 2</th>
+		        <th>ODC 3</th>
+		        <th>Factura</th>
+                <th>Cargar Pdfs</th>
+                  <th>Enviar</th>
+
+		      </tr>
+		    </thead>
+		    <tbody >
+                    {% for foo in cliente %}
+                    <tr>
+                        <td>{{ foo.id }}</td>
+                        <td>{{ foo.nombre }}{{ foo.apellidos }}</td>
+                        {% for faa in tarjeta %}
+                            {% if faa.cliente.id == foo.id %}
+                                <td> {{ faa.caratula }}</td>
+                                <td>{{ faa.tarjeta_de_mejoravit  }}</td>
+
+                                <td data-ng-controller="CalculatorController">
+                                    <button type="button" class="btn btn-primary" data-target="#{{faa.cliente.id}}" data-toggle="modal" data-target=".bd-example-modal-sm"  data-ng-init="montoInicial={{ faa.credito}}" data-ng-click="calculate()">{{ faa.credito }}</button>
+                                    <div class="modal fade bs-example-modal-sm" id="{{faa.cliente.id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            <div class="table-responsive">
+                                              <table class="table">
+                                                <thead>
+                                                  <tr>
+                                                    <th>Concepto</th>
+                                                    <th>Monto</th>
+                                                    <th>%</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr>
+                                                    <td>Monto del Credito</td>
+                                                    <td>{{ faa.credito }}</td>
+                                                    <td>100%</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Mano de Obra(Retiro efectivo cajero)</td>
+                                                    <td>-{$ manoObra $}</td>
+                                                    <td>-20%</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Credito(Saldo/FCM)</td>
+                                                    <td>{$ monto1 $}</td>
+                                                    <td>80%</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>Impuestos(16%iva+4% infonavit)</td>
+                                                    <td>-{$ veinteiva $}</td>
+                                                    <td>-20%</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>comision</td>
+                                                      <td>{{ faa.comisiona }}</td>
+                                                      <td></td>
+                                                  </tr>
+                                                   <tr>
+                                                    <td>Total</td>
+                                                    <td>{$ iva $}</td>
+                                                    <td>Entrega  efectivo</td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                        </div>
+                                      </div>
+                                    </div>
+                                        </div>
+                                </td>
+                        <div data-ng-controller="FacturaController">
+                                <td>
+                                    {% for ord1 in orden1 %}
+                                        {% if faa.cliente.id == ord1.user.id %}
+                                            {% if ord1.orden_compra %}
+                                                Folio:{{ ord1.id }} - <div data-ng-init="ord1={{ ord1.total_amount }}">Monto: {{ ord1.total_amount }}</div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <a href="{% url 'odc1' cliente_id=foo.id %}">Ver</a>
+                                </td>
+                                <td>
+                                    {% for ord2 in orden2 %}
+                                        {% if faa.cliente.id == ord2.user.id %}
+                                            {% if  ord2.orden_compra %}
+                                                Folio:{{ ord2.id }}- <div data-ng-init="ord2={{ ord2.total_amount }}">Monto:{{ ord2.total_amount }}</div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <a href="{% url 'odc2' cliente_id=foo.id %}">Ver</a>
+                                </td>
+                                <td>
+                                    {% for ord3 in orden3 %}
+                                        {% if faa.cliente.id == ord3.user.id %}
+                                            {% if ord3.orden_compra %}
+                                                Folio:{{ ord3.id }}- <div data-ng-init="ord3={{ ord3.total_amount }}">Monto:{{ ord3.total_amount }}</div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <a href="{% url 'odc3' cliente_id=foo.id %}">Ver</a>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" data-target="#{{faa.cliente.id}}{{ faa.cliente.nss }}" data-toggle="modal" data-target=".bd-example-modal-sm"  ng-click="ordeness()">ver</button>
+                                    <div class="modal fade bs-example-modal-sm" id="{{faa.cliente.id}}{{ faa.cliente.nss }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            <div class="table-responsive">
+                                              <table class="table">
+                                                <thead>
+                                                  <tr>
+                                                    <th>Orden de Compra</th>
+                                                    <th>Id </th>
+                                                    <th>Monto</th>
+                                                    <th>%</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for odc  in odcs %}
+                                                    {% if faa.cliente.id == odc.user.id %}
+                                                        <tr data-ng-controller="FacturaController">
+                                                            {% if odc.orden_compra == "1" %}
+                                                            <td>{{ odc.orden_compra }}</td>
+                                                                <td>{{ odc.id }}</td>
+                                                            <td>{{ odc.total_amount }}</td>
+                                                            {% endif %}
+                                                             {% if odc.orden_compra == "2" %}
+                                                            <td>{{ odc.orden_compra }}</td>
+                                                                  <td>{{ odc.id }}</td>
+                                                                 <td>{{ odc.total_amount }}</td>
+                                                            {% endif %}
+                                                            {% if odc.orden_compra == "3" %}
+                                                                <td>{{ odc.orden_compra }}</td>
+                                                                 <td>{{ odc.id }}</td>
+                                                                <td>{{ odc.total_amount }}</td>
+                                                            {% endif %}
+                                                            <td></td>
+                                                        </tr>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                  <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    </div>
+                                </td>
+                        </div>
+                                <td><a href="{% url 'cargar_pdfs'  foo.id %}">Cargar</a></td>
+                                <td>
+                                    <a href="{% url 'enviar_email' cliente_id=foo.id %}">Enviar</a>
+                                </td>
+
+                            {% endif %}
+                        {% endfor %}
+                  </tr>
+                    {% endfor %}
+		    </tbody>
+		 </table>
+        </div>
+    </div>
+
+{% endblock contenido %}
+
+{% block javascript %}
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+    <script>
+     	var app = angular.module('Clientes', [])
+     		app.config(function($interpolateProvider) {
+	        		$interpolateProvider.startSymbol('{$');
+	    		    $interpolateProvider.endSymbol('$}');
+	        });
+
+     	   	app.controller('CalculatorController',['$scope', function($scope){
+                $scope.montoInicial = {};
+				$scope.calculate = function(){
+					 $scope.manoObra = (parseInt($scope.montoInicial) * 20 /100);
+					 //cobtenemos el  20%
+
+					 $scope.monto1 = ($scope.montoInicial)-(parseInt($scope.montoInicial) * 20 /100);
+                    $scope.veinteiva = (parseInt($scope.monto1) * 20 /100);
+					 $scope.iva =  $scope.monto1 - $scope.veinteiva ;
+					 //obtenemos el iva
+
+				}
+			}]);
+
+            app.controller('FacturaController',['$scope', function($scope){
+                $scope.ord1 = {};
+                $scope.ord2 = {};
+                $scope.ord3 = {};
+				$scope.ordeness = function(){
+					 $scope.ord11 = (parseInt($scope.ord1));
+                     $scope.ord22 = (parseInt($scope.ord2));
+                    $scope.ord33 = (parseInt($scope.ord3));
+
+
+				}
+			}]);
+
+
+
+
+    </script>
+{% endblock %}

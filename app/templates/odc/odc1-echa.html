@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load staticfiles  %}
+
+{% block contenido %}
+
+    <div class="row">
+         <div class="container">
+            <div class="panel panel-default">
+               <img class="imagena" src="{% static 'img/imagen.jpg' %}" alt="" height="100px" width="100px">
+              <!-- Default panel contents -->
+                    {% for foo in ordencliente %}
+                          <div class="panel-heading">
+                                <div class="alinl .col-md-6"><h4>Nombre: {{ foo.user }} {{ foo.user.apellidos }}</h4></div>
+                                <div class="alinr .col-md-6" align="right"><strong><h5><font color="red"> Folio: {{ foo.id }}</font></h5></strong></div>
+                          </div>
+                          <div class="panel-body">
+                            <div>
+                                  <div class=" col-xs-4">
+                                    <label for="fecha"><b>Dirección:</b> {{ foo.user.direccion }}</label>
+                                  </div>
+                            </div>
+                                  <div class=" col-xs-4">
+                                    <label for="exampleInputEmail1"><b>Telefono:</b>  {{ foo.user.telefono }} </label>
+                                  </div>
+                                  <div class=" col-xs-4">
+                                    <label for="exampleInputPassword1"><b>Fecha:</b> {{ foo.order_date }}</label>
+                                  </div>
+
+                          </div>
+                      {% endfor %}
+              <!-- Table -->
+             <table class="table  table-bordered" id="example">
+                 <thead class="color1">
+                   <thead>
+                     <tr>
+                       <th>CANTIDAD</th>
+                       <th>DESCRIPCIÓN</th>
+                       <th>PRECIO UNITARIO</th>
+                       <th>IMPORTE</th>
+                     </tr>
+                   </thead>
+                   <tbody>
+                            {% for prod in productos %}
+                                <tr>
+                                    <td>{{ prod.quantity }}</td>
+                                    <td>{{ prod.product }}</td>
+                                    <td> $ {{ prod.product.price }}</td>
+                                    <td> $ {{ prod.importe}}</td>
+                                </tr>
+
+
+                            {% endfor %}
+
+
+                   </tbody>
+
+              </table>
+
+
+            </div>
+                {% for foo in ordencliente %}
+                     <table class="table  table-bordered" id="example">
+                                  <tr>
+                                      <td><div class="alinr .col-md-6" align="right"><b>Total: ${{ foo.total_amount}}</b></div></td>
+                                  </tr>
+                     </table>
+                 {% endfor %}
+               <div class="row">
+                  <div class="col-md-9">
+                  </div>
+                  <div class="col-md-3">
+                     <button type="button" class="btn btn-primary">generar PDF</button>
+                  </div>
+               </div>
+
+         </div>
+      </div>
+
+{% endblock %}
