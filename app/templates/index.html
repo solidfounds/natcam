@@ -139,6 +139,7 @@
          <th>Nombre</th>
          <th>Dirección</th>
          <th>Teléfono</th>
+         <th>Ife</th>
          <th>Empresa</th>
          <th>Registro Patronal</th>
          <th>Comisión</th>
@@ -200,6 +201,11 @@
              </td>
 
              <td>{{ mi_cliente.telefono }}</td>
+             <td>
+                 <ul class="nav nav-pills">
+                     <li role="presentation"><a href="{{ MEDIA_URL }} {{ mi_cliente.ife.url }}" target="_blank">Ife</a></li>
+                 </ul>
+             </td>
              <td>{{ mi_cliente.empresa }}</td>
              <td>{{ mi_cliente.registro_patronal}}</td>
              <td>{{ mi_cliente.comision }}</td>

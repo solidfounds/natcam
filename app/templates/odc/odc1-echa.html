@@ -1,24 +1,35 @@
 {% extends 'base.html' %}
 {% load staticfiles  %}
 
+{% block css_add %}
+    <style>
+        .imagene{
+        vertical-align: middle;
+            margin-bottom: 5px;
+            margin-top: 20px;
+            margin-left: 20px;
+    }
+    </style>
+{% endblock %}
 {% block contenido %}
-
     <div class="row">
          <div class="container">
             <div class="panel panel-default">
-               <img class="imagena" src="{% static 'img/imagen.jpg' %}" alt="" height="100px" width="100px">
+               <img class="imagene" src="{% static 'img/greenhouse.jpg' %}" alt="" height="120px" width="110px">
+                <div class="alinr .col-md-6" align="right"><strong><h5>Remisión/O. de C. {{ foo.id }}</h5></strong></div>
+
               <!-- Default panel contents -->
                     {% for foo in ordencliente %}
                           <div class="panel-heading">
-                                <div class="alinl .col-md-6"><h4>Nombre: {{ foo.user }} {{ foo.user.apellidos }}</h4></div>
-                                <div class="alinr .col-md-6" align="right"><strong><h5><font color="red"> Folio: {{ foo.id }}</font></h5></strong></div>
+                                <div class="alinl .col-md-6"><h5><strong>{{ foo.user.nombre }} {{ foo.user.apellidos }}</strong></h5></div>
+                                <div class="alinr .col-md-6" align="right"><strong><h5><font color="red"> Folio: {{ foo.id }}-AGS</font></h5></strong></div>
+                                <div class="alinl .col-md-6"><h6><strong>Calle:</strong>  {{ foo.user.calle }}{{ foo.user.numero }}</h6></div>
+                                <div class="alinl .col-md-6"><h6><strong>Col: CP. </strong> {{ foo.user.colonia_fraccionamiento }}, C.P. {{ foo.user.cp }}</h6></div>
+                                <div class="alinl .col-md-6"><h6><strong>Municipio: </strong>{{ foo.user.municipio_delegacion}}</h6></div>
+                                <div class="alinl .col-md-6"><h6><strong>Ciudad: </strong>{{ foo.user.endidad }}</h6></div>
                           </div>
                           <div class="panel-body">
-                            <div>
-                                  <div class=" col-xs-4">
-                                    <label for="fecha"><b>Dirección:</b> {{ foo.user.direccion }}</label>
-                                  </div>
-                            </div>
+
                                   <div class=" col-xs-4">
                                     <label for="exampleInputEmail1"><b>Telefono:</b>  {{ foo.user.telefono }} </label>
                                   </div>
@@ -47,13 +58,8 @@
                                     <td> $ {{ prod.product.price }}</td>
                                     <td> $ {{ prod.importe}}</td>
                                 </tr>
-
-
                             {% endfor %}
-
-
                    </tbody>
-
               </table>
 
 
@@ -65,13 +71,13 @@
                                   </tr>
                      </table>
                  {% endfor %}
-               <div class="row">
-                  <div class="col-md-9">
-                  </div>
-                  <div class="col-md-3">
-                     <button type="button" class="btn btn-primary">generar PDF</button>
-                  </div>
-               </div>
+             <div class="row">
+                 <div class="col-md-9">
+                 </div>
+                 <div class="col-md-3">
+                     <button type="button" class="btn btn-primary"  onClick="window.print()">generar PDF</button>
+                 </div>
+             </div>
 
          </div>
       </div>

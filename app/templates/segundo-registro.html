@@ -58,6 +58,7 @@
          <th>Cliente</th>
          <th>Carátula</th>
          <th>Tarjeta Mejoravit</th>
+         <th>Ife</th>
          <th>Crédito</th>
          <th>Acciones</th>
      </tr>
@@ -68,12 +69,17 @@
              <td>{{ mi_cliente.cliente }}  {{ mi_cliente.cliente.apellidos}}</td>
              <td>
                  <ul class="nav nav-pills">
-                     <li role="presentation"><a href="{{ MEDIA_URL }} {{ mi_cliente.caratula.url }}">Caratula</a></li>
+                     <li role="presentation"><a href="{{ MEDIA_URL }} {{ mi_cliente.caratula.url }}" target="_blank">Caratula</a></li>
                  </ul>
              </td>
              <td>
                  <ul class="nav nav-pills">
-                     <li role="presentation"><a href="{{ MEDIA_URL }}{{ mi_cliente.tarjeta_de_mejoravit  }}">Tarjeta</a></li>
+                     <li role="presentation"><a href="{{ MEDIA_URL }}{{ mi_cliente.tarjeta_de_mejoravit.url  }}"  target="_blank">Tarjeta</a></li>
+                 </ul>
+             </td>
+             <td>
+                 <ul class="nav nav-pills">
+                     <li role="presentation"><a href="{{ MEDIA_URL }} {{ mi_cliente.ife.url }}" target="_blank">Ife</a></li>
                  </ul>
              </td>
              <td>{{ mi_cliente.credito }}</td>
