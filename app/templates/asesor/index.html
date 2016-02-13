@@ -216,7 +216,56 @@
              <td>
                 {{ mi_cliente.comision }}
              </td>
-             <td>facturación </td>
+             <td>
+                 <button type="button" class="btn btn-primary" data-target="#{{mi_cliente.id}}{{ mi_cliente.nsn }}" data-toggle="modal"  data-ng-click="ordeness()">ver</button>
+                    <div class="modal fade bs-example-modal-sm" id="{{mi_cliente.id}}{{ mi_cliente.nsn }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Orden de Compra</th>
+                                                    <th>Id </th>
+                                                    <th>Monto</th>
+                                                    <th>%</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for odc  in odcs %}
+                                                {% if mi_cliente.id == odc.user.id %}
+                                                    <tr data-ng-controller="FacturaController">
+                                                        {% if odc.orden_compra == "1" %}
+                                                            <td>{{ odc.orden_compra }}</td>
+                                                            <td>{{ odc.id }}</td>
+                                                            <td>{{ odc.total_amount }}</td>
+                                                        {% endif %}
+                                                        {% if odc.orden_compra == "2" %}
+                                                            <td>{{ odc.orden_compra }}</td>
+                                                            <td>{{ odc.id }}</td>
+                                                            <td>{{ odc.total_amount }}</td>
+                                                        {% endif %}
+                                                        {% if odc.orden_compra == "3" %}
+                                                            <td>{{ odc.orden_compra }}</td>
+                                                            <td>{{ odc.id }}</td>
+                                                            <td>{{ odc.total_amount }}</td>
+                                                        {% endif %}
+                                                        <td>100%</td>
+                                                        </tr>
+                                                    {% endif %}
+                                            {% endfor %}
+                                            <tr>
+                                                <td>Mano de Obra(Retiro efectivo cajero)</td>
+                                                <td></td>
+                                                <td>-20%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+             </td>
              <td>fecha de captura</td>
             <td>
                 <div class="dropdown">

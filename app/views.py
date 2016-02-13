@@ -79,8 +79,11 @@ def primerRegistro(request):
     operadort = request.user
     datos = Datos.objects.get(usuario = operadort)
     if datos.tipo == "1":
-        odcs = Order.objects.filter(operador =operadort )
-
+        odcs = Order.objects.filter(Q(operador__username__contains=operadort))
+        ordenes = Order.objects.filter(operador__username__contains=operadort)
+        orden1 = Order.objects.filter(Q(orden_compra="1") & Q(operador__username__contains=operadort))
+        orden2 = Order.objects.filter(Q(orden_compra="2") & Q(operador__username__contains=operadort))
+        orden3 = Order.objects.filter(Q(orden_compra="3") & Q(operador__username__contains=operadort))
         if request.method == 'POST':
             form = PrimerRegistroFORM(request.POST, request.FILES)
             if form.is_valid():
@@ -93,7 +96,10 @@ def primerRegistro(request):
         mis_clientes = PrimerRegistro.objects.filter(operador__username__contains=operadort)
         return render(request, 'asesor/index.html', {'form': form,
                                               'mis_clientes': mis_clientes,
-                                              'oprtrocs': odcs})
+                                              'odcs': odcs,
+                                              'orden1':orden1,
+                                              'orden2':orden2,
+                                              'orden3':orden3,  })
     elif datos.tipo == "2":
         return redirect('clientes')
     elif datos.tipo == "3":
