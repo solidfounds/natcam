@@ -45,13 +45,14 @@ urlpatterns = [
     url(r'^editar/segundo_registro/(?P<pk>\d+)', views.SegundoRegistroEdit, name='editar_segundo_registro'),
     url(r'^eliminar/(?P<pk>\d+)$', views.SegundoRegistroDelete, name='eliminar_segundo_registro'),
     url(r'^(?P<cliente_id>\d+)$', views.enviar_email, name='enviar_email'),
-    url(r'^calendario/$', views.calendario, name='caledario'),
+    url(r'^calendario/$', views.calendario, name='calendario'),
 
     url(r'^dia/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$',views.dia, name='post_detail'),
 
     #cargar pdfs
     url(r'^cargar_pds/(?P<id>\d+)', views.cargar_pdfs, name='cargar_pdfs'),
     url(r'^cliente/perfil/(?P<id>\d+)', views.cliente_perfil, name='cliente_perfil'),
+    url(r'^gael/admin/', views.sucursales, name='sucursales'),
 
 ]
 

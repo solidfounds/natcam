@@ -13,7 +13,7 @@ import json
 from django.utils import timezone
 from decimal import Decimal
 from django.contrib.auth.models import User
-from usuarios.models import Datos
+from usuarios.models import Datos, Sucursal
 
 
 def index(request):
@@ -96,6 +96,8 @@ def primerRegistro(request):
                                               'oprtrocs': odcs})
     elif datos.tipo == "2":
         return redirect('clientes')
+    elif datos.tipo == "3":
+        return redirect('calendario')
 
 
 
@@ -429,5 +431,12 @@ def cliente_perfil(request, id):
     return render(request, 'perfil/peril-cliente.html', {
                                                     'primer':obtenerClientePR,
                                                     #'segundo'
+    })
 
+def sucursales(request):
+    datosusuarios = Datos.objects.all()
+    sucursales = Sucursal.objects.all()
+    return render(request, 'gaeladmin/sucursales.html', {
+                                                        'datos':datosusuarios,
+                                                        'sucursales': sucursales,
     })

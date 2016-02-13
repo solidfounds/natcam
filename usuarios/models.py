@@ -26,6 +26,7 @@ PORCENTAJE_GANANCIA_CHOICES = (
 PERSONAL_CHOICES = (
     ('1', 'Asesor'),
     ('2', 'Asistente'),
+    ('3', 'Gael'),
 )
 
 class Datos(models.Model):
