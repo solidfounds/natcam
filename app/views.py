@@ -94,7 +94,8 @@ def primerRegistro(request):
         else:
             form = PrimerRegistroFORM()
         mis_clientes = PrimerRegistro.objects.filter(operador__username__contains=operadort)
-        return render(request, 'asesor/index.html', {'form': form,
+        return render(request, 'asesor/index.html', {
+                                              'form': form,
                                               'mis_clientes': mis_clientes,
                                               'odcs': odcs,
                                               'orden1':orden1,
