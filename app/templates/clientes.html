@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base/base-asistente.html" %}
 
 {% block css_add %}
 	<style>
@@ -31,6 +31,29 @@
 {% for rea in clienta %}
     {{ rea.nombre }}
 {% endfor %}
+    <button class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar Cliente</button>
+    <hr>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="container">
+            <div class="row">
+            <div class="col-md-2 col-sm-2"></div>
+            <div class="col-md-5 col-sm-4 " >
+                <div class="text-danger mr"><h4 class="ma">Agrega un nuevo cliente.</h4></div>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="divider"></div>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <hr>
+                </form>
+            </div><div class="col-md-4 col-sm-2"></div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
 
 
     <div class="row" data-ng-app="Clientes">
@@ -42,13 +65,14 @@
 		        <th>Nombre:</th>
 		        <th>Carátula</th>
 		        <th>Tarjeta Mejoravit</th>
-                 <th>Crédito Mejoravit</th>
+                <th>Ife</th>
 		        <th>ODC 1</th>
 		        <th>ODC 2</th>
 		        <th>ODC 3</th>
-		        <th>Factura</th>
-                <th>Cargar Pdfs</th>
+		        <th>Facturación</th>
+                <th>Comisión</th>
                   <th>Enviar</th>
+                 <th>Acciones</th>
 
 		      </tr>
 		    </thead>
@@ -68,6 +92,43 @@
                                     <ul class="nav nav-pills">
                                         <li role="presentation"><a href="{{ MEDIA_URL }}{{ faa.tarjeta_de_mejoravit.url }}"  target="_blank">tarjeta</a></li>
                                     </ul>
+                                </td>
+                                <td>
+                                    <ul class="nav nav-pills">
+                                        <li role="presentation"><a href="{{ MEDIA_URL }}{{ faa.ife.url }}"  target="_blank">Ife</a></li>
+                                    </ul>
+                                </td>
+
+                        <div data-ng-controller="FacturaController">
+                                <td>
+                                    {% for ord1 in orden1 %}
+                                        {% if faa.cliente.id == ord1.user.id %}
+                                            {% if ord1.orden_compra %}
+                                                Folio:{{ ord1.id }} - <div data-ng-init="ord1={{ ord1.total_amount }}">Monto: {{ ord1.total_amount }}</div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <a href="{% url 'odc1' cliente_id=foo.id %}">Ver</a>
+                                </td>
+                                <td>
+                                    {% for ord2 in orden2 %}
+                                        {% if faa.cliente.id == ord2.user.id %}
+                                            {% if  ord2.orden_compra %}
+                                                Folio:{{ ord2.id }}- <div data-ng-init="ord2={{ ord2.total_amount }}">Monto:{{ ord2.total_amount }}</div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <a href="{% url 'odc2' cliente_id=foo.id %}">Ver</a>
+                                </td>
+                                <td>
+                                    {% for ord3 in orden3 %}
+                                        {% if faa.cliente.id == ord3.user.id %}
+                                            {% if ord3.orden_compra %}
+                                                Folio:{{ ord3.id }}- <div data-ng-init="ord3={{ ord3.total_amount }}">Monto:{{ ord3.total_amount }}</div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <a href="{% url 'odc3' cliente_id=foo.id %}">Ver</a>
                                 </td>
                                 <td data-ng-controller="CalculatorController">
                                     <button type="button" class="btn btn-primary" data-target="#{{faa.cliente.id}}" data-toggle="modal" data-target=".bd-example-modal-sm"  data-ng-init="montoInicial={{ faa.credito}}" data-ng-click="calculate()">{{ faa.credito }}</button>
@@ -121,91 +182,26 @@
                                     </div>
                                         </div>
                                 </td>
-                        <div data-ng-controller="FacturaController">
                                 <td>
-                                    {% for ord1 in orden1 %}
-                                        {% if faa.cliente.id == ord1.user.id %}
-                                            {% if ord1.orden_compra %}
-                                                Folio:{{ ord1.id }} - <div data-ng-init="ord1={{ ord1.total_amount }}">Monto: {{ ord1.total_amount }}</div>
-                                            {% endif %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    <a href="{% url 'odc1' cliente_id=foo.id %}">Ver</a>
-                                </td>
-                                <td>
-                                    {% for ord2 in orden2 %}
-                                        {% if faa.cliente.id == ord2.user.id %}
-                                            {% if  ord2.orden_compra %}
-                                                Folio:{{ ord2.id }}- <div data-ng-init="ord2={{ ord2.total_amount }}">Monto:{{ ord2.total_amount }}</div>
-                                            {% endif %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    <a href="{% url 'odc2' cliente_id=foo.id %}">Ver</a>
-                                </td>
-                                <td>
-                                    {% for ord3 in orden3 %}
-                                        {% if faa.cliente.id == ord3.user.id %}
-                                            {% if ord3.orden_compra %}
-                                                Folio:{{ ord3.id }}- <div data-ng-init="ord3={{ ord3.total_amount }}">Monto:{{ ord3.total_amount }}</div>
-                                            {% endif %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    <a href="{% url 'odc3' cliente_id=foo.id %}">Ver</a>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-primary" data-target="#{{faa.cliente.id}}{{ faa.cliente.nss }}" data-toggle="modal" data-target=".bd-example-modal-sm"  ng-click="ordeness()">ver</button>
-                                    <div class="modal fade bs-example-modal-sm" id="{{faa.cliente.id}}{{ faa.cliente.nss }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                                      <div class="modal-dialog modal-sm">
-                                        <div class="modal-content">
-                                            <div class="table-responsive">
-                                              <table class="table">
-                                                <thead>
-                                                  <tr>
-                                                    <th>Orden de Compra</th>
-                                                    <th>Id </th>
-                                                    <th>Monto</th>
-                                                    <th>%</th>
-                                                  </tr>
-                                                </thead>
-                                                <tbody>
-                                                {% for odc  in odcs %}
-                                                    {% if faa.cliente.id == odc.user.id %}
-                                                        <tr data-ng-controller="FacturaController">
-                                                            {% if odc.orden_compra == "1" %}
-                                                            <td>{{ odc.orden_compra }}</td>
-                                                                <td>{{ odc.id }}</td>
-                                                            <td>{{ odc.total_amount }}</td>
-                                                            {% endif %}
-                                                             {% if odc.orden_compra == "2" %}
-                                                            <td>{{ odc.orden_compra }}</td>
-                                                                  <td>{{ odc.id }}</td>
-                                                                 <td>{{ odc.total_amount }}</td>
-                                                            {% endif %}
-                                                            {% if odc.orden_compra == "3" %}
-                                                                <td>{{ odc.orden_compra }}</td>
-                                                                 <td>{{ odc.id }}</td>
-                                                                <td>{{ odc.total_amount }}</td>
-                                                            {% endif %}
-                                                            <td></td>
-                                                        </tr>
-                                                    {% endif %}
-                                                {% endfor %}
-                                                  <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                  </tr>
-                                                </tbody>
-                                              </table>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    </div>
+                                    {{ foo.comision }}
+                                    -
+                                    {{ faa.comisiona }}
                                 </td>
                         </div>
-                                <td><a href="{% url 'cargar_pdfs'  foo.id %}">Cargar</a></td>
+                               {#  <td><a href="{% url 'cargar_pdfs'  foo.id %}">Cargar</a></td> #}
                                 <td>
                                     <a href="{% url 'enviar_email' cliente_id=foo.id %}">Enviar</a>
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            Acciones <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                            <li><a  href="{% url 'editar_segundo_registro' faa.cliente.pk %}">Editar</a></li>
+                                            <li><a href="{% url 'eliminar_segundo_registro' faa.cliente.pk %}">Eliminar</a></li>
+                                        </ul>
+                                        </div>
                                 </td>
 
                             {% endif %}

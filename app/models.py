@@ -21,7 +21,7 @@ class PrimerRegistro(models.Model):
     empresa = models.CharField(max_length=254)
     registro_patronal = models.CharField(max_length=15)
     comision = models.DecimalField('comisión', max_digits=7, decimal_places=2)
-    ife = models.FileField(upload_to='ifes/', blank=True, null=True)
+
 
     email = models.EmailField()
     numero_de_cuenta = models.CharField('número de cuenta', max_length=16)
@@ -41,6 +41,7 @@ class PrimerRegistro(models.Model):
 class SegundoRegistro(models.Model):
     cliente = models.ForeignKey(PrimerRegistro)
     fecha = models.DateField(auto_now_add=True)
+    ife = models.FileField(upload_to='ifes/', blank=True, null=True)
     caratula = models.FileField(upload_to='caratula/', blank=True, null=True)
     tarjeta_de_mejoravit = models.FileField(upload_to='targeta_infonavit/', blank=True, null=True)
     credito = models.DecimalField('crédito', max_digits=7, decimal_places=2, blank=True, null=True)
@@ -124,8 +125,8 @@ class RelacionP(models.Model):
     fecha = models.DateTimeField(default=timezone.now)
     cliente = models.ForeignKey(PrimerRegistro, null=True)
     odc1 = models.PositiveIntegerField()
-    odc2 = models.PositiveIntegerField()
-    odc3 = models.PositiveIntegerField()
+    odc2 = models.PositiveIntegerField(null=True, blank=True)
+    odc3 = models.PositiveIntegerField(null=True, blank=True)
     pag_clie = models.PositiveIntegerField()
     p_asesor = models.PositiveIntegerField()
     comision = models.PositiveIntegerField()

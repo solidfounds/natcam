@@ -13,6 +13,8 @@ import json
 from django.utils import timezone
 from decimal import Decimal
 from django.contrib.auth.models import User
+from usuarios.models import Datos
+
 
 def index(request):
     return render(request, 'index.html', )
@@ -30,9 +32,19 @@ def clientes(request):
     orden1 = Order.objects.filter(Q(orden_compra="1") & Q(operador__username__contains=usuario))
     orden2 = Order.objects.filter(Q(orden_compra="2") & Q(operador__username__contains=usuario))
     orden3 = Order.objects.filter(Q(orden_compra="3") & Q(operador__username__contains=usuario))
+
+
     # odcf  = ['1', '2', '3']
     # q_objects = Q()
-
+    if request.method == 'POST':
+        form = SegundoRegistroForm(request.POST, request.FILES)
+        if form.is_valid():
+            posta = form.save(commit=False)
+            posta.operador = usuario
+            posta.save()
+            return redirect('segundo_registro')
+    else:
+        form = SegundoRegistroForm()
     odcs = Order.objects.filter(Q(operador__username__contains=usuario))
     return render(request, 'clientes.html', {
         'cliente': cliente,
@@ -42,6 +54,7 @@ def clientes(request):
         'orden2': orden2,
         'orden3': orden3,
         'odcs': odcs,
+        'form':form,
     })
 
 
@@ -63,18 +76,27 @@ def desempeno(request):
 
 #@login_required(login_url='/')
 def primerRegistro(request):
-    usuario = request.user
-    if request.method == 'POST':
-        form = PrimerRegistroFORM(request.POST, request.FILES)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.operador = usuario
-            post.save()
-            return redirect('agregar_clientes')
-    else:
-        form = PrimerRegistroFORM()
-    mis_clientes = PrimerRegistro.objects.filter(operador__username__contains=usuario)
-    return render(request, 'index.html', {'form': form, 'mis_clientes': mis_clientes})
+    operadort = request.user
+    datos = Datos.objects.get(usuario = operadort)
+    if datos.tipo == "1":
+        odcs = Order.objects.filter(operador =operadort )
+
+        if request.method == 'POST':
+            form = PrimerRegistroFORM(request.POST, request.FILES)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.operador = operadort
+                post.save()
+                return redirect('agregar_clientes')
+        else:
+            form = PrimerRegistroFORM()
+        mis_clientes = PrimerRegistro.objects.filter(operador__username__contains=operadort)
+        return render(request, 'asesor/index.html', {'form': form,
+                                              'mis_clientes': mis_clientes,
+                                              'oprtrocs': odcs})
+    elif datos.tipo == "2":
+        return redirect('clientes')
+
 
 
 #@login_required(login_url='/')
@@ -131,7 +153,6 @@ def SegundoRegistroDelete(request, pk, template_name='delete/confirmacion2.html'
 #@login_required(login_url='/')
 def orden_compra1(request, cliente_id=None):
     # data = serializers.serialize("json", Productos.objects.all(), fields=('pk', 'name', 'price'))
-
     if Order.objects.filter(Q(user__id=cliente_id) & Q(orden_compra=1)).exists():
         ordencliente = Order.objects.filter(Q(user__id=cliente_id) & Q(orden_compra=1))
         productos = ProductOrder.objects.filter(order=ordencliente)
@@ -263,22 +284,28 @@ def enviar_email(request, cliente_id=None):
     posta = Order.objects.filter(user=cliente_id).aggregate(Sum('total_amount'))
     post = Order.objects.filter(user=cliente_id)
     primerr = PrimerRegistro.objects.get(id = cliente_id)
-    ife = primerr.ife
     sent = False
     if request.method == 'POST':
         form = EmailOdcsForm(request.POST)
         if form.is_valid():
             enviaryael(request,cliente_id)
             cd = form.cleaned_data
-            # post_url = request.build_absolute_uri(post.get_absolute_url())
-            # fetch = [(f.order_date) for f in Order.objects.filter(user = cliente_id)]
             allorder = [(p.total_amount) for p in Order.objects.filter(user=cliente_id)]
-            subject = '  recommends you reading '
-            message = 'Cliente Listo \n\n\'s  datos Orden 1:{}\n\n Orden 2:{}\n\n Orden 3: {}\n\n Total:{}  comments: {} '.format(allorder[0], allorder[1], allorder[2], posta['total_amount__sum'], cd['comments'], )
-            #message.attach('ife')
-            send_mail(subject, message, 'soldiddfouns@gmail.com', [cd['to']])
-            sent = True
-            redirect('clientes')
+            if len(allorder) == 3:
+                subject = '  recommends you reading '
+                message = 'Cliente Listo \n\n\'s  datos Orden 1:{}\n\n Orden 2:{}\n\n Orden 3: {}\n\n Total:{}  comments: {} '.format(allorder[0], allorder[1], allorder[2], posta['total_amount__sum'], cd['comments'], )
+                #message.attach('ife')
+                send_mail(subject, message, 'soldiddfouns@gmail.com', [cd['to']])
+                sent = True
+                redirect('clientes')
+            elif len(allorder) == 2:
+                subject = '  recommends you reading '
+                message = 'Cliente Listo \n\n\'s  datos Orden 1:{}\n\n Orden 2:{}\n\n  Total:{}  comments: {} '.format(allorder[0], allorder[1], posta['total_amount__sum'], cd['comments'], )
+                #message.attach('ife')
+                send_mail(subject, message, 'soldiddfouns@gmail.com', [cd['to']])
+                sent = True
+                redirect('clientes')
+
         else:
             return redirect('clientes')
     else:
@@ -294,43 +321,73 @@ def enviar_email(request, cliente_id=None):
 
 #def enviaryael(request,fecha, cliente, odc1,odc2,odc3 ,pag_clie ,p_asesor,comision,com_t,asesor,ref_pago, importe):
 def enviaryael(request, cliente_id):
-    infocliente  = PrimerRegistro.objects.get(id=cliente_id)
-    segundor = SegundoRegistro.objects.get(id=cliente_id)
-    odc1 = Order.objects.get(user__id =cliente_id, orden_compra__contains =1)
-    od1 = float(odc1.total_amount)
-    odc2 = Order.objects.get(user__id =cliente_id, orden_compra__contains =2)
-    od2 = float(odc2.total_amount)
-    odc3 = Order.objects.get(user__id =cliente_id, orden_compra__contains =3)
-    od3 = float(odc3.total_amount)
-    totalodc = Order.objects.filter(user__id=cliente_id).aggregate(Sum('total_amount'))
-    totalodcs = float(totalodc['total_amount__sum'])
-    # for odcss in odcs:
-    #     odcss.orden_compra
-    #odcs1 = odcs.orden_compra
-    comision = infocliente.comision
-    com = float(comision)
-    p_comision = segundor.comisiona()
-    pcom = float(p_comision)
-    suma = com + pcom
-    sumaimporte = totalodcs -suma
-    #ordenes = Order.objects.filter(cliente=cliente_id)
-    nombre = infocliente.id
-    fecha = timezone.now()
-    form = RelacionP.objects.create(
-                fecha = fecha,
-                #cliente =  nombre,
-                odc1 = od1,
-                odc2 = od2,
-                odc3 = od3,
-                pag_clie = totalodcs,
-                p_asesor = pcom ,
-                comision = com,
-                com_t = suma,
-                asesor = request.user,
-                # ref_pago = request.POST['ref_pago'],
-                importe = sumaimporte,
-            )
-    return redirect('clientes')
+    contars3 =Order.objects.filter(user__id =cliente_id, orden_compra__contains =3)
+    if contars3.count() > 0:
+        infocliente  = PrimerRegistro.objects.get(id=cliente_id)
+        segundor = SegundoRegistro.objects.get(id=cliente_id)
+        odc1 = Order.objects.get(user__id =cliente_id, orden_compra__contains =1)
+        od1 = float(odc1.total_amount)
+        odc2 = Order.objects.get(user__id =cliente_id, orden_compra__contains =2)
+        od2 = float(odc2.total_amount)
+        odc3 = Order.objects.get(user__id =cliente_id, orden_compra__contains =3)
+        od3 = float(odc3.total_amount)
+        totalodc = Order.objects.filter(user__id=cliente_id).aggregate(Sum('total_amount'))
+        totalodcs = float(totalodc['total_amount__sum'])
+        comision = infocliente.comision
+        com = float(comision)
+        p_comision = segundor.comisiona()
+        pcom = float(p_comision)
+        suma = com + pcom
+        sumaimporte = totalodcs -suma
+        nombre = infocliente.id
+        fecha = timezone.now()
+        form = RelacionP.objects.create(
+                    fecha = fecha,
+                    #cliente =  nombre,
+                    odc1 = od1,
+                    odc2 = od2,
+                    odc3 = od3,
+                    pag_clie = totalodcs,
+                    p_asesor = pcom ,
+                    comision = com,
+                    com_t = suma,
+                    asesor = request.user,
+                    # ref_pago = request.POST['ref_pago'],
+                    importe = sumaimporte,
+                )
+    else:
+        infocliente  = PrimerRegistro.objects.get(id=cliente_id)
+        segundor = SegundoRegistro.objects.get(id=cliente_id)
+        odc1 = Order.objects.get(user__id =cliente_id, orden_compra__contains =1)
+        od1 = float(odc1.total_amount)
+        odc2 = Order.objects.get(user__id =cliente_id, orden_compra__contains =2)
+        od2 = float(odc2.total_amount)
+        totalodc = Order.objects.filter(user__id=cliente_id).aggregate(Sum('total_amount'))
+        totalodcs = float(totalodc['total_amount__sum'])
+        comision = infocliente.comision
+        com = float(comision)
+        p_comision = segundor.comisiona()
+        pcom = float(p_comision)
+        suma = com + pcom
+        sumaimporte = totalodcs -suma
+        nombre = infocliente.id
+        fecha = timezone.now()
+        form = RelacionP.objects.create(
+                    fecha = fecha,
+                    #cliente =  nombre,
+                    odc1 = od1,
+                    odc2 = od2,
+                    pag_clie = totalodcs,
+                    p_asesor = pcom ,
+                    comision = com,
+                    com_t = suma,
+                    asesor = request.user,
+                    # ref_pago = request.POST['ref_pago'],
+                    importe = sumaimporte,
+                )
+
+
+        return redirect('clientes')
 
 def dia(request, year, month, day):
     #form = RelacionPFprm()
