@@ -20,70 +20,91 @@ def index(request):
     return render(request, 'index.html', )
 
 
-def nota_remision(request):
-    return render(request, 'nota-remision.html')
 
 #@login_required(login_url='/')
 def clientes(request):
     usuario = request.user
-    cliente = PrimerRegistro.objects.filter(operador__username__contains=usuario)
-    tarjeta = SegundoRegistro.objects.filter(operador__username__contains=usuario)
-    ordenes = Order.objects.filter(operador__username__contains=usuario)
-    orden1 = Order.objects.filter(Q(orden_compra="1") & Q(operador__username__contains=usuario))
-    orden2 = Order.objects.filter(Q(orden_compra="2") & Q(operador__username__contains=usuario))
-    orden3 = Order.objects.filter(Q(orden_compra="3") & Q(operador__username__contains=usuario))
-
-
-    # odcf  = ['1', '2', '3']
-    # q_objects = Q()
     if request.method == 'POST':
         form = SegundoRegistroForm(request.POST, request.FILES)
         if form.is_valid():
-            posta = form.save(commit=False)
-            posta.operador = usuario
-            posta.save()
-            return redirect('segundo_registro')
+            cliente = form.cleaned_data['cliente']
+            ife = form.cleaned_data['ife']
+            caratula = form.cleaned_data['caratula']
+            tarjeta = form.cleaned_data['tarjeta_de_mejoravit']
+            credito = form.cleaned_data['credito']
+            getcliente = PrimerRegistro.objects.get(id = cliente)
+            operador = form.operador = getcliente.operador
+
+            ar = SegundoRegistro.objects.create(cliente=getcliente, ife=ife,caratula=caratula, tarjeta_de_mejoravit=tarjeta,credito=credito , operador=operador)
+            ar.save()
+            return redirect('desempeno')
     else:
         form = SegundoRegistroForm()
-    odcs = Order.objects.filter(Q(operador__username__contains=usuario))
-    return render(request, 'clientes.html', {
-        'cliente': cliente,
-        'tarjeta': tarjeta,
-        'ordenes': ordenes,
-        'orden1': orden1,
-        'orden2': orden2,
-        'orden3': orden3,
-        'odcs': odcs,
-        'form':form,
-    })
-
+    datos = Datos.objects.get(usuario=usuario)
+    sucursa = datos.sucursal
+    asesores = Datos.objects.filter(sucursal=sucursa)
+    for ase in asesores:
+        cliente = PrimerRegistro.objects.filter(operador__username__contains=ase)
+        tarjeta = SegundoRegistro.objects.filter(operador__username__contains=ase)
+        ordenes = Order.objects.filter(operador__username__contains=ase)
+        orden1 = Order.objects.filter(Q(orden_compra="1") & Q(operador__username__contains=ase))
+        orden2 = Order.objects.filter(Q(orden_compra="2") & Q(operador__username__contains=ase))
+        orden3 = Order.objects.filter(Q(orden_compra="3") & Q(operador__username__contains=ase))
+        odcs = Order.objects.filter(Q(operador__username__contains=usuario))
+        return render(request, 'clientes.html', {
+            'cliente': cliente,
+            'tarjeta': tarjeta,
+            'ordenes': ordenes,
+            'orden1': orden1,
+            'orden2': orden2,
+            'orden3': orden3,
+            'odcs': odcs,
+            'form':form,
+            'datos':datos
+        })
 
 #@login_required(login_url='/')
 def desempeno(request):
     usuario = request.user
-    mi_info = User.objects.get(username=usuario)
-    total_clientes = PrimerRegistro.objects.filter(operador__username__contains=usuario).count()
-    micomision = PrimerRegistro.objects.filter(operador__username__contains=usuario)
-    micomiscionAsesor = SegundoRegistro.objects.filter(operador__username__contains=usuario)
-    #percepcion = SegundoRegistro.objects.filter(operador__username__contains=usuario).aggregate(Sum('micomision'))
-    return render(request, 'desempeno.html', {'mi_info': mi_info,
-                                              'total_clientes': total_clientes,
-                                              'micomision':micomision,
-                                              'micomiscionAsesor':micomiscionAsesor,
-                                              #'percepcion': percepcion
-                                              })
-
+    datos = Datos.objects.get(usuario = usuario)
+    if datos.tipo == "1":
+        mi_info = User.objects.get(username=usuario)
+        total_clientes = PrimerRegistro.objects.filter(operador__username__contains=usuario).count()
+        micomision = PrimerRegistro.objects.filter(operador__username__contains=usuario)
+        micomiscionAsesor = SegundoRegistro.objects.filter(operador__username__contains=usuario)
+        #percepcion = SegundoRegistro.objects.filter(operador__username__contains=usuario).aggregate(Sum('micomision'))
+        return render(request, 'asesor/desempeno.html', {'mi_info': mi_info,
+                                                  'total_clientes': total_clientes,
+                                                  'micomision':micomision,
+                                                  'micomiscionAsesor':micomiscionAsesor,
+                                                  })
+    elif datos.tipo == "2":
+        mi_info = User.objects.get(username=usuario)
+        total_clientes = PrimerRegistro.objects.filter(operador__username__contains=usuario).count()
+        micomision = PrimerRegistro.objects.filter(operador__username__contains=usuario)
+        micomiscionAsesor = SegundoRegistro.objects.filter(operador__username__contains=usuario)
+        #percepcion = SegundoRegistro.objects.filter(operador__username__contains=usuario).aggregate(Sum('micomision'))
+        return render(request, 'asistente/desempeno.html', {'mi_info': mi_info,
+                                                  'total_clientes': total_clientes,
+                                                  'micomision':micomision,
+                                                  'micomiscionAsesor':micomiscionAsesor,
+                                                  #'percepcion': percepcion
+                                                  })
 
 #@login_required(login_url='/')
 def primerRegistro(request):
     operadort = request.user
     datos = Datos.objects.get(usuario = operadort)
+
     if datos.tipo == "1":
-        odcs = Order.objects.filter(Q(operador__username__contains=operadort))
+        sucursal = datos.sucursal
+        sacar_asesor = Datos.objects.get(Q(tipo = '2')& Q(sucursal=sucursal))
+        odcs = Order.objects.filter(Q(operador__username__contains=sacar_asesor.usuario))
         ordenes = Order.objects.filter(operador__username__contains=operadort)
-        orden1 = Order.objects.filter(Q(orden_compra="1") & Q(operador__username__contains=operadort))
-        orden2 = Order.objects.filter(Q(orden_compra="2") & Q(operador__username__contains=operadort))
-        orden3 = Order.objects.filter(Q(orden_compra="3") & Q(operador__username__contains=operadort))
+        orden1 = Order.objects.filter(Q(orden_compra="1") & Q(operador=sacar_asesor.usuario ))
+        orden2 = Order.objects.filter(Q(orden_compra="2") & Q(operador=sacar_asesor.usuario))
+        orden3 = Order.objects.filter(Q(orden_compra="3") & Q(operador=sacar_asesor.usuario))
+        datos = Datos.objects.get(usuario = operadort)
         if request.method == 'POST':
             form = PrimerRegistroFORM(request.POST, request.FILES)
             if form.is_valid():
@@ -100,7 +121,8 @@ def primerRegistro(request):
                                               'odcs': odcs,
                                               'orden1':orden1,
                                               'orden2':orden2,
-                                              'orden3':orden3,  })
+                                              'orden3':orden3,
+                                               'datos':datos })
     elif datos.tipo == "2":
         return redirect('clientes')
     elif datos.tipo == "3":
@@ -333,7 +355,7 @@ def enviaryael(request, cliente_id):
     contars3 =Order.objects.filter(user__id =cliente_id, orden_compra__contains =3)
     if contars3.count() > 0:
         infocliente  = PrimerRegistro.objects.get(id=cliente_id)
-        segundor = SegundoRegistro.objects.get(id=cliente_id)
+        segundor = SegundoRegistro.objects.get(cliente__id=cliente_id)
         odc1 = Order.objects.get(user__id =cliente_id, orden_compra__contains =1)
         od1 = float(odc1.total_amount)
         odc2 = Order.objects.get(user__id =cliente_id, orden_compra__contains =2)
@@ -349,10 +371,11 @@ def enviaryael(request, cliente_id):
         suma = com + pcom
         sumaimporte = totalodcs -suma
         nombre = infocliente.id
+        o_cliente = PrimerRegistro.objects.get(id=nombre)
         fecha = timezone.now()
         form = RelacionP.objects.create(
                     fecha = fecha,
-                    #cliente =  nombre,
+                    cliente =  o_cliente,
                     odc1 = od1,
                     odc2 = od2,
                     odc3 = od3,
@@ -380,10 +403,11 @@ def enviaryael(request, cliente_id):
         suma = com + pcom
         sumaimporte = totalodcs -suma
         nombre = infocliente.id
+        o_cliente = PrimerRegistro.objects.get(id=nombre)
         fecha = timezone.now()
         form = RelacionP.objects.create(
                     fecha = fecha,
-                    #cliente =  nombre,
+                    cliente =  o_cliente,
                     odc1 = od1,
                     odc2 = od2,
                     pag_clie = totalodcs,
@@ -394,8 +418,6 @@ def enviaryael(request, cliente_id):
                     # ref_pago = request.POST['ref_pago'],
                     importe = sumaimporte,
                 )
-
-
         return redirect('clientes')
 
 def dia(request, year, month, day):
@@ -425,7 +447,9 @@ def calendario(request):
              return dia(request, year, month, day)
     else:
         form = BuscarDiaForm()
-    return render(request, 'gaeladmin/calendar.html', {'form':form})
+    diass = RelacionP.objects.all()
+    return render(request, 'gaeladmin/calendar.html', {'form':form,
+                                                       'diass':diass})
 
 def cargar_pdfs(request, id):
     form = CargarPdfsForm
@@ -447,3 +471,10 @@ def sucursales(request):
                                                         'datos':datosusuarios,
                                                         'sucursales': sucursales,
     })
+
+def gastos_oficina(request):
+    return  render(request,'asistente/gastos-oficina.html')
+
+def empleado_perfil(request, id):
+    obtenerEmpleado = Datos.objects.get(id=id)
+    return render(request, 'perfil/perfil-empleado.html',{'primer':obtenerEmpleado,})

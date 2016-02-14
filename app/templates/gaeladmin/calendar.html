@@ -1,10 +1,11 @@
 {% extends 'base/base-gael.html' %}
 {% block css_add %}
     {% load staticfiles %}
-    <script type="text/javascript" src="{% static 'jquery/dist/jquery.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'moment/min/moment.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script>
+        $('.dropdown-toggle').dropdown();
+    </script>
+
 
 {% endblock %}
 {% block contenido %}
@@ -13,9 +14,94 @@
           <div class="form-group">
             {{ form.as_p }}
           </div>
-        <input type="submit"/>
+        <input class="btn btn-success btn-lg btn-block" type="submit"/>
     </form>
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                  <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Sucursal Toluca 1
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panel-body">
+                    <table class="table">
+                     <thead>
+                      <tr>
+                         <th>Cliente</th>
+                         <th>Compra 1</th>
+                          <th>Compra 2</th>
+                          <th>Compra 3</th>
+                          <th>Pago Cliente</th>
+                          <th>% Asesor</th>
+                          <th>Comisión</th>
+                          <th>Com. Total</th>
+                          <th>Asesor</th>
+                          <th>Ref. Pago</th>
+                          <th>Importe</th>
+                          <th>Asignar R. Pago</th>
+                      </tr>
+                     </thead>
+                        <tbody>
+                 {% for foo in diass  %}
+                     <tr>
+                         <td><a href="{% url 'cliente_perfil' id=foo.id %}">{{ foo.cliente }}{{ foo.cliente.apellidos }}</a></td>
+                         <td>{{ foo.odc1 }}</td>
+                         <td>{{ foo.odc2  }}</td>
+                         <td>{{ foo.odc3 }}</td>
+                         <td>{{ foo.pag_clie }}</td>
+                         <td>{{ foo.p_asesor }}</td>
+                         <td>{{ foo.comision }}</td>
+                         <td>{{ foo.com_t }}</td>
+                         <td>{{ foo.asesor }}</td>
+                         <td>{{ foo.ref_pago }}</td>
+                         <td>{{ foo.importe }}</td>
+                         <td>
+                            <div class="dropdown">
+                              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Dropdown
+                                <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                              </ul>
+                            </div>
+                         </td>
+                     </tr>
+                 {% endfor %}
+             </tbody>
+                     <tfoot>
+                  <tr>
+                     <th>Cliente</th>
+                     <th>Compra 1</th>
+                      <th>Compra 2</th>
+                      <th>Compra 3</th>
+                      <th>Pago Cliente</th>
+                      <th>% Asesor</th>
+                      <th>Comisión</th>
+                      <th>Com. Total</th>
+                      <th>Asesor</th>
+                      <th>Ref. Pago</th>
+                      <th>Importe</th>
+                      <th>Asignar R. Pago</th>
+                  </tr>
+                </tfoot>
+            </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        </div>
+    </div>
 
-</div>
 {% endblock %}

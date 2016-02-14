@@ -1,65 +1,54 @@
 {% extends 'base/base-gael.html' %}
 
 {% block contenido %}
+<style>
 
-
-
-
-
-
+    .blanco-color{
+        color: #ffffff;
+    }
+</style>
       <div class="row row-offcanvas row-offcanvas-right">
 
-        <div class="col-xs-12 col-sm-9">
+        <div class="col-xs-12 col-sm-12">
           <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
           </p>
-          <div class="jumbotron">
-            <h1>Hello, world!</h1>
-            <p>This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.</p>
-          </div>
-          <div class="row">
-              {% for sucursal in sucursales %}
-                <div class="col-xs-6 col-lg-4 col-md-4">
-                  <h2>{{ sucursal.nombre }}</h2>
-                  <p>
-                      {% for dato in datos %}
-                          {% if sucursal.nombre == dato.sucursal.nombre %}
-                                   <h4>{{ dato.usuario }}</h4>
-                          {% endif %}
+          <div class="list-group-item active">
+                <h1 class="blanco-color">Datos Relevantes</h1>
 
-                      {% endfor %}
-                  </p>
-                  <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                </div><!--/.col-xs-6.col-lg-4-->
-             {% endfor %}
-            <div class="col-xs-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/.col-xs-6.col-lg-4-->
-            <div class="col-xs-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/.col-xs-6.col-lg-4-->
-            <div class="col-xs-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/.col-xs-6.col-lg-4-->
-            <div class="col-xs-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/.col-xs-6.col-lg-4-->
-            <div class="col-xs-6 col-lg-4">
-              <h2>Heading</h2>
-              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!--/.col-xs-6.col-lg-4-->
+          </div><div><p><p></div>
+
+       <div class="row">
+                   {% for sucursal in sucursales %}
+                        <div class="col-xs-6 col-lg-4 col-md-4">
+                          <div class="panel panel-warning">
+                                    <div class="panel-heading">
+                                        <h4 class="blanco-color">Sucursal: {{ sucursal.nombre }}</h4></div>
+                                         <div class="panel-body">
+                                        {% for dato in datos %}
+                                            {% if sucursal.nombre == dato.sucursal.nombre %}
+                                                    <h5><a href="{{ dato.id }}">{{ dato.usuario }} {{ dato.get_tipo_display }}</a></h5>
+                                                    <hr/>
+                                            {% endif %}
+                                        {% endfor %}
+                                            Ingresos Mes: Febrero 120000.00
+                                            <hr/>
+                                            Egresos Mes: Febrero 100000.00
+                                            <hr/>
+                                            Ganancias: 20000.00
+                                            <hr/>
+                                            <a class="btn btn-default" href="#" role="button">Ver Detalles &raquo;</a>
+                                        </div>
+                                    </div>
+                            </div>
+                   {% endfor %}
+
           </div><!--/row-->
         </div><!--/.col-xs-12.col-sm-9-->
-      </div><!--/row-->
+         </div><!--/row-->
 
-      <hr>
+         <hr>
+
+
+
 {% endblock %}

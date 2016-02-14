@@ -1,4 +1,4 @@
-{% extends 'base-asesor.html' %}
+{% extends 'base/base-asesor.html' %}
 
  {% block css_add %}
      {% load staticfiles %}
@@ -15,6 +15,10 @@
 		.addClass('table table-striped table-bordered');
 </script>
  {% endblock %}
+{% block sucursal %}
+{{ datos.sucursal }}
+    {{ datos.tipo }}
+{% endblock %}
 
 {% block contenido %}
     <button class="btn btn-primary" data-toggle="modal" data-target="#bd-example-modal-lg">Agregar Nuevo  Cliente</button>
@@ -254,11 +258,6 @@
                                                         </tr>
                                                     {% endif %}
                                             {% endfor %}
-                                            <tr>
-                                                <td>Mano de Obra(Retiro efectivo cajero)</td>
-                                                <td></td>
-                                                <td>-20%</td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

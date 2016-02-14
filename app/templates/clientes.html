@@ -13,11 +13,7 @@
 	</style>
     {% load staticfiles %}
     <script src="{% static 'js/datatables.min.js' %}"></script>
-    <script type="text/javascript" charset="utf-8">
-        $(document).ready(function() {
-            $('#example').DataTable();
-        } );
-    </script>
+
     <script type="text/javascript">
 	// For demo to fit into DataTables site builder...
 	$('#example')
@@ -26,14 +22,47 @@
 </script>
 {% endblock css_add %}
 
+{% block sucursal %}
+    {{ datos.sucursal }}
+    {{ datos.tipo }}
+{% endblock %}
+
 {% block contenido %}
-
-{% for rea in clienta %}
-    {{ rea.nombre }}
-{% endfor %}
-
-
-
+                                            <div class="modal fade" id="paso2" >
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-md-2 col-sm-2"></div>
+                                                            <div class="col-md-5 col-sm-4 " >
+                                                                <div class="text-danger mr"><h4 class="ma">Agrega un nuevo cliente.</h4></div>
+                                                                <form method="post" enctype="multipart/form-data">
+                                                                    {% csrf_token %}
+                                                                    {{ form.cliente.label }}
+                                                                    {{ form.cliente }}
+                                                                    <hr/>
+                                                                    {{ form.ife.label }}
+                                                                    {{ form.ife }}
+                                                                    <hr/>
+                                                                    {{ form.caratula.label }}
+                                                                    {{ form.caratula }}
+                                                                    <hr/>
+                                                                    {{ form.tarjeta_de_mejoravit.label }}
+                                                                    {{ form.tarjeta_de_mejoravit }}
+                                                                    <hr/>
+                                                                    {{ form.credito.label }}
+                                                                    {{ form.credito }}
+                                                                    <div class="divider"></div>
+                                                                    <hr/>
+                                                                    <button type="submit" class="btn btn-success">Guardar</button>
+                                                                    <hr>
+                                                                </form>
+                                                            </div><div class="col-md-4 col-sm-2"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
     <div class="row" data-ng-app="Clientes">
         <div class="table-responsive">
 		    <table class="table table-bordered display" id="example">
@@ -50,60 +79,20 @@
 		        <th>Facturación</th>
                 <th>Comisión</th>
                   <th>Enviar</th>
-                 <th>Acciones</th>
-
+                <td>Acciones</td>
 		      </tr>
 		    </thead>
 		    <tbody >
                     {% for foo in cliente %}
-                    <tr>
-                        <td>{{ foo.id }}</td>
-                        <td>{{ foo.nombre }}{{ foo.apellidos }}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Acciones <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                    <li><a  href="" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar Catla, Ife, TM </a>
-                                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                          <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="container">
-                                                    <div class="row">
-                                                    <div class="col-md-2 col-sm-2"></div>
-                                                    <div class="col-md-5 col-sm-4 " >
-                                                        <div class="text-danger mr"><h4 class="ma">Agrega un nuevo cliente.</h4></div>
-                                                        <form method="post" enctype="multipart/form-data">
-                                                            {% csrf_token %}
-                                                            {{ form.as_p }}
-                                                            <div class="divider"></div>
-                                                            <button type="submit" class="btn btn-success">Guardar</button>
-                                                            <hr>
-                                                        </form>
-                                                    </div><div class="col-md-4 col-sm-2"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                    </li>
-                                    <li><a  href="">Editar</a></li>
-                                    <li><a href="">Eliminar</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                        {% for faa in tarjeta %}
-                            {% if faa.cliente.id == foo.id %}
+                        <tr>
+                            <td>
+                                <input name="ids" type="hidden" id="{{foo.id}}" value="{{ foo.id }}"/>
+                                {{ foo.id }}
+                            </td>
+                            <td>{{ foo.nombre }}{{ foo.apellidos }}</td>
+                            {% if tarjeta %}
+                            {% for faa in tarjeta %}
+                                {% if faa.cliente.id == foo.id %}
                                 <td>
                                     <ul class="nav nav-pills">
                                         <li role="presentation"><a href="{{ MEDIA_URL }}{{ faa.caratula.url }}"  target="_blank">caratula</a></li>
@@ -119,8 +108,6 @@
                                         <li role="presentation"><a href="{{ MEDIA_URL }}{{ faa.ife.url }}"  target="_blank">Ife</a></li>
                                     </ul>
                                 </td>
-
-                        <div data-ng-controller="FacturaController">
                                 <td>
                                     {% for ord1 in orden1 %}
                                         {% if faa.cliente.id == ord1.user.id %}
@@ -133,6 +120,7 @@
                                 </td>
                                 <td>
                                     {% for ord2 in orden2 %}
+                                        Folio:{{ ord2.id }}
                                         {% if faa.cliente.id == ord2.user.id %}
                                             {% if  ord2.orden_compra %}
                                                 Folio:{{ ord2.id }}- <div data-ng-init="ord2={{ ord2.total_amount }}">Monto:{{ ord2.total_amount }}</div>
@@ -152,8 +140,8 @@
                                     <a href="{% url 'odc3' cliente_id=foo.id %}">Ver</a>
                                 </td>
                                 <td data-ng-controller="CalculatorController">
-                                    <button type="button" class="btn btn-primary" data-target="#{{faa.cliente.id}}" data-toggle="modal" data-target=".bd-example-modal-sm"  data-ng-init="montoInicial={{ faa.credito}}" data-ng-click="calculate()">{{ faa.credito }}</button>
-                                    <div class="modal fade bs-example-modal-sm" id="{{faa.cliente.id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                    <button type="button" class="btn btn-primary" data-target="#{{faa.cliente.id}}{{faa.cliente.nss}}" data-toggle="modal" data-ng-init="montoInicial={{ faa.credito}}" data-ng-click="calculate()">{{ faa.credito }}</button>
+                                    <div class="modal fade bs-example-modal-sm" id="{{faa.cliente.id}}{{faa.cliente.nss}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                                       <div class="modal-dialog modal-sm">
                                         <div class="modal-content">
                                             <div class="table-responsive">
@@ -208,26 +196,26 @@
                                     -
                                     {{ faa.comisiona }}
                                 </td>
-                        </div>
                                {#  <td><a href="{% url 'cargar_pdfs'  foo.id %}">Cargar</a></td> #}
                                 <td>
                                     <a href="{% url 'enviar_email' cliente_id=foo.id %}">Enviar</a>
                                 </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                            Acciones <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                            <li><a  href="{% url 'editar_segundo_registro' faa.cliente.pk %}">Editar</a></li>
-                                            <li><a href="{% url 'eliminar_segundo_registro' faa.cliente.pk %}">Eliminar</a></li>
-                                        </ul>
-                                        </div>
-                                </td>
                             {% endif %}
-                        {% endfor %}
-
-                  </tr>
+                            {% endfor %}
+                        {% endif %}
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        Acciones <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                        <li>
+                                            <a  data-toggle="modal" data-target="#paso2" id="boton02">Caratula, IFE y T. Mejoravit</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
                     {% endfor %}
 		    </tbody>
 		 </table>
@@ -245,21 +233,17 @@
 	        		$interpolateProvider.startSymbol('{$');
 	    		    $interpolateProvider.endSymbol('$}');
 	        });
-
      	   	app.controller('CalculatorController',['$scope', function($scope){
                 $scope.montoInicial = {};
 				$scope.calculate = function(){
 					 $scope.manoObra = (parseInt($scope.montoInicial) * 20 /100);
 					 //cobtenemos el  20%
-
 					 $scope.monto1 = ($scope.montoInicial)-(parseInt($scope.montoInicial) * 20 /100);
                     $scope.veinteiva = (parseInt($scope.monto1) * 20 /100);
 					 $scope.iva =  $scope.monto1 - $scope.veinteiva ;
 					 //obtenemos el iva
-
 				}
 			}]);
-
             app.controller('FacturaController',['$scope', function($scope){
                 $scope.ord1 = {};
                 $scope.ord2 = {};
@@ -268,13 +252,18 @@
 					 $scope.ord11 = (parseInt($scope.ord1));
                      $scope.ord22 = (parseInt($scope.ord2));
                     $scope.ord33 = (parseInt($scope.ord3));
-
-
 				}
 			}]);
-
-
-
-
     </script>
+        <script type="text/javascript">
+        $(document).ready(function(){
+            $("#boton02").click(function () {
+                alert("El texto del botón es --> " + $("#boton").attr("value"));
+
+            //saco el valor accediendo a un input de tipo text y name = nombre2 y lo asigno a uno con name = nombre3
+            $("#id_cliente").val($('#id').val());
+
+            });
+        });
+      </script>
 {% endblock %}

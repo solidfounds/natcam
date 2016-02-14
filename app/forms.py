@@ -28,20 +28,13 @@ class PrimerRegistroFORM(ModelForm):
 
         }
 
-class SegundoRegistroForm(ModelForm):
-    class Meta:
-        model = SegundoRegistro
-        fields = ('cliente', 'caratula', 'tarjeta_de_mejoravit','credito', 'ife')
-        widgets={
-            #'cliente': forms.TextInput(attrs={'type':'text','required':'true','class':'form-control form-control-sm col-sm-4'}),
-             'ife': forms.ClearableFileInput(attrs={'type':'file','class':' form-control-sm'}),
-             'caratula': forms.ClearableFileInput(attrs={'type':'file','required':'true','class':'form-control form-control-sm  col-sm-4'}),
-             'tarjeta_de_mejoravit': forms.ClearableFileInput(attrs={'type':'file','class':'form-control form-control-sm  col-sm-4'}),
-             #'numero_tarjeta': forms.TextInput(attrs={'type':'select','required':'true','class':'form-control form-control-sm  col-md-2','placeholder':'ejemplo: 4488-9988-5533-1122', 'max':"9999999999999999"}),
-             'credito': forms.TextInput(attrs={'type':'number','required':'true','class':'form-control form-control-sm  col-md-2','max':"9999999999",'placeholder':'Debe contener puntos decimales: 1500.00'}),
-         }
 
-
+class SegundoRegistroForm(forms.Form):
+    cliente = forms.CharField()
+    ife = forms.FileField()
+    caratula = forms.FileField()
+    tarjeta_de_mejoravit = forms.FileField()
+    credito = forms.IntegerField()
 
 class OrderForm(ModelForm):
     class Meta:

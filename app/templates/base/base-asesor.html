@@ -10,15 +10,13 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Latest compiled and minified CSS -->
     <link href='https://fonts.googleapis.com/css?family=Arimo:700' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Arimo:700' rel='stylesheet' type='text/css'>
     {% load staticfiles %}
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >
     <!-- Optional theme -->
 
     <!-- Latest compiled and minified JavaScript -->
-    {% load staticfiles %}
-
-
 	<style>
         .imagena{
             padding-bottom: 10px;
@@ -88,7 +86,11 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Acciones <span class="caret"></span></a>
               <ul class="dropdown-menu">
                   <li><a href="#">Usuario: {{ request.user}}</a></li>
-                  <li><a href="#">{{ request.sucursal.nombre }}</a></li>
+                  <li><a href="#">Sucursal:
+                        {% block sucursal %}
+                        
+                        {% endblock %}
+                  </a></li>
                   <li role="separator" class="divider"></li>
                   <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesion</a></li>
               </ul>

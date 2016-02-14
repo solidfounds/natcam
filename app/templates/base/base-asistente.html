@@ -82,13 +82,17 @@
 
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url "desempeno" %}">Gastos Oficina</a></li>
+            <li><a href="{% url "gastos_oficina" %}">Gastos Oficina</a></li>
             <li><a href="{% url "desempeno" %}">Mi Desempeño</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Acciones <span class="caret"></span></a>
               <ul class="dropdown-menu">
                   <li><a href="#">Usuario: {{ request.user}}</a></li>
-                  <li><a href="#">{{ request.sucursal.nombre }}</a></li>
+                  <li><a href="#">Sucursal:
+                      {% block sucursal %}
+
+                      {% endblock %}
+                  </a></li>
                   <li role="separator" class="divider"></li>
                   <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesion</a></li>
               </ul>
