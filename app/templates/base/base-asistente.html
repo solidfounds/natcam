@@ -57,6 +57,10 @@
         .navbar-default .navbar-nav>li>a {
                 color: #ffffff;
             }
+        .texto{
+            font-family: 'Arimo', sans-serif;
+            font-size: 10px;
+        }
 	</style>
 	{% block css_add %}
 
@@ -68,18 +72,24 @@
 
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
           <a class="navbar-brand" href="#"><img class="imagena" src="{% static 'img/logo.svg' %}" alt="" height="45px" width="70px"></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="{% url "clientes" %}">Clientes</a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li>
+                <a class="texto" href="#">
+                    {% block sucursal %}
 
+                    {% endblock %}
+                </a>
+
+            </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{% url "gastos_oficina" %}">Gastos Oficina</a></li>
@@ -89,9 +99,7 @@
               <ul class="dropdown-menu">
                   <li><a href="#">Usuario: {{ request.user}}</a></li>
                   <li><a href="#">Sucursal:
-                      {% block sucursal %}
 
-                      {% endblock %}
                   </a></li>
                   <li role="separator" class="divider"></li>
                   <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesion</a></li>

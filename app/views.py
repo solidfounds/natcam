@@ -3,7 +3,8 @@ from django.core.mail import send_mail
 from django.db.models import Q
 from django.db.models import Sum
 from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
-from .forms import PrimerRegistroFORM, SegundoRegistroForm, OrderForm, EmailOdcsForm, CargarPdfsForm
+from .forms import PrimerRegistroFORM, SegundoRegistroForm, OrderForm, EmailOdcsForm, CargarPdfsForm,\
+    PReferenciaForm,  BuscarDiaForm, PRBoleanPagoForm, OdcsPagadasForm
 from django.http import HttpResponseRedirect
 from .models import PrimerRegistro, SegundoRegistro, Productos, ProductOrder, Order, RelacionP
 #from users.models import User
@@ -77,6 +78,7 @@ def desempeno(request):
                                                   'total_clientes': total_clientes,
                                                   'micomision':micomision,
                                                   'micomiscionAsesor':micomiscionAsesor,
+                                                  'datos':datos,
                                                   })
     elif datos.tipo == "2":
         mi_info = User.objects.get(username=usuario)
@@ -88,6 +90,7 @@ def desempeno(request):
                                                   'total_clientes': total_clientes,
                                                   'micomision':micomision,
                                                   'micomiscionAsesor':micomiscionAsesor,
+                                                  'datos':datos,
                                                   #'percepcion': percepcion
                                                   })
 
@@ -323,8 +326,8 @@ def enviar_email(request, cliente_id=None):
             cd = form.cleaned_data
             allorder = [(p.total_amount) for p in Order.objects.filter(user=cliente_id)]
             if len(allorder) == 3:
-                subject = '  recommends you reading '
-                message = 'Cliente Listo \n\n\'s  datos Orden 1:{}\n\n Orden 2:{}\n\n Orden 3: {}\n\n Total:{}  comments: {} '.format(allorder[0], allorder[1], allorder[2], posta['total_amount__sum'], cd['comments'], )
+                subject = '  Mi Casita ordenes de compra + ife + caratula + tarjeta mejoravit '
+                message = 'Cliente Listo \n\n\'s  datos Orden 1:{}\n\n Orden 2:{}\n\n Orden 3: {}\n\n Total:{} \n\n url archivos: {} \n\n comentario: {} '.format(allorder[0], allorder[1], allorder[2], posta['total_amount__sum'],cd['url_archivos'], cd['comments'],)
                 #message.attach('ife')
                 send_mail(subject, message, 'soldiddfouns@gmail.com', [cd['to']])
                 sent = True
@@ -431,25 +434,58 @@ def dia(request, year, month, day):
                                                   })
 
 
-from calendar import HTMLCalendar
-from datetime import date
-from  itertools import groupby
-from  django.utils.html import conditional_escape as esc
-from .forms import BuscarDiaForm
+
 def calendario(request):
-    if request.method == 'POST':
-        form = BuscarDiaForm(request.POST)
-        if form.is_valid():
-             fetch = form.cleaned_data['fecha']
-             year = fetch.year
-             month = fetch.month
-             day = fetch.day
-             return dia(request, year, month, day)
-    else:
-        form = BuscarDiaForm()
     diass = RelacionP.objects.all()
-    return render(request, 'gaeladmin/calendar.html', {'form':form,
-                                                       'diass':diass})
+    if request.method == 'POST':
+        if 'fecha_calendario' in request.POST:
+            form = BuscarDiaForm(request.POST)
+            if form.is_valid():
+                 fetch = form.cleaned_data['fecha']
+                 year = fetch.year
+                 month = fetch.month
+                 day = fetch.day
+                 return dia(request, year, month, day)
+        elif 'referencia_pago' in request.POST:
+            forma = PReferenciaForm(request.POST)
+            if forma.is_valid():
+                client = forma.cleaned_data['cliente']
+                cliente = RelacionP.objects.get(cliente__id =client)
+                cliente.ref_pago = forma.cleaned_data['ref_pago']
+                #cliente.crbd_rpago = forma.cleaned_data['crbd_rpago']
+                cliente.save(update_fields=['ref_pago'])
+                return redirect('calendario')
+        elif 'cheque_cobrado' in request.POST:
+            forma = PRBoleanPagoForm(request.POST)
+            if forma.is_valid():
+                client = forma.cleaned_data['clienteb']
+                cliente = RelacionP.objects.get(cliente__id =client)
+                cliente.crbd_rpago = forma.cleaned_data['crbd_rpago']
+                #cliente.crbd_rpago = forma.cleaned_data['crbd_rpago']
+                cliente.save(update_fields=['crbd_rpago'])
+                return redirect('calendario')
+        elif 'ordenes_pagadas' in request.POST:
+            forma = OdcsPagadasForm(request.POST)
+            if forma.is_valid():
+                client = forma.cleaned_data['clientec']
+                cliente = RelacionP.objects.get(cliente__id =client)
+                if forma.cleaned_data['odc1p'] == True and forma.cleaned_data['odc2p'] ==None and forma.cleaned_data['odc3p'] == None:
+                    cliente.odc1p = forma.cleaned_data['odc1p']
+                    cliente.odc2p = forma.cleaned_data['odc2p']
+                    cliente.odc3p = forma.cleaned_data['odc3p']
+                    cliente.save(update_fields=['odc1p', 'odc2p', 'odc3p'])
+                    return redirect('calendario')
+                elif forma.cleaned_data['odc1p'] == True and forma.cleaned_data['odc2p'] == True and forma.cleaned_data['odc3p'] == True:
+                    pass
+    rform = BuscarDiaForm()
+    refrencia_form = PReferenciaForm()
+    boleanRefePagform = PRBoleanPagoForm()
+    odcsPagadas = OdcsPagadasForm()
+    return render(request, 'gaeladmin/calendar.html', {'form':rform,
+                                                           'diass':diass,
+                                                           'r_form':refrencia_form,
+                                                           'b_rform':boleanRefePagform,
+                                                            'odcs_p':odcsPagadas})
 
 def cargar_pdfs(request, id):
     form = CargarPdfsForm
@@ -458,11 +494,9 @@ def cargar_pdfs(request, id):
 
 def cliente_perfil(request, id):
     obtenerClientePR = PrimerRegistro.objects.get(id=id)
-    #obtenerClienteSR = SegundoRegistro.objects.get()
-    return render(request, 'perfil/peril-cliente.html', {
-                                                    'primer':obtenerClientePR,
-                                                    #'segundo'
-    })
+    obtenerTgts = SegundoRegistro.objects.get(cliente__id = id)
+    return render(request, 'perfil/peril-cliente.html', {'primer':obtenerClientePR,
+                                                         'segundo': obtenerTgts})
 
 def sucursales(request):
     datosusuarios = Datos.objects.all()
@@ -473,7 +507,9 @@ def sucursales(request):
     })
 
 def gastos_oficina(request):
-    return  render(request,'asistente/gastos-oficina.html')
+    usuario = request.user
+    datos = Datos.objects.get(usuario=usuario)
+    return  render(request,'asistente/gastos-oficina.html', {'datos':datos})
 
 def empleado_perfil(request, id):
     obtenerEmpleado = Datos.objects.get(id=id)

@@ -30,7 +30,7 @@ class PrimerRegistroFORM(ModelForm):
 
 
 class SegundoRegistroForm(forms.Form):
-    cliente = forms.CharField()
+    cliente = forms.IntegerField(widget=forms.NumberInput(attrs={'readonly':'readonly'}))
     ife = forms.FileField()
     caratula = forms.FileField()
     tarjeta_de_mejoravit = forms.FileField()
@@ -45,12 +45,28 @@ class OrderForm(ModelForm):
 class EmailOdcsForm(forms.Form):
     to = forms.EmailField(label='Destinatario')
     comments = forms.CharField(label='Comentario',required=False, widget=forms.Textarea)
+    url_archivos = forms.URLField()
     # ord1 = forms.CharField(widget=forms.TextInput(attrs={"type":'hidden', 'value': '{{ foo.total_amount }}'}))
     # ord2 = forms.CharField(widget=forms.TextInput(attrs={"type":'hidden', 'value': '{{foo.total_amount }}'}))
     # ord3 = forms.CharField(widget=forms.TextInput(attrs={}))
 
 class BuscarDiaForm(forms.Form):
     fecha = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+
+class PReferenciaForm(forms.Form):
+    cliente = forms.IntegerField(widget=forms.NumberInput(attrs={'readonly':'readonly'}))
+    ref_pago = forms.CharField(max_length=12)
+
+class PRBoleanPagoForm(forms.Form):
+    clienteb = forms.IntegerField(widget=forms.NumberInput(attrs={'readonly':'readonly'}))
+    crbd_rpago = forms.BooleanField()
+
+class OdcsPagadasForm(forms.Form):
+    clientec = forms.IntegerField(widget=forms.NumberInput(attrs={'readonly':'readonly'}))
+    odc1p = forms.BooleanField()
+    odc2p = forms.BooleanField()
+    odc3p = forms.BooleanField()
+
 
 # class RelacionPFprm(ModelForm):
 #     class Meta:

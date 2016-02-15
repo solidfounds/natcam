@@ -122,16 +122,20 @@ class ProductOrder(models.Model):
 
 class RelacionP(models.Model):
     fecha = models.DateTimeField(default=timezone.now)
-    cliente = models.ForeignKey(PrimerRegistro, null=True)
+    cliente = models.OneToOneField(PrimerRegistro, null=True,)
     odc1 = models.PositiveIntegerField()
+    odc1p = models.BooleanField(default=False)
     odc2 = models.PositiveIntegerField(null=True, blank=True)
+    odc2p = models.BooleanField(default=False)
     odc3 = models.PositiveIntegerField(null=True, blank=True)
+    odc3p = models.BooleanField(default=False)
     pag_clie = models.PositiveIntegerField()
     p_asesor = models.PositiveIntegerField()
     comision = models.PositiveIntegerField()
     com_t = models.PositiveIntegerField()
     asesor = models.ForeignKey(User, null=True)
-    ref_pago = models.CharField('Referencia de Pago',max_length=20, null=True)
+    ref_pago = models.CharField('Referencia de Pago',max_length=20, null=True, blank=True)
+    crbd_rpago = models.BooleanField(default=False)
     importe = models.DecimalField('Importe',max_digits=7, decimal_places=2, null=True)
 
     # def __str__(self):

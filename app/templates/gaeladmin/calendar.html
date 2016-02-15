@@ -1,107 +1,255 @@
 {% extends 'base/base-gael.html' %}
 {% block css_add %}
     {% load staticfiles %}
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script>
-        $('.dropdown-toggle').dropdown();
-    </script>
+    <style>
+        .None span{
+            display: none;
+        }
+    .None:after{
+        content: "Falta A.";
+    }
+    .False{
+        background-color: #e51c23 ;
+    }
+        .True{
+        background-color: #4caf50;
+        color: black;
+    }
+    td#noMostrar{
+        display: none;
+    }
+
+    </style>
+
 
 
 {% endblock %}
 {% block contenido %}
-    <form action="" method="post">
+    <button class="btn btn-danger"></button>
+    <div class="modal fade" id="paso2" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2">
+                        </div>
+                        <div class="col-md-5 col-sm-4 " >
+                            <div class="text-danger mr"><h4 class="ma">Agrega Referencia de Pago.</h4>
+                            </div>
+                                <form method="post"  role="form" >
+                                     {% csrf_token %}
+                                    {{ r_form.cliente.label }} id:
+                                    {{ r_form.cliente }}
+                                    <hr/>
+                                    {{ r_form.ref_pago.label }}
+                                    {{ r_form.ref_pago }}
+                                    <hr/>
+                                    <button type="submit" class="btn btn-success" name="referencia_pago">Guardar</button>
+                                    <hr>
+                                </form>
+                        </div>
+                        <div class="col-md-4 col-sm-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="paso3" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2">
+                        </div>
+                        <div class="col-md-5 col-sm-4 " >
+                            <div class="text-danger mr"><h4 class="ma">Agrega Referencia de Pago.</h4>
+                            </div>
+                                <form method="post"  role="form" >
+                                     {% csrf_token %}
+                                    {{ b_rform.clienteb.label }} id:
+                                    {{ b_rform.clienteb }}
+                                    <hr/>
+                                    cheque cobrado
+                                    {{ b_rform.crbd_rpago }}
+                                    <hr/>
+                                    <button type="submit" class="btn btn-success" name="cheque_cobrado">Guardar</button>
+                                    <hr>
+                                </form>
+                        </div>
+                        <div class="col-md-4 col-sm-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="paso4" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2">
+                        </div>
+                        <div class="col-md-5 col-sm-4 " >
+                            <div class="text-danger mr"><h4 class="ma">Agrega Ordenes de Compra Ya Pagadas.</h4>
+                            </div>
+                                <form method="post"  role="form" >
+                                     {% csrf_token %}
+                                    {{ odcs_p.clientec.label }}
+                                    {{ odcs_p.clientec }}
+                                    <hr/>
+                                    {{ odcs_p.odc1p.label }}
+                                    {{ odcs_p.odc1p }}
+                                    <hr/>
+                                    {{ odcs_p.odc2p.label }}
+                                    {{ odcs_p.odc2p }}
+                                    <hr/>
+                                    {{ odcs_p.odc3p.label }}
+                                    {{ odcs_p.odc3p }}
+                                    <hr/>
+                                    <button type="submit" class="btn btn-success" name="ordenes_pagadas">Guardar</button>
+                                    <hr>
+                                </form>
+                        </div>
+                        <div class="col-md-4 col-sm-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form action="" method="post" >
         {% csrf_token %}
           <div class="form-group">
             {{ form.as_p }}
           </div>
-        <input class="btn btn-success btn-lg btn-block" type="submit"/>
+        <input class="btn btn-success btn-lg btn-block" type="submit" name="fecha_calendario"/>
+        <hr/>
     </form>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-              <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
-                  <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                      Sucursal Toluca 1
-                    </a>
-                  </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                  <div class="panel-body">
-                    <table class="table">
-                     <thead>
-                      <tr>
-                         <th>Cliente</th>
-                         <th>Compra 1</th>
-                          <th>Compra 2</th>
-                          <th>Compra 3</th>
-                          <th>Pago Cliente</th>
-                          <th>% Asesor</th>
-                          <th>Comisión</th>
-                          <th>Com. Total</th>
-                          <th>Asesor</th>
-                          <th>Ref. Pago</th>
-                          <th>Importe</th>
-                          <th>Asignar R. Pago</th>
-                      </tr>
+                    <table class="table" id="example">
+                        <thead>
+                          <tr>
+                             <th>Cliente</th>
+                             <th>Compra 1</th>
+                              <th>Compra 2</th>
+                              <th>Compra 3</th>
+                              <th>Facturación</th>
+                              <th>% Asesor</th>
+                              <th>Comisión</th>
+                              <th>Com. Total</th>
+                              <th>Asesor</th>
+                              <th>Ref. Pago</th>
+                              <th>Importe</th>
+                              <th>Asignar R. Pago</th>
+                          </tr>
                      </thead>
                         <tbody>
-                 {% for foo in diass  %}
+                            {% for foo in diass  %}
                      <tr>
-                         <td><a href="{% url 'cliente_perfil' id=foo.id %}">{{ foo.cliente }}{{ foo.cliente.apellidos }}</a></td>
-                         <td>{{ foo.odc1 }}</td>
-                         <td>{{ foo.odc2  }}</td>
-                         <td>{{ foo.odc3 }}</td>
-                         <td>{{ foo.pag_clie }}</td>
-                         <td>{{ foo.p_asesor }}</td>
-                         <td>{{ foo.comision }}</td>
-                         <td>{{ foo.com_t }}</td>
+                         <td><a href="{% url 'cliente_perfil' id=foo.id%}" >  <button  class="btn btn-success">{{ foo.cliente }} {{ foo.cliente.apellidos }}</button></a></td>
+                         <td class="{{ foo.odc1p }}">{{ foo.odc1 }}.00</td>
+                         <td class="{{ foo.odc2p }}">{{ foo.odc2  }}.00</td>
+                         <td class="{{ foo.odc3p }}">{{ foo.odc3 }}.00</td>
+                         <td>{{ foo.pag_clie }}.00</td>
+                         <td>{{ foo.p_asesor }}.00</td>
+                         <td>{{ foo.comision }}.00</td>
+                         <td>{{ foo.com_t }}.00</td>
                          <td>{{ foo.asesor }}</td>
-                         <td>{{ foo.ref_pago }}</td>
+                         <td class="{{ foo.ref_pago }} {{ foo.crbd_rpago }}"> <span>{{ foo.ref_pago }}</span></td>
                          <td>{{ foo.importe }}</td>
                          <td>
                             <div class="dropdown">
                               <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                Dropdown
+                                Asignar
                                 <span class="caret"></span>
                               </button>
                               <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
+                                  <li>
+                                      <a  data-toggle="modal" data-target="#paso2" id="boton02">
+                                          <button id="{{foo.cliente.id}}" value="{{foo.cliente.id }}" class="btn btn-success boton_perfil">Asignar
+                                          </button>
+                                      </a>
+                                  </li>
+                                  <li>
+                                      <a  data-toggle="modal" data-target="#paso3" id="boton03">
+                                          <button id="{{foo.cliente.id }}" value="{{foo.cliente.id }}" class="btn btn-success boton_perfib">cheque Cobrado
+                                          </button>
+                                      </a>
+                                  </li>
+                                  <li>
+                                      <a  data-toggle="modal" data-target="#paso4" id="boton04">
+                                          <button id="{{foo.cliente.id }}" value="{{foo.cliente.id }}" class="btn btn-success boton_perfic">odcs pagadas
+                                          </button>
+                                      </a>
+                                  </li>
                               </ul>
                             </div>
                          </td>
                      </tr>
                  {% endfor %}
-             </tbody>
-                     <tfoot>
-                  <tr>
-                     <th>Cliente</th>
-                     <th>Compra 1</th>
-                      <th>Compra 2</th>
-                      <th>Compra 3</th>
-                      <th>Pago Cliente</th>
-                      <th>% Asesor</th>
-                      <th>Comisión</th>
-                      <th>Com. Total</th>
-                      <th>Asesor</th>
-                      <th>Ref. Pago</th>
-                      <th>Importe</th>
-                      <th>Asignar R. Pago</th>
-                  </tr>
-                </tfoot>
-            </table>
-                  </div>
-                </div>
-              </div>
+                        </tbody>
+                        <tfoot>
+                            <tr class="totalColumn" >
+                                <td><span >Cliente</span></td>
+                                <td>Compra 1</td>
+                                <td>Compra 2</td>
+                                <td>Compra 3</td>
+                                <td>Pago Cliente</td>
+                                <td>% Asesor</td>
+                                <td>Comisión</td>
+                                <td>Com. Total</td>
+                                <td> <span id="noMostrar">Asesor</span> </td>
+                                <td > <span id="noMostrar"></span>Ref. Pago</td>
+                                <td>Importe</td>
+                                <td id="noMostrar">Asignar R. Pago</td>
+                            </tr>
+                        </tfoot>
+                    </table>
             </div>
         </div>
-        </div>
     </div>
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#example').DataTable();
+            var $theButtons = $(".boton_perfil");
+            var $theinput = $("#id_cliente");
+            $theButtons.click(function(){
+               $theinput.val(this.value);
+            });
+
+            var $theButtonsb = $(".boton_perfib");
+            var $theinputb = $("#id_clienteb");
+            $theButtonsb.click(function(){
+               $theinputb.val(this.value);
+            });
+
+            var $theButtonsc = $(".boton_perfic");
+            var $theinputc = $("#id_clientec");
+            $theButtonsc.click(function(){
+               $theinputc.val(this.value);
+            });
+
+            $('table thead th').each(function(i) {
+                calculateColumn(i);
+            });
+        });
+        function calculateColumn(index) {
+            var total = 0;
+            $('table tr').each(function () {
+                var value = parseInt($('td', this).eq(index).text());
+                if (!isNaN(value)) {
+                    total += value;
+                }
+            });
+            $('table tfoot td').eq(index).text('Total: ' + total);
+        }
+
+
+    </script>
+    <script>
+
+    </script>
 
 {% endblock %}

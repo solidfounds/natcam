@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base/base-asistente.html' %}
 {% block contenido %}
 
     <table class="table">
@@ -36,6 +36,10 @@
             <div>
                 {{ form.to.label_tag }}
                 {{ form.to }}
+            </div>
+            <div>
+                {{ form.url_archivos.label_tag }}
+                {{ form.url_archivos }}
             </div>
             <div>
                 {{ form.comments.label_tag }}

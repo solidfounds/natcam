@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base/base-gael.html" %}
 {% block contenido %}
     <div class="container">
       <div class="row">
@@ -47,9 +47,9 @@
                     </tbody>
                   </table>
                   <ul class="nav nav-pills">
-                    <li role="presentation"><a href="{{ MEDIA_URL }}{{ primer.ife.url }}">Ife</a></li>
-                      <li role="presentation" ><a href="#">Tarjeta Mejoravit</a></li>
-                      <li role="presentation" ><a href="#">Caratula</a></li>
+                    <li role="presentation"><a href="{{ MEDIA_URL }}{{ segundo.ife.url }}">Ife</a></li>
+                      <li role="presentation" ><a href="{{ MEDIA_URL }}{{ segundo.tarjeta_de_mejoravit.url }}">Tarjeta Mejoravit</a></li>
+                      <li role="presentation" ><a href="{{ MEDIA_URL }}{{ segundo.caratula.url }}">Caratula</a></li>
                   </ul>
                 </div>
               </div>

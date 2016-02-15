@@ -14,7 +14,10 @@
 	</style>
 		
 	{% endblock css_add %}
-
+{% block sucursal %}
+    {{ datos.sucursal }}
+    {{ datos.get_tipo_display }}
+{% endblock %}
 {% block contenido %}
     <div class="container">
 	            <div class="row">

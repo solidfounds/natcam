@@ -24,11 +24,11 @@
 
 {% block sucursal %}
     {{ datos.sucursal }}
-    {{ datos.tipo }}
+    {{ datos.get_tipo_display }}
 {% endblock %}
 
 {% block contenido %}
-                                            <div class="modal fade" id="paso2" >
+    <div class="modal fade" id="paso2" >
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="container">
@@ -210,7 +210,11 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                         <li>
-                                            <a  data-toggle="modal" data-target="#paso2" id="boton02">Caratula, IFE y T. Mejoravit</a>
+                                            <a  data-toggle="modal" data-target="#paso2" id="boton02">
+                                                <button id="{{ foo.id }}" value="{{ foo.id }}" class="btn btn-sucess boton_perfil">Caratula, IFE y T. Mejoravit
+                                                </button>
+
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>
@@ -257,13 +261,13 @@
     </script>
         <script type="text/javascript">
         $(document).ready(function(){
-            $("#boton02").click(function () {
-                alert("El texto del botón es --> " + $("#boton").attr("value"));
 
-            //saco el valor accediendo a un input de tipo text y name = nombre2 y lo asigno a uno con name = nombre3
-            $("#id_cliente").val($('#id').val());
-
+            var $theButtons = $(".boton_perfil");
+            var $theinput = $("#id_cliente");
+            $theButtons.click(function(){
+               $theinput.val(this.value);
             });
+
         });
       </script>
 {% endblock %}
