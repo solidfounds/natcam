@@ -11,6 +11,8 @@ class CusursalAdmin(admin.ModelAdmin):
 
 @admin.register(Datos)
 class DatosAdmin(admin.ModelAdmin):
+    list_display = ('id','usuario','tipo', 'sucursal')
+    filter = ('tipo')
     pass
 
 @admin.register(GatosSucursal)

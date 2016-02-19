@@ -42,16 +42,15 @@ def clientes(request):
         form = SegundoRegistroForm()
     datos = Datos.objects.get(usuario=usuario)
     sucursa = datos.sucursal
-    asesores = Datos.objects.filter(sucursal=sucursa)
-    for ase in asesores:
-        cliente = PrimerRegistro.objects.filter(operador__username__contains=ase)
-        tarjeta = SegundoRegistro.objects.filter(operador__username__contains=ase)
-        ordenes = Order.objects.filter(operador__username__contains=ase)
-        orden1 = Order.objects.filter(Q(orden_compra="1") & Q(operador__username__contains=ase))
-        orden2 = Order.objects.filter(Q(orden_compra="2") & Q(operador__username__contains=ase))
-        orden3 = Order.objects.filter(Q(orden_compra="3") & Q(operador__username__contains=ase))
-        odcs = Order.objects.filter(Q(operador__username__contains=usuario))
-        return render(request, 'clientes.html', {
+    asesore = Datos.objects.filter(sucursal=sucursa ).filter(tipo =1)
+    cliente = PrimerRegistro.objects.filter(operador__id__in=asesore)
+    tarjeta = SegundoRegistro.objects.filter(operador__id__in=asesore)
+    ordenes = Order.objects.filter(operador__username__contains=asesore)
+    orden1 = Order.objects.filter(Q(orden_compra="1") & Q(operador__id__in=asesore))
+    orden2 = Order.objects.filter(Q(orden_compra="2") & Q(operador__id__in=asesore))
+    orden3 = Order.objects.filter(Q(orden_compra="3") & Q(operador__id__in=asesore))
+    odcs = Order.objects.filter(Q(operador__username__contains=usuario))
+    return render(request, 'clientes.html', {
             'cliente': cliente,
             'tarjeta': tarjeta,
             'ordenes': ordenes,
@@ -126,12 +125,14 @@ def desempeno(request):
 #@login_required(login_url='/')
 def primerRegistro(request):
     operadort = request.user
-    datos = Datos.objects.get(usuario = operadort)
+    datos = Datos.objects.get(usuario__username= operadort)
 
     if datos.tipo == "1":
         sucursal = datos.sucursal
-        sacar_asesor = Datos.objects.get(Q(tipo = '2')& Q(sucursal=sucursal))
-        odcs = Order.objects.filter(Q(operador__username__contains=sacar_asesor.usuario))
+        sacar_asesor = Datos.objects.get(Q(tipo = "1")& Q(sucursal=sucursal) &Q(usuario=operadort))
+        asistente = Datos.objects.get(Q(tipo = "2") & Q(sucursal=sucursal) )
+
+        odcs = Order.objects.filter(operador__id=asistente.id)
         ordenes = Order.objects.filter(operador__username__contains=operadort)
         orden1 = Order.objects.filter(Q(orden_compra="1") & Q(operador=sacar_asesor.usuario ))
         orden2 = Order.objects.filter(Q(orden_compra="2") & Q(operador=sacar_asesor.usuario))
@@ -606,7 +607,7 @@ def sucursal_unica(request, pk):
 def gastos_oficina(request):
     usuario = request.user
     datos = Datos.objects.get(usuario=usuario)
-    sucursal = datos.sucursal
+    sucursal = datos.sucursal.id
 
     if request.method == 'POST':
         form = GatosSucursalForm(request.POST)
@@ -615,12 +616,15 @@ def gastos_oficina(request):
             gasto.sucursal =sucursal
             gasto.save()
             return redirect('gastos_oficina')
-
+    datosusuarios = Datos.objects.filter(sucursal=sucursal)
+    datossucursales = Sucursal.objects.filter(id=sucursal)
     form = GatosSucursalForm()
     gs = GatosSucursal.objects.filter(sucursal=sucursal)
     return  render(request,'asistente/gastos-oficina.html', {'datos':datos,
                                                              'form':form,
-                                                             'gs':gs})
+                                                             'gs':gs,
+                                                             'datosusuarios':datosusuarios,
+                                                             'datossucursal':datossucursales})
 
 def empleado_perfil(request, id):
     obtenerEmpleado = Datos.objects.get(id=id)

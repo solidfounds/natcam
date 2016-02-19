@@ -85,6 +85,8 @@
 		    </thead>
 		    <tbody >
                     {% for foo in cliente %}
+                            {{ foo.comision }}
+
                         <tr>
                             <td>
                                 <input name="ids" type="hidden" id="{{foo.id}}" value="{{ foo.id }}"/>

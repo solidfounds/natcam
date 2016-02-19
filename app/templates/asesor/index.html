@@ -64,6 +64,11 @@
                     <div class="col-sm-6">{{ form.colonia_fraccionamiento }}
                     {{ form.colonia_o_fraccionamiento.errors }}</div>
                   </div>
+                        <div class="form-group  row">
+                    <label class="col-sm-2 form-control-label">Email::</label>
+                    <div class="col-sm-6">{{ form.email }}
+                    {{ form.email.errors }}</div>
+                  </div>
                   <div class="form-group  row">
                     <label class="col-sm-2 form-control-label">Municipio o Delegación:</label>
                     <div class="col-sm-6">{{ form.municipio_delegacion }}
@@ -229,7 +234,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for odc  in odcs %}
+                                            {% for odc  in odcs%}
                                                 {% if mi_cliente.id == odc.user.id %}
                                                     <tr data-ng-controller="FacturaController">
                                                         {% if odc.orden_compra == "1" %}

@@ -63,9 +63,7 @@
     </div>
     <hr/>
     <hr/>
-{% for g in gs %}
 
-{% endfor %}
 
 
    <div class="row">
@@ -92,6 +90,19 @@
         chart.draw(data, options);
       }
     </script>
+
+
+
+    {% for fea in datossucursal %}
+                {{ fea.nombre }}
+
+        {% for datosusuario in datosusuarios %}
+            {{ datosusuario.usuario }}
+        {% endfor %}
+
+
+    {% endfor %}
+
 
 {% endblock %}
 {% block javascript %}
