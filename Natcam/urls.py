@@ -50,7 +50,8 @@ urlpatterns = [
     url(r'^cargar_pds/(?P<id>\d+)', views.cargar_pdfs, name='cargar_pdfs'),
     url(r'^cliente/perfil/(?P<id>\d+)', views.cliente_perfil, name='cliente_perfil'),
     url(r'^gael/admin/(?P<id>\d+)', views.empleado_perfil, name='empleado_perfil'),
-    url(r'^gael/admin/sucursales', views.sucursales, name='sucursales'),
+    url(r'^gael/admin/sucursales/', views.sucursales, name='sucursales'),
+    url(r'^gael/admin/sucursal/(?P<pk>\d+)', views.sucursal_unica, name='sucursal_unica'),
     url(r'^gael/admin/comisiones', views.comisiones_admingael, name='comisiones_admingael'),
 
     #asistente

@@ -590,11 +590,19 @@ def cliente_perfil(request, id):
 def sucursales(request):
     datosusuarios = Datos.objects.all()
     sucursales = Sucursal.objects.all()
-    return render(request, 'gaeladmin/sucursales.html', {
+    return render(request, 'gaeladmin/sucursales/sucursales.html', {
                                                         'datos':datosusuarios,
                                                         'sucursales': sucursales,
     })
-
+#sucursal personalizada
+def sucursal_unica(request, pk):
+    sucsl = Sucursal.objects.get(id = pk)
+    suc = sucsl.id
+    gs = GatosSucursal.objects.filter(sucursal__id = suc)
+    datos = Datos.objects.filter(sucursal__id = suc)
+    return render(request, 'gaeladmin/sucursales/sucursal-unica.html', {'sucsl': sucsl,
+                                                                        'gs': gs,
+                                                                        'datos':datos,})
 def gastos_oficina(request):
     usuario = request.user
     datos = Datos.objects.get(usuario=usuario)

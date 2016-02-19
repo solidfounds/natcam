@@ -89,7 +89,7 @@ body{
                                                             <tr>
                                                               <th><h5><strong>Nombre del Empleado</strong></h5></th>
                                                               <th><h5><strong>Perfil</strong></h5></th>
-                                                            </tr>
+                                                                                                                                                                                                                                                                            </tr>
                                                           </thead>
 
                                                           {% for dato in datos %}
@@ -156,14 +156,13 @@ body{
                                             </div>
                                              <hr>
                                              <!-- Modal -->
-
                                             Ingresos Mes: Febrero 120000.00
                                             <hr/>
                                             Egresos Mes: Febrero 100000.00
                                             <hr/>
                                             Ganancias: 20000.00
                                             <hr/>
-                                            <a class="btn btn-default" href="#" role="button">Ver Detalles &raquo;</a>
+                                            <a class="btn btn-default" href="{% url 'sucursal_unica' sucursal.id %}" role="button">Ver Detalles &raquo;</a>
                                         </div>
                                     </div>
                             </div>

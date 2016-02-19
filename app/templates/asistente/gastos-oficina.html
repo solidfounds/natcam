@@ -78,10 +78,9 @@
         var data = google.visualization.arrayToDataTable([
           ['Mes', 'Agua', 'Luz', 'Telefono', 'Renta', 'Varios'],
           {% for g in gs %}
-            ['{{ g.fecha.month }}', {{ g.agua|default_if_none:'000' }}, {{ g.luz|default_if_none:'000' }},{{ g.telefono }} ,{{ g.renta }}, {{ g.varios }}],
+            ['{{ g.fecha }}', {{ g.agua|default_if_none:'000' }}, {{ g.luz|default_if_none:'000' }},{{ g.telefono }} ,{{ g.renta }}, {{ g.varios }}],
           {% endfor %}
         ]);
-
         var options = {
           chart: {
             title: 'Egresos Sucursal',
