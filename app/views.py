@@ -129,14 +129,8 @@ def primerRegistro(request):
 
     if datos.tipo == "1":
         sucursal = datos.sucursal
-        sacar_asesor = Datos.objects.get(Q(tipo = "1")& Q(sucursal=sucursal) &Q(usuario=operadort))
         asistente = Datos.objects.get(Q(tipo = "2") & Q(sucursal=sucursal) )
-
         odcs = Order.objects.filter(operador__id=asistente.id)
-        ordenes = Order.objects.filter(operador__username__contains=operadort)
-        orden1 = Order.objects.filter(Q(orden_compra="1") & Q(operador=sacar_asesor.usuario ))
-        orden2 = Order.objects.filter(Q(orden_compra="2") & Q(operador=sacar_asesor.usuario))
-        orden3 = Order.objects.filter(Q(orden_compra="3") & Q(operador=sacar_asesor.usuario))
         datos = Datos.objects.get(usuario = operadort)
         if request.method == 'POST':
             form = PrimerRegistroFORM(request.POST, request.FILES)
@@ -152,9 +146,6 @@ def primerRegistro(request):
                                               'form': form,
                                               'mis_clientes': mis_clientes,
                                               'odcs': odcs,
-                                              'orden1':orden1,
-                                              'orden2':orden2,
-                                              'orden3':orden3,
                                                'datos':datos })
     elif datos.tipo == "2":
         return redirect('clientes')
@@ -625,7 +616,6 @@ def gastos_oficina(request):
                                                              'gs':gs,
                                                              'datosusuarios':datosusuarios,
                                                              'datossucursal':datossucursales})
-
 def empleado_perfil(request, id):
     obtenerEmpleado = Datos.objects.get(id=id)
     return render(request, 'perfil/perfil-empleado.html',{'primer':obtenerEmpleado,})
