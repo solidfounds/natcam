@@ -5,14 +5,7 @@
 
 
 	{% block css_add %}
-    {% load staticfiles %}
-    <script src="{% static 'js/datatables.min.js' %}"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('#example').DataTable();
-        });
-    </script>
 	<style>
 	.color{
 		background-color: #e74c3c;
@@ -38,7 +31,145 @@
 
 {% block contenido %}
     <div class="container">
-        <table class="table" id="example">
+        <button id='hideshow' value='show/hide' class="btn btn-danger">Abrir meses</button>
+        <div class="row">
+            <div class="col-md-10"></div>
+            <div class="col-md-2">Mes: </div>
+        </div>
+        <div class="row">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="display: none">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              2016
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default" value="2016-02-01">Febrero</button>
+              <button type="button" class="btn btn-default" value="2016-03-01">Marzo</button>
+              <button type="button" class="btn btn-default" value="2016-04-01">Abril</button>
+              <button type="button" class="btn btn-default" value="2016-05-01">Mayo</button>
+              <button type="button" class="btn btn-default" value="2016-06-01">Junio</button>
+              <button type="button" class="btn btn-default" value="2016-07-01">Julio</button>
+              <button type="button" class="btn btn-default" value="2016-08-01">Agosto</button>
+              <button type="button" class="btn btn-default" value="2016-09-01">Semptiembre</button>
+              <button type="button" class="btn btn-default" value="2016-10-01">Octubre</button>
+              <button type="button" class="btn btn-default" value="2016-11-01">Noviembre</button>
+              <button type="button" class="btn btn-default" value="2016-12-01">Diciembre</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              2017
+            </a>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+              <button type="button" class="btn btn-default" value="2017-01-01">Enero</button>
+              <button type="button" class="btn btn-default" value="2017-02-01">Febrero</button>
+              <button type="button" class="btn btn-default" value="2017-03-01">Marzo</button>
+              <button type="button" class="btn btn-default" value="2017-04-01">Abril</button>
+              <button type="button" class="btn btn-default" value="2017-05-01">Mayo</button>
+              <button type="button" class="btn btn-default" value="2017-06-01">Junio</button>
+              <button type="button" class="btn btn-default" value="2017-07-01">Julio</button>
+              <button type="button" class="btn btn-default" value="2017-08-01">Agosto</button>
+              <button type="button" class="btn btn-default" value="2017-09-01">Semptiembre</button>
+              <button type="button" class="btn btn-default" value="2017-10-01">Octubre</button>
+              <button type="button" class="btn btn-default" value="2017-11-01">Noviembre</button>
+              <button type="button" class="btn btn-default" value="2017-12-01">Diciembre</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            2018
+            </a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+              <button type="button" class="btn btn-default" value="2018-01-01">Enero</button>
+              <button type="button" class="btn btn-default" value="2018-02-01">Febrero</button>
+              <button type="button" class="btn btn-default" value="2018-03-01">Marzo</button>
+              <button type="button" class="btn btn-default" value="2018-04-01">Abril</button>
+              <button type="button" class="btn btn-default" value="2018-05-01">Mayo</button>
+              <button type="button" class="btn btn-default" value="2018-06-01">Junio</button>
+              <button type="button" class="btn btn-default" value="2018-06-01">Julio</button>
+              <button type="button" class="btn btn-default" value="2018-08-01">Agosto</button>
+              <button type="button" class="btn btn-default" value="2018-09-01">Semptiembre</button>
+              <button type="button" class="btn btn-default" value="2018-10-01">Octubre</button>
+              <button type="button" class="btn btn-default" value="2018-11-01">Noviembre</button>
+              <button type="button" class="btn btn-default" value="2018-12-01">Diciembre</button>
+          </div>
+        </div>
+      </div>
+        <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+            2019
+            </a>
+          </h4>
+        </div>
+        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+          <div class="panel-body">
+              <button type="button" class="btn btn-default" value="2019-01-01">aEnero</button>
+              <button type="button" class="btn btn-default" value="2019-02-01">Febrero</button>
+              <button type="button" class="btn btn-default" value="2019-03-01">Marzo</button>
+              <button type="button" class="btn btn-default" value="2019-04-01">Abril</button>
+              <button type="button" class="btn btn-default" value="2019-05-01">Mayo</button>
+              <button type="button" class="btn btn-default" value="2019-06-01">Junio</button>
+              <button type="button" class="btn btn-default" value="2019-07-01">Julio</button>
+              <button type="button" class="btn btn-default" value="2019-08-01">Agosto</button>
+              <button type="button" class="btn btn-default" value="2019-09-01">Semptiembre</button>
+              <button type="button" class="btn btn-default" value="2019-10-01">Octubre</button>
+              <button type="button" class="btn btn-default" value="2019-11-01">Noviembre</button>
+              <button type="button" class="btn btn-default" value="2019-12-01">Diciembre</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingFive">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
+            2020
+            </a>
+          </h4>
+        </div>
+        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+          <div class="panel-body">
+              <button type="button" class="btn btn-default" value="2020-01-01">Enero</button>
+              <button type="button" class="btn btn-default" value="2020-02-01">Febrero</button>
+              <button type="button" class="btn btn-default" value="2020-03-01">Marzo</button>
+              <button type="button" class="btn btn-default" value="2020-04-01">Abril</button>
+              <button type="button" class="btn btn-default" value="2020-05-01">Mayo</button>
+              <button type="button" class="btn btn-default" value="2020-06-01">Junio</button>
+              <button type="button" class="btn btn-default" value="2020-07-01">Julio</button>
+              <button type="button" class="btn btn-default" value="2020-08-01">Agosto</button>
+              <button type="button" class="btn btn-default" value="2020-09-01">Semptiembre</button>
+              <button type="button" class="btn btn-default" value="2020-10-01">Octubre</button>
+              <button type="button" class="btn btn-default" value="2020-11-01">Noviembre</button>
+              <button type="button" class="btn btn-default" value="2020-12-01">Diciembre</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        </div>
+
+
+        <table class="table" >
              <thead>
               <tr>
                  <th>Fecha</th>
@@ -67,30 +198,1325 @@
              </tfoot>
              <tbody>
                 {% for rp_c in rp_comisiones %}
-
-                    <tr>
-                        <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
-                        <td>{{ rp_c.asesor }}</td>
-                        <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
-                        <td>{{ rp_c.p_asesor }}</td>
-                        <td>{{ rp_c.comision }}</td>
-                        <td>- 100.00</td>
-                        <td>{{ rp_c.com_t}}</td>
-                    </tr>
-
+                    {% if rp_c.fecha.day == 31 %}
+                        <tr>
+                            <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                            <td>{{ rp_c.asesor }}</td>
+                            <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                            <td>{{ rp_c.p_asesor }}</td>
+                            <td>{{ rp_c.comision }}</td>
+                            <td>- 100.00</td>
+                            <td>{{ rp_c.com_t}}</td>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
-
-
              </tbody>
             </table>
+        <table class="table">
+             <thead>
+              <tr>
+                 <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                 <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </thead>
+             <tfoot>
+              <tr>
+                  <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                  <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </tfoot>
+             <tbody>
+                {% for rp_c in rp_comisiones %}
+                    {% if rp_c.fecha.day == 30 %}
+                        <tr>
+                            <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                            <td>{{ rp_c.asesor }}</td>
+                            <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                            <td>{{ rp_c.p_asesor }}</td>
+                            <td>{{ rp_c.comision }}</td>
+                            <td>- 100.00</td>
+                            <td>{{ rp_c.com_t}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+             </tbody>
+            </table>
+        <table class="table">
+             <thead>
+              <tr>
+                 <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                 <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </thead>
+             <tfoot>
+              <tr>
+                  <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                  <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </tfoot>
+             <tbody>
+                {% for rp_c in rp_comisiones %}
+                    {% if rp_c.fecha.day == 29 %}
+                        <tr>
+                            <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                            <td>{{ rp_c.asesor }}</td>
+                            <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                            <td>{{ rp_c.p_asesor }}</td>
+                            <td>{{ rp_c.comision }}</td>
+                            <td>- 100.00</td>
+                            <td>{{ rp_c.com_t}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+             </tbody>
+            </table>
+        <table class="table">
+             <thead>
+              <tr>
+                 <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                 <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </thead>
+             <tfoot>
+              <tr>
+                  <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                  <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </tfoot>
+             <tbody>
+                {% for rp_c in rp_comisiones %}
+                    {% if rp_c.fecha.day == 28 %}
+                        <tr>
+                            <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                            <td>{{ rp_c.asesor }}</td>
+                            <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                            <td>{{ rp_c.p_asesor }}</td>
+                            <td>{{ rp_c.comision }}</td>
+                            <td>- 100.00</td>
+                            <td>{{ rp_c.com_t}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+             </tbody>
+            </table>
+        <table class="table">
+             <thead>
+              <tr>
+                 <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                 <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </thead>
+             <tfoot>
+              <tr>
+                  <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                  <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </tfoot>
+             <tbody>
+                {% for rp_c in rp_comisiones %}
+                    {% if rp_c.fecha.day == 27 %}
+                        <tr>
+                            <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                            <td>{{ rp_c.asesor }}</td>
+                            <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                            <td>{{ rp_c.p_asesor }}</td>
+                            <td>{{ rp_c.comision }}</td>
+                            <td>- 100.00</td>
+                            <td>{{ rp_c.com_t}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+             </tbody>
+            </table>
+        <table class="table">
+             <thead>
+              <tr>
+                 <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                 <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </thead>
+             <tfoot>
+              <tr>
+                  <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                  <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </tfoot>
+             <tbody>
+                {% for rp_c in rp_comisiones %}
+                    {% if rp_c.fecha.day == 26 %}
+                        <tr>
+                            <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                            <td>{{ rp_c.asesor }}</td>
+                            <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                            <td>{{ rp_c.p_asesor }}</td>
+                            <td>{{ rp_c.comision }}</td>
+                            <td>- 100.00</td>
+                            <td>{{ rp_c.com_t}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+             </tbody>
+            </table>
+        <table class="table">
+             <thead>
+              <tr>
+                 <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                 <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </thead>
+             <tfoot>
+              <tr>
+                  <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                  <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </tfoot>
+             <tbody>
+                {% for rp_c in rp_comisiones %}
+                    {% if rp_c.fecha.day == 25 %}
+                        <tr>
+                            <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                            <td>{{ rp_c.asesor }}</td>
+                            <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                            <td>{{ rp_c.p_asesor }}</td>
+                            <td>{{ rp_c.comision }}</td>
+                            <td>- 100.00</td>
+                            <td>{{ rp_c.com_t}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+             </tbody>
+            </table>
+        <table class="table">
+             <thead>
+              <tr>
+                 <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                 <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </thead>
+             <tfoot>
+              <tr>
+                  <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                  <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </tfoot>
+             <tbody>
+                {% for rp_c in rp_comisiones %}
+                    {% if rp_c.fecha.day == 24 %}
+                        <tr>
+                            <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                            <td>{{ rp_c.asesor }}</td>
+                            <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                            <td>{{ rp_c.p_asesor }}</td>
+                            <td>{{ rp_c.comision }}</td>
+                            <td>- 100.00</td>
+                            <td>{{ rp_c.com_t}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+             </tbody>
+            </table>
+        <table class="table">
+             <thead>
+              <tr>
+                 <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                 <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </thead>
+             <tfoot>
+              <tr>
+                  <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                  <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </tfoot>
+             <tbody>
+                {% for rp_c in rp_comisiones %}
+                    {% if rp_c.fecha.day == 23 %}
+                        <tr>
+                            <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                            <td>{{ rp_c.asesor }}</td>
+                            <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                            <td>{{ rp_c.p_asesor }}</td>
+                            <td>{{ rp_c.comision }}</td>
+                            <td>- 100.00</td>
+                            <td>{{ rp_c.com_t}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+             </tbody>
+            </table>
+        <table class="table">
+             <thead>
+              <tr>
+                 <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                 <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </thead>
+             <tfoot>
+              <tr>
+                  <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                  <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </tfoot>
+             <tbody>
+                {% for rp_c in rp_comisiones %}
+                    {% if rp_c.fecha.day == 22 %}
+                        <tr>
+                            <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                            <td>{{ rp_c.asesor }}</td>
+                            <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                            <td>{{ rp_c.p_asesor }}</td>
+                            <td>{{ rp_c.comision }}</td>
+                            <td>- 100.00</td>
+                            <td>{{ rp_c.com_t}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+             </tbody>
+            </table>
+        <table class="table">
+             <thead>
+              <tr>
+                 <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                 <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </thead>
+             <tfoot>
+              <tr>
+                  <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                  <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </tfoot>
+             <tbody>
+                {% for rp_c in rp_comisiones %}
+                    {% if rp_c.fecha.day == 21 %}
+                        <tr>
+                            <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                            <td>{{ rp_c.asesor }}</td>
+                            <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                            <td>{{ rp_c.p_asesor }}</td>
+                            <td>{{ rp_c.comision }}</td>
+                            <td>- 100.00</td>
+                            <td>{{ rp_c.com_t}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+             </tbody>
+            </table>
+        <table class="table">
+             <thead>
+              <tr>
+                 <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                 <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </thead>
+             <tfoot>
+              <tr>
+                  <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                  <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </tfoot>
+             <tbody>
+                {% for rp_c in rp_comisiones %}
+                    {% if rp_c.fecha.day == 20 %}
+                        <tr>
+                            <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                            <td>{{ rp_c.asesor }}</td>
+                            <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                            <td>{{ rp_c.p_asesor }}</td>
+                            <td>{{ rp_c.comision }}</td>
+                            <td>- 100.00</td>
+                            <td>{{ rp_c.com_t}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+             </tbody>
+            </table>
+        <table class="table">
+             <thead>
+              <tr>
+                 <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                 <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </thead>
+             <tfoot>
+              <tr>
+                  <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                  <th>Baucheo</th>
+                 <th>Total</th>
+                  <th></th>
+                  <th></th>
+              </tr>
+             </tfoot>
+             <tbody>
+                {% for rp_c in rp_comisiones %}
+                    {% if rp_c.fecha.day == 19 %}
+                        <tr>
+                            <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                            <td>{{ rp_c.asesor }}</td>
+                            <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                            <td>{{ rp_c.p_asesor }}</td>
+                            <td>{{ rp_c.comision }}</td>
+                            <td>- 100.00</td>
+                            <td>{{ rp_c.com_t}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+             </tbody>
+            </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 18 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 17 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 16 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 15 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 14 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 13 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 12 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 11 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 10 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 9 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 8 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 7 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 6 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 5%}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 4 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 3 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 2 %}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+        <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                     <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </thead>
+                 <tfoot>
+                  <tr>
+                      <th>Fecha</th>
+                     <th>Asesor</th>
+                      <th>Cliente</th>
+                     <th>%comision</th>
+                     <th>Comision</th>
+                      <th>Baucheo</th>
+                     <th>Total</th>
+                      <th></th>
+                      <th></th>
+                  </tr>
+                 </tfoot>
+                 <tbody>
+                    {% for rp_c in rp_comisiones %}
+                        {% if rp_c.fecha.day == 1%}
+                            <tr>
+                                <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
+                                <td>{{ rp_c.asesor }}</td>
+                                <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                                <td>{{ rp_c.p_asesor }}</td>
+                                <td>{{ rp_c.comision }}</td>
+                                <td>- 100.00</td>
+                                <td>{{ rp_c.com_t}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                 </tbody>
+                </table>
+
     </div>
 
 
-
-
-
+    {% load staticfiles %}
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#hideshow').on('click', function (event) {
+                $('#accordion').toggle('hide');
+            })
+        })
+    </script>
                 <!-- /.row -->
 {% endblock contenido %}
 {% block javascript %}
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 {% endblock %}
