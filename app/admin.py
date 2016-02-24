@@ -35,4 +35,4 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(RelacionP)
 class RelacionP(admin.ModelAdmin):
-    list_display = ('id','fecha', 'odc1', 'odc2', 'odc3', )
+    list_display = ('id','fecha', 'odc1', 'odc2', 'odc3','asesor', 'cliente' )

@@ -56,6 +56,7 @@ urlpatterns = [
 
     #asistente
     url(r'^gastos_oficina/', views.gastos_oficina, name='gastos_oficina'),
+    url(r'^ver_resumencom/fecha/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$', views.ver_resumencom, name='ver_resumencom'),
 ]
 
 

@@ -154,7 +154,8 @@ class RelacionP(models.Model):
     #     return self.fecha
     def get_absolute_url(self):
         return reverse('post_detail', args=[self.fecha.year,
-                                                 self.fecha.strftime('%m')])
+                                                 self.fecha.strftime('%m'),
+                                                 self.fecha.strftime('%d'),])
 
 class CargarPdfs(models.Model):
     cliente = models.ForeignKey(PrimerRegistro)

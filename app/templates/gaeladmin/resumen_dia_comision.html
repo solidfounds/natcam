@@ -1,0 +1,133 @@
+
+{% extends "base/base-gael.html" %}
+
+
+
+
+	{% block css_add %}
+
+	<style>
+	.color{
+		background-color: #e74c3c;
+		font-size: 4rem;
+	}
+	.numero{
+		text-align: center;
+		color: #fff;
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	.huge{
+		font-size: 2rem;
+	}
+	.panel{
+		background-color: #e74c3c;
+		color: #fff;
+        text-align: left;
+	}
+	</style>
+
+	{% endblock css_add %}
+
+{% block contenido %}
+
+        <table class="table" id="diescinueve">
+             <thead>
+              <tr>
+                 <th>Fecha</th>
+                 <th>Asesor</th>
+                  <th>Cliente</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                 <th>Baucheo</th>
+                 <th>Total</th>
+
+                  <th></th>
+              </tr>
+             </thead>
+
+             <tbody>
+                {% for rp_c in diass %}
+                        <a href="">    </a>
+                        <tr>
+                            <td>{{ rp_c.fecha|date:"Y/m/d" }}</td>
+                            <td class="{{ rp_c.asesor }}">{{ rp_c.asesor }}</td>
+                            <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
+                            <td>{{ rp_c.p_asesor }}</td>
+                            <td>{{ rp_c.comision }}</td>
+                            <td>100</td>
+                            <td>{{ rp_c.com_t}}</td>
+                        </tr>
+                {% endfor %}
+             </tbody>
+            <tfoot>
+                <tr class="totalColumn" >
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+            </table>
+{#{{ asesores }}#}
+
+
+{{ sumar_tot_ase.com_t__sum }} {{ sumar_tot_ase }}
+
+    {% for foo in sumar_tot_ase %}
+        {{ foo.asesor }}
+    {% endfor %}
+
+
+
+
+    {% for fa in sumar_tot_ase1.all %}
+        {% if fa.asesor  == fa.asesor%}
+            {{ fa.asesor }}{{ fa.com_t }}
+        {% endif %}
+    {% endfor %}
+
+    <hr/>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Asesor</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fi in asesoressd %}
+                <tr>
+                    <td>
+                        {{ fi.asesor }}
+                    </td>
+                    <td>
+                          {{ fi.total.com_t__sum }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+
+
+    {% load staticfiles %}
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#hideshow').on('click', function (event) {
+                $('#accordion').toggle('hide');
+            })
+        })
+
+    </script>
+                <!-- /.row -->
+{% endblock contenido %}
+{% block javascript %}
+
+{% endblock %}

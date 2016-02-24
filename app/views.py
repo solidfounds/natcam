@@ -4,7 +4,7 @@ import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -621,5 +621,53 @@ def empleado_perfil(request, id):
     return render(request, 'perfil/perfil-empleado.html',{'primer':obtenerEmpleado,})
 
 def comisiones_admingael(request):
+    if request.method == 'POST':
+        if 'fecha_calendario' in request.POST:
+            form = BuscarDiaForm(request.POST)
+            if form.is_valid():
+                 fetch = form.cleaned_data['fecha']
+                 year = fetch.year
+                 month = fetch.month
+                 return dia(request, year, month)
     rp_comisiones = RelacionP.objects.all()
-    return render(request, 'gaeladmin/comisiones-gael.html',{ 'rp_comisiones':rp_comisiones,})
+    rform = BuscarDiaForm()
+    hoy = datetime.date.today()
+    mes_actual = hoy.month
+    return render(request, 'gaeladmin/comisiones-gael.html',{
+                                            'mes_actual': mes_actual,
+                                            'rp_comisiones':rp_comisiones,
+                                            'form':rform,})
+
+def ver_resumencom(request,year, month, day):
+    sacar_asesor_db=get_list_or_404(RelacionP, fecha__year=2016,
+                                        fecha__month=2,
+                                        fecha__day=23,)
+
+    sacar_asesor = RelacionP.objects.filter(fecha__year=2016,
+                                        fecha__month=2,
+                                        fecha__day=23,)
+    asesoress = []
+    for asesor in sacar_asesor:
+        asesoress.append((asesor.asesor))
+
+    asesoressd = []
+    for asesord in sacar_asesor:
+        asesoressd.append({
+                    'asesor': asesord.asesor,
+                    'total': RelacionP.objects.filter(Q(asesor__username =asesord.asesor) & Q(fecha__year=2016,
+                                        fecha__month=2,
+                                        fecha__day=23,)).aggregate(Sum('com_t')),
+                         })
+
+    sumar_tot_ase = RelacionP.objects.filter(Q(asesor__username__in =asesoress) & Q(fecha__year=2016,
+                                        fecha__month=2,
+                                        fecha__day=23,)).aggregate(Sum('com_t'))
+    sumar_tot_ase1 = RelacionP.objects.filter(Q(asesor__username__in =asesoress) & Q(fecha__year=2016,
+                                        fecha__month=2,
+                                        fecha__day=23,))
+
+    return render(request, 'gaeladmin/resumen_dia_comision.html', {'diass': sacar_asesor,
+                                                                   'sumar_tot_ase':sumar_tot_ase,
+                                                                   'sumar_tot_ase1':sumar_tot_ase1,
+                                                                    'asesoressd':asesoressd  ,
+                                                                   })

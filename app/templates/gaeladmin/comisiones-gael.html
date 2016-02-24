@@ -30,14 +30,43 @@
 	{% endblock css_add %}
 
 {% block contenido %}
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Comisiontes Totales</h4>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary">Guardar Cambios</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container">
+            <div class="row">
+    <div class="col-md-5"></div>
+    <div class="col-md-2">
+        <form action="" method="post" >
+        {% csrf_token %}
+                {{ form.as_p }}
+                <input class="btn btn-success" type="submit" name="fecha_calendario"/>
+        </form>
+    </div>
+    <div class="col-md-5"></div>
+    </div>
         <button id='hideshow' value='show/hide' class="btn btn-danger">Abrir meses</button>
         <div class="row">
             <div class="col-md-10"></div>
-            <div class="col-md-2">Mes: </div>
+            <div class="col-md-2">Mes: {{ mes_actual }}</div>
         </div>
         <div class="row">
-                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="display: none">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="display: none">
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
           <h4 class="panel-title">
@@ -165,11 +194,10 @@
         </div>
       </div>
     </div>
-
         </div>
 
 
-        <table class="table" >
+        <table class="table" id="table1" >
              <thead>
               <tr>
                  <th>Fecha</th>
@@ -179,23 +207,15 @@
                  <th>Comision</th>
                  <th>Baucheo</th>
                  <th>Total</th>
-                  <th></th>
+                  <th>
+                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                          ver  resumen
+                      </button>
+                  </th>
                   <th></th>
               </tr>
              </thead>
-             <tfoot>
-              <tr>
-                  <th>Fecha</th>
-                 <th>Asesor</th>
-                  <th>Cliente</th>
-                 <th>%comision</th>
-                 <th>Comision</th>
-                  <th>Baucheo</th>
-                 <th>Total</th>
-                  <th></th>
-                  <th></th>
-              </tr>
-             </tfoot>
+
              <tbody>
                 {% for rp_c in rp_comisiones %}
                     {% if rp_c.fecha.day == 31 %}
@@ -205,7 +225,7 @@
                             <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
                             <td>{{ rp_c.p_asesor }}</td>
                             <td>{{ rp_c.comision }}</td>
-                            <td>- 100.00</td>
+                            <td>100.00</td>
                             <td>{{ rp_c.com_t}}</td>
                         </tr>
                     {% endif %}
@@ -222,23 +242,15 @@
                  <th>Comision</th>
                  <th>Baucheo</th>
                  <th>Total</th>
-                  <th></th>
+                  <th>
+                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                          ver  resumen
+                      </button>
+                  </th>
                   <th></th>
               </tr>
              </thead>
-             <tfoot>
-              <tr>
-                  <th>Fecha</th>
-                 <th>Asesor</th>
-                  <th>Cliente</th>
-                 <th>%comision</th>
-                 <th>Comision</th>
-                  <th>Baucheo</th>
-                 <th>Total</th>
-                  <th></th>
-                  <th></th>
-              </tr>
-             </tfoot>
+
              <tbody>
                 {% for rp_c in rp_comisiones %}
                     {% if rp_c.fecha.day == 30 %}
@@ -255,7 +267,7 @@
                 {% endfor %}
              </tbody>
             </table>
-        <table class="table">
+        <table class="table" id="diescinueve">
              <thead>
               <tr>
                  <th>Fecha</th>
@@ -265,38 +277,40 @@
                  <th>Comision</th>
                  <th>Baucheo</th>
                  <th>Total</th>
-                  <th></th>
+
                   <th></th>
               </tr>
              </thead>
-             <tfoot>
-              <tr>
-                  <th>Fecha</th>
-                 <th>Asesor</th>
-                  <th>Cliente</th>
-                 <th>%comision</th>
-                 <th>Comision</th>
-                  <th>Baucheo</th>
-                 <th>Total</th>
-                  <th></th>
-                  <th></th>
-              </tr>
-             </tfoot>
+
              <tbody>
                 {% for rp_c in rp_comisiones %}
                     {% if rp_c.fecha.day == 29 %}
+                        <a href="">    </a>
                         <tr>
-                            <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
-                            <td>{{ rp_c.asesor }}</td>
+                            <td>{{ rp_c.fecha|date:"Y/m/d" }}</td>
+                            <td class="{{ rp_c.asesor }}">{{ rp_c.asesor }}</td>
                             <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
                             <td>{{ rp_c.p_asesor }}</td>
                             <td>{{ rp_c.comision }}</td>
-                            <td>- 100.00</td>
+                            <td>100</td>
                             <td>{{ rp_c.com_t}}</td>
+
                         </tr>
                     {% endif %}
                 {% endfor %}
              </tbody>
+            <tfoot>
+                <tr class="totalColumn" >
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+            </tfoot>
             </table>
         <table class="table">
              <thead>
@@ -308,23 +322,10 @@
                  <th>Comision</th>
                  <th>Baucheo</th>
                  <th>Total</th>
-                  <th></th>
+                  <th>ver resumen</th>
                   <th></th>
               </tr>
              </thead>
-             <tfoot>
-              <tr>
-                  <th>Fecha</th>
-                 <th>Asesor</th>
-                  <th>Cliente</th>
-                 <th>%comision</th>
-                 <th>Comision</th>
-                  <th>Baucheo</th>
-                 <th>Total</th>
-                  <th></th>
-                  <th></th>
-              </tr>
-             </tfoot>
              <tbody>
                 {% for rp_c in rp_comisiones %}
                     {% if rp_c.fecha.day == 28 %}
@@ -336,10 +337,17 @@
                             <td>{{ rp_c.comision }}</td>
                             <td>- 100.00</td>
                             <td>{{ rp_c.com_t}}</td>
+                            <td><a href="{% url 'ver_resumencom' %}">
+                                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                                        ver  resumen
+                                    </button>
+                                </a>
+                            </td>
                         </tr>
                     {% endif %}
                 {% endfor %}
              </tbody>
+
             </table>
         <table class="table">
              <thead>
@@ -351,23 +359,15 @@
                  <th>Comision</th>
                  <th>Baucheo</th>
                  <th>Total</th>
-                  <th></th>
+                  <th>
+                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                          ver  resumen
+                      </button>
+                  </th>
                   <th></th>
               </tr>
              </thead>
-             <tfoot>
-              <tr>
-                  <th>Fecha</th>
-                 <th>Asesor</th>
-                  <th>Cliente</th>
-                 <th>%comision</th>
-                 <th>Comision</th>
-                  <th>Baucheo</th>
-                 <th>Total</th>
-                  <th></th>
-                  <th></th>
-              </tr>
-             </tfoot>
+
              <tbody>
                 {% for rp_c in rp_comisiones %}
                     {% if rp_c.fecha.day == 27 %}
@@ -394,23 +394,15 @@
                  <th>Comision</th>
                  <th>Baucheo</th>
                  <th>Total</th>
-                  <th></th>
+                  <th>
+                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                          ver  resumen
+                      </button>
+                  </th>
                   <th></th>
               </tr>
              </thead>
-             <tfoot>
-              <tr>
-                  <th>Fecha</th>
-                 <th>Asesor</th>
-                  <th>Cliente</th>
-                 <th>%comision</th>
-                 <th>Comision</th>
-                  <th>Baucheo</th>
-                 <th>Total</th>
-                  <th></th>
-                  <th></th>
-              </tr>
-             </tfoot>
+
              <tbody>
                 {% for rp_c in rp_comisiones %}
                     {% if rp_c.fecha.day == 26 %}
@@ -437,23 +429,15 @@
                  <th>Comision</th>
                  <th>Baucheo</th>
                  <th>Total</th>
-                  <th></th>
+                  <th>
+                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                          ver  resumen
+                      </button>
+                  </th>
                   <th></th>
               </tr>
              </thead>
-             <tfoot>
-              <tr>
-                  <th>Fecha</th>
-                 <th>Asesor</th>
-                  <th>Cliente</th>
-                 <th>%comision</th>
-                 <th>Comision</th>
-                  <th>Baucheo</th>
-                 <th>Total</th>
-                  <th></th>
-                  <th></th>
-              </tr>
-             </tfoot>
+
              <tbody>
                 {% for rp_c in rp_comisiones %}
                     {% if rp_c.fecha.day == 25 %}
@@ -480,23 +464,14 @@
                  <th>Comision</th>
                  <th>Baucheo</th>
                  <th>Total</th>
-                  <th></th>
+                  <th>
+                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                          ver  resumen
+                      </button>
+                  </th>
                   <th></th>
               </tr>
              </thead>
-             <tfoot>
-              <tr>
-                  <th>Fecha</th>
-                 <th>Asesor</th>
-                  <th>Cliente</th>
-                 <th>%comision</th>
-                 <th>Comision</th>
-                  <th>Baucheo</th>
-                 <th>Total</th>
-                  <th></th>
-                  <th></th>
-              </tr>
-             </tfoot>
              <tbody>
                 {% for rp_c in rp_comisiones %}
                     {% if rp_c.fecha.day == 24 %}
@@ -523,23 +498,14 @@
                  <th>Comision</th>
                  <th>Baucheo</th>
                  <th>Total</th>
-                  <th></th>
+                  <th>
+                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                          ver  resumen
+                      </button>
+                  </th>
                   <th></th>
               </tr>
              </thead>
-             <tfoot>
-              <tr>
-                  <th>Fecha</th>
-                 <th>Asesor</th>
-                  <th>Cliente</th>
-                 <th>%comision</th>
-                 <th>Comision</th>
-                  <th>Baucheo</th>
-                 <th>Total</th>
-                  <th></th>
-                  <th></th>
-              </tr>
-             </tfoot>
              <tbody>
                 {% for rp_c in rp_comisiones %}
                     {% if rp_c.fecha.day == 23 %}
@@ -566,23 +532,14 @@
                  <th>Comision</th>
                  <th>Baucheo</th>
                  <th>Total</th>
-                  <th></th>
+                  <th>
+                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                          ver  resumen
+                      </button>
+                  </th>
                   <th></th>
               </tr>
              </thead>
-             <tfoot>
-              <tr>
-                  <th>Fecha</th>
-                 <th>Asesor</th>
-                  <th>Cliente</th>
-                 <th>%comision</th>
-                 <th>Comision</th>
-                  <th>Baucheo</th>
-                 <th>Total</th>
-                  <th></th>
-                  <th></th>
-              </tr>
-             </tfoot>
              <tbody>
                 {% for rp_c in rp_comisiones %}
                     {% if rp_c.fecha.day == 22 %}
@@ -609,23 +566,14 @@
                  <th>Comision</th>
                  <th>Baucheo</th>
                  <th>Total</th>
-                  <th></th>
+                  <th>
+                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                          ver  resumen
+                      </button>
+                  </th>
                   <th></th>
               </tr>
              </thead>
-             <tfoot>
-              <tr>
-                  <th>Fecha</th>
-                 <th>Asesor</th>
-                  <th>Cliente</th>
-                 <th>%comision</th>
-                 <th>Comision</th>
-                  <th>Baucheo</th>
-                 <th>Total</th>
-                  <th></th>
-                  <th></th>
-              </tr>
-             </tfoot>
              <tbody>
                 {% for rp_c in rp_comisiones %}
                     {% if rp_c.fecha.day == 21 %}
@@ -652,23 +600,14 @@
                  <th>Comision</th>
                  <th>Baucheo</th>
                  <th>Total</th>
-                  <th></th>
+                  <th>
+                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                          ver  resumen
+                      </button>
+                  </th>
                   <th></th>
               </tr>
              </thead>
-             <tfoot>
-              <tr>
-                  <th>Fecha</th>
-                 <th>Asesor</th>
-                  <th>Cliente</th>
-                 <th>%comision</th>
-                 <th>Comision</th>
-                  <th>Baucheo</th>
-                 <th>Total</th>
-                  <th></th>
-                  <th></th>
-              </tr>
-             </tfoot>
              <tbody>
                 {% for rp_c in rp_comisiones %}
                     {% if rp_c.fecha.day == 20 %}
@@ -695,23 +634,14 @@
                  <th>Comision</th>
                  <th>Baucheo</th>
                  <th>Total</th>
-                  <th></th>
+                  <th>
+                      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                          ver  resumen
+                      </button>
+                  </th>
                   <th></th>
               </tr>
              </thead>
-             <tfoot>
-              <tr>
-                  <th>Fecha</th>
-                 <th>Asesor</th>
-                  <th>Cliente</th>
-                 <th>%comision</th>
-                 <th>Comision</th>
-                  <th>Baucheo</th>
-                 <th>Total</th>
-                  <th></th>
-                  <th></th>
-              </tr>
-             </tfoot>
              <tbody>
                 {% for rp_c in rp_comisiones %}
                     {% if rp_c.fecha.day == 19 %}
@@ -738,23 +668,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 18 %}
@@ -781,23 +702,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 17 %}
@@ -824,23 +736,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 16 %}
@@ -867,23 +770,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 15 %}
@@ -910,23 +804,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 14 %}
@@ -953,23 +838,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 13 %}
@@ -996,23 +872,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 12 %}
@@ -1039,23 +906,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 11 %}
@@ -1082,23 +940,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 10 %}
@@ -1125,23 +974,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 9 %}
@@ -1168,23 +1008,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 8 %}
@@ -1211,23 +1042,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 7 %}
@@ -1254,23 +1076,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 6 %}
@@ -1297,23 +1110,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 5%}
@@ -1340,23 +1144,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 4 %}
@@ -1383,23 +1178,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 3 %}
@@ -1426,23 +1212,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 2 %}
@@ -1469,23 +1246,14 @@
                      <th>Comision</th>
                      <th>Baucheo</th>
                      <th>Total</th>
-                      <th></th>
+                      <th>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            ver  resumen
+                          </button>
+                      </th>
                       <th></th>
                   </tr>
                  </thead>
-                 <tfoot>
-                  <tr>
-                      <th>Fecha</th>
-                     <th>Asesor</th>
-                      <th>Cliente</th>
-                     <th>%comision</th>
-                     <th>Comision</th>
-                      <th>Baucheo</th>
-                     <th>Total</th>
-                      <th></th>
-                      <th></th>
-                  </tr>
-                 </tfoot>
                  <tbody>
                     {% for rp_c in rp_comisiones %}
                         {% if rp_c.fecha.day == 1%}
@@ -1502,7 +1270,6 @@
                     {% endfor %}
                  </tbody>
                 </table>
-
     </div>
 
 
@@ -1513,7 +1280,48 @@
             $('#hideshow').on('click', function (event) {
                 $('#accordion').toggle('hide');
             })
+            var $theButtons = $(".boton_perfil");
+            var $theinput = $("#id_cliente");
+            $theButtons.click(function(){
+               $theinput.val(this.value);
+            });
+
+            var $theButtonsb = $(".boton_perfib");
+            var $theinputb = $("#id_clienteb");
+            $theButtonsb.click(function(){
+               $theinputb.val(this.value);
+            });
+
+            var $theButtonsc = $(".boton_perfic");
+            var $theinputc = $("#id_clientec");
+            $theButtonsc.click(function(){
+               $theinputc.val(this.value);
+            });
+            var $theButtonsd = $(".btn-default");
+            var $theinputd = $("#id_fecha");
+            $theButtonsd.click(function(){
+               $theinputd.val(this.value);
+            });
+
+            $('#diescinueve thead th').each(function(i) {
+                calculateColumn(i);
+            });
+
+            $(".valedor2").mouseenter(function(){
+                var a = $(this).text();
+                window.alert(a);
+            });
         })
+        function calculateColumn(index) {
+            var total = 0;
+            $('#diescinueve  tr').each(function () {
+                var value = parseInt($('td', this).eq(index).text());
+                if (!isNaN(value)) {
+                    total += value;
+                }
+            });
+            $('table tfoot td').eq(index).text('Total: ' + total);
+        }
     </script>
                 <!-- /.row -->
 {% endblock contenido %}
