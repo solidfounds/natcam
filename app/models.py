@@ -156,6 +156,19 @@ class RelacionP(models.Model):
         return reverse('post_detail', args=[self.fecha.year,
                                                  self.fecha.strftime('%m'),
                                                  self.fecha.strftime('%d'),])
+    def __str__(self):
+        return self.cliente.nombre
+
+
+class ComisionAsesor(models.Model):
+    operacion = models.ForeignKey(RelacionP)
+    comision_t = models.PositiveIntegerField()
+    ref_p = models.CharField("Referencia de Pago", max_length=20)
+    crdb_rpago = models.BooleanField("Cheque Cobrado")
+
+
+
+
 
 class CargarPdfs(models.Model):
     cliente = models.ForeignKey(PrimerRegistro)
@@ -163,3 +176,4 @@ class CargarPdfs(models.Model):
     odc2 = models.FileField(upload_to='cargarpdfs/', blank=True, null=True)
     odc3 = models.FileField(upload_to='cargarpdfs/', blank=True, null=True)
     operador = models.ForeignKey(User)
+

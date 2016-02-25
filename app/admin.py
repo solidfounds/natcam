@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  PrimerRegistro,SegundoRegistro, Productos, Order, ProductOrder, RelacionP
+from .models import  PrimerRegistro,SegundoRegistro, Productos, Order, ProductOrder, RelacionP, ComisionAsesor
 
 
 @admin.register(Productos)
@@ -36,3 +36,7 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(RelacionP)
 class RelacionP(admin.ModelAdmin):
     list_display = ('id','fecha', 'odc1', 'odc2', 'odc3','asesor', 'cliente' )
+
+@admin.register(ComisionAsesor)
+class CimisionAsesorAdmin(admin.ModelAdmin):
+    list_display = ('operacion', 'comision_t', 'crdb_rpago')

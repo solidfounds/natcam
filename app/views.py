@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 
 from .forms import PrimerRegistroFORM, SegundoRegistroForm, OrderForm, EmailOdcsForm, CargarPdfsForm,\
     PReferenciaForm,  BuscarDiaForm, PRBoleanPagoForm, OdcsPagadasForm
-from .models import PrimerRegistro, SegundoRegistro, Productos, ProductOrder, Order, RelacionP
+from .models import PrimerRegistro, SegundoRegistro, Productos, ProductOrder, Order, RelacionP, ComisionAsesor
 from usuarios.models import Datos, Sucursal, GatosSucursal
 from usuarios.forms import GatosSucursalForm
 
