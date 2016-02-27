@@ -63,7 +63,7 @@
         <button id='hideshow' value='show/hide' class="btn btn-danger">Abrir meses</button>
         <div class="row">
             <div class="col-md-10"></div>
-            <div class="col-md-2">Mes: {{ mes_actual }}</div>
+            <div class="col-md-2">Mes: {{ mes }}</div>
         </div>
         <div class="row">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="display: none">
@@ -217,7 +217,7 @@
                 {% for rp_c in rp_comisiones %}
                     {% if rp_c.fecha.day == 31 %}
                         <tr>
-                            <td>{{ rp_c.fecha|date:"Y/m/d" }}</td>
+                            <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
                             <td>{{ rp_c.asesor }}</td>
                             <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
                             <td>{{ rp_c.p_asesor }}</td>
@@ -248,7 +248,7 @@
                 {% for rp_c in rp_comisiones %}
                     {% if rp_c.fecha.day == 30 %}
                         <tr>
-                            <td>{{ rp_c.fecha|date:"Y/m/d" }}</td>
+                            <td></td>
                             <td>{{ rp_c.asesor }}</td>
                             <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
                             <td>{{ rp_c.p_asesor }}</td>
@@ -482,6 +482,7 @@
                  <th>Comision</th>
                  <th>Baucheo</th>
                  <th>Total</th>
+
                   <th></th>
               </tr>
              </thead>

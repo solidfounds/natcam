@@ -38,5 +38,5 @@ class RelacionP(admin.ModelAdmin):
     list_display = ('id','fecha', 'odc1', 'odc2', 'odc3','asesor', 'cliente' )
 
 @admin.register(ComisionAsesor)
-class CimisionAsesorAdmin(admin.ModelAdmin):
-    list_display = ('operacion', 'comision_t', 'crdb_rpago')
+class ComisionAsesorAdmin(admin.ModelAdmin):
+    list_display = ('id', 'asesor','comision_t','ref_p' ,'crdb_rpago')

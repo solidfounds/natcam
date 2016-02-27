@@ -77,3 +77,11 @@ class CargarPdfsForm(ModelForm):
     class Meta:
         model = CargarPdfs
         fields = ('odc1', 'odc2', 'odc3')
+
+class CReferenciaForm(forms.Form):
+    asesor = forms.IntegerField(widget=forms.NumberInput(attrs={'readonly':'readonly'}))
+    ref_p = forms.CharField(max_length=12)
+
+class CReferenciaBoolForm(forms.Form):
+    asesorb = forms.IntegerField(widget=forms.NumberInput(attrs={'readonly':'readonly'}))
+    crdb_rpago = forms.BooleanField(initial=False)

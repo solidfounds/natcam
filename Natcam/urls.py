@@ -22,6 +22,12 @@ from app import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
       url(r'^home', views.primerRegistro, name='agregar_clientes'),
+
+    #ASESOR
+
+
+
+    #ASISTENTE
     url(r'^editar/primer_registro/(?P<pk>\d+)', views.PrimerRegistroEdit, name='editar_primer_registro'),
     url(r'^eliminar/(?P<pk>\d+)$', views.PrimerRegistroDelete, name='eliminar_primer_registro'),
     url(r'^clientes/', views.clientes, name='clientes'),
@@ -30,14 +36,12 @@ urlpatterns = [
     url(r'^$', 'django.contrib.auth.views.login', name='login'),
     url(r'^account/', include('usuarios.urls')),
 
-    #url(r'^$', userlogin.as_view(), name='login'),
-    #url(r'^$', 'users.views.userlogin', name='login'),
-    #url(r'^salir/$', 'users.views.LogOut', name='logout'),
+
     url(r'^odc1/(?P<cliente_id>\d+)/', views.orden_compra1, name='odc1'),
     url(r'^odc2/(?P<cliente_id>\d+)/', views.orden_compra2, name='odc2'),
     url(r'^odc3/(?P<cliente_id>\d+)/', views.orden_compra3, name='odc3'),
     url(r'^segundo_registro/$', views.segundoRegistro, name='segundo_registro'),
-    # url(r'^detail/(?P<object_id>\d+)/$', 'products.views.detail_view', name='detail_view'),
+
 
     url(r'^editar/segundo_registro/(?P<pk>\d+)', views.SegundoRegistroEdit, name='editar_segundo_registro'),
     url(r'^eliminar/(?P<pk>\d+)$', views.SegundoRegistroDelete, name='eliminar_segundo_registro'),
@@ -51,8 +55,8 @@ urlpatterns = [
     url(r'^cliente/perfil/(?P<id>\d+)', views.cliente_perfil, name='cliente_perfil'),
     url(r'^gael/admin/(?P<id>\d+)', views.empleado_perfil, name='empleado_perfil'),
     url(r'^gael/admin/sucursales/', views.sucursales, name='sucursales'),
-    url(r'^gael/admin/sucursal/(?P<pk>\d+)', views.sucursal_unica, name='sucursal_unica'),
-    url(r'^gael/admin/comisiones', views.comisiones_admingael, name='comisiones_admingael'),
+    url(r'^gael/admin/sucursal/(?P<pk>\d+)/$', views.sucursal_unica, name='sucursal_unica'),
+    url(r'^gael/admin/comisiones/$', views.comisiones_admingael, name='comisiones_admingael'),
 
     #asistente
     url(r'^gastos_oficina/', views.gastos_oficina, name='gastos_oficina'),

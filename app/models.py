@@ -161,13 +161,11 @@ class RelacionP(models.Model):
 
 
 class ComisionAsesor(models.Model):
-    operacion = models.ForeignKey(RelacionP)
+    asesor = models.ForeignKey(User, null=True)
     comision_t = models.PositiveIntegerField()
-    ref_p = models.CharField("Referencia de Pago", max_length=20)
-    crdb_rpago = models.BooleanField("Cheque Cobrado")
-
-
-
+    fecha = models.DateField()
+    ref_p = models.CharField("Referencia de Pago", max_length=20, null=True,)
+    crdb_rpago = models.BooleanField("Cheque Cobrado", default=False)
 
 
 class CargarPdfs(models.Model):

@@ -25,13 +25,79 @@
 		color: #fff;
         text-align: left;
 	}
+    .True{
+        background-color: #00C65D;
+    }
+    .False{
+        background-color: #e74c3c;
+    }
+    .naranja{
+        background-color: #ff9800;
+        color: #f0f0f0;
+    }
 	</style>
 
 	{% endblock css_add %}
 
 {% block contenido %}
+        <div class="modal fade" id="paso2" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2">
+                        </div>
+                        <div class="col-md-5 col-sm-4 " >
+                            <div class="text-danger mr"><h4 class="ma">Agrega Referencia de Pago1.</h4>
+                            </div>
+                                <form method="post"  role="form" >
+                                     {% csrf_token %}
+                                    {{ r_form.asesor.label }}
+                                    {{ r_form.asesor }}
+                                    <hr/>
+                                    {{ r_form.ref_pago.label }}
+                                    {{ r_form.ref_p}}
+                                    <hr/>
+                                    <button type="submit" class="btn btn-success" name="referencia_pago">Guardar</button>
+                                    <hr>
+                                </form>
+                        </div>
+                        <div class="col-md-4 col-sm-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="modal fade" id="paso3" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2">
+                        </div>
+                        <div class="col-md-5 col-sm-4 " >
+                            <div class="text-danger mr"><h4 class="ma">Agrega Referencia de Pago.</h4>
+                            </div>
+                                <form method="post"  role="form" >
+                                     {% csrf_token %}
+                                    {{ b_rform.asesorb.label }}
+                                    {{ b_rform.asesorb }}
+                                    <hr/>
+                                    cheque cobrado
+                                    {{ b_rform.crdb_rpago }}
+                                    <hr/>
+                                    <button type="submit" class="btn btn-success" name="cheque_cobrado">Guardar</button>
+                                    <hr>
+                                </form>
+                        </div>
+                        <div class="col-md-4 col-sm-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <table class="table" id="diescinueve">
+    <table class="table">
              <thead>
               <tr>
                  <th>Fecha</th>
@@ -68,34 +134,22 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
+                    <td class="naranja"></td>
                 </tr>
             </tfoot>
             </table>
-{#{{ asesores }}#}
 
-
-{{ sumar_tot_ase.com_t__sum }} {{ sumar_tot_ase }}
-
-    {% for foo in sumar_tot_ase %}
-        {{ foo.asesor }}
-    {% endfor %}
-
-
-
-
-    {% for fa in sumar_tot_ase1.all %}
-        {% if fa.asesor  == fa.asesor%}
-            {{ fa.asesor }}{{ fa.com_t }}
-        {% endif %}
-    {% endfor %}
 
     <hr/>
-    <table class="table">
+<div class="row">
+    <div class="col-md-7">
+            <table class="table">
         <thead>
             <tr>
                 <th>Asesor</th>
                 <th>Total</th>
+                <td>Ref. Pago</td>
+                <td>Acciones</td>
             </tr>
         </thead>
         <tbody>
@@ -105,15 +159,48 @@
                         {{ fi.asesor }}
                     </td>
                     <td>
-                          {{ fi.total.com_t__sum }}
+                          {{ fi.comision_t }}
+                    </td>
+                    <td class="{{ fi.crdb_rpago }}">
+                        {{ fi.ref_p }}
+                    </td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Asignar<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li>
+                                    <a  data-toggle="modal" data-target="#paso2" id="boton02">
+                                        <button value="{{fi.asesor.id}}"  class="btn btn-success boton_perfil">cheque
+                                        </button>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a  data-toggle="modal" data-target="#paso3" id="boton03">
+                                        <button  value="{{fi.asesor.id }}" class="btn btn-success boton_perfib">cheque cobrado
+                                        </button>
+                                    </a>
+                                </li>
+                              </ul>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    </div>
+    <div class="col-md-5"></div>
+</div>
 
 
-
+    <div class="row">
+        <div class="col-md-9">
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-primary"  onClick="window.print()">generar PDF</button>
+        </div>
+    </div>
 
 
     {% load staticfiles %}
@@ -122,9 +209,32 @@
         $(document).ready(function() {
             $('#hideshow').on('click', function (event) {
                 $('#accordion').toggle('hide');
-            })
-        })
+            });
 
+            $('table thead th').each(function(i) {
+                calculateColumn(i);
+            });
+            var $theButtons = $(".boton_perfil");
+            var $theinput = $("#id_asesor");
+            $theButtons.click(function(){
+               $theinput.val(this.value);
+            });
+            var $theButtonsb = $(".boton_perfib");
+            var $theinputb = $("#id_asesorb");
+            $theButtonsb.click(function(){
+               $theinputb.val(this.value);
+            });
+        });
+        function calculateColumn(index) {
+            var total = 0;
+            $('table tr').each(function () {
+                var value = parseInt($('td', this).eq(index).text());
+                if (!isNaN(value)) {
+                    total += value;
+                }
+            });
+            $('table tfoot td').eq(index).text('Total: ' + total);
+        }
     </script>
                 <!-- /.row -->
 {% endblock contenido %}

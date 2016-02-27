@@ -10,10 +10,11 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 from .forms import PrimerRegistroFORM, SegundoRegistroForm, OrderForm, EmailOdcsForm, CargarPdfsForm,\
-    PReferenciaForm,  BuscarDiaForm, PRBoleanPagoForm, OdcsPagadasForm
+    PReferenciaForm,  BuscarDiaForm, PRBoleanPagoForm, OdcsPagadasForm, CReferenciaForm, CReferenciaBoolForm
 from .models import PrimerRegistro, SegundoRegistro, Productos, ProductOrder, Order, RelacionP, ComisionAsesor
 from usuarios.models import Datos, Sucursal, GatosSucursal
 from usuarios.forms import GatosSucursalForm
+from django.core.urlresolvers import reverse
 
 
 def index(request):
@@ -572,13 +573,11 @@ def calendario(request):
 def cargar_pdfs(request, id):
     form = CargarPdfsForm
     return render(request, 'cargar-pdf/cargar-pdfs.html', {'form':form})
-
 def cliente_perfil(request, id):
     obtenerClientePR = PrimerRegistro.objects.get(id=id)
     obtenerTgts = SegundoRegistro.objects.get(cliente__id = id)
     return render(request, 'perfil/peril-cliente.html', {'primer':obtenerClientePR,
                                                          'segundo': obtenerTgts})
-
 def sucursales(request):
     datosusuarios = Datos.objects.all()
     sucursales = Sucursal.objects.all()
@@ -628,46 +627,84 @@ def comisiones_admingael(request):
                  fetch = form.cleaned_data['fecha']
                  year = fetch.year
                  month = fetch.month
-                 return dia(request, year, month)
-    rp_comisiones = RelacionP.objects.all()
+                 return mes_comision(request, year, month)
     rform = BuscarDiaForm()
     hoy = datetime.date.today()
     mes_actual = hoy.month
+    anio_actual =hoy.year
+    rp_comisiones = RelacionP.objects.filter(fecha__month=mes_actual, fecha__year=anio_actual).order_by('asesor')
+
     return render(request, 'gaeladmin/comisiones-gael.html',{
                                             'mes_actual': mes_actual,
                                             'rp_comisiones':rp_comisiones,
-                                            'form':rform,})
+                                            'form':rform,
+                                            })
 
+
+def mes_comision(request, year, month):
+    mess = get_list_or_404(RelacionP,fecha__year=year,
+                                        fecha__month=month,)
+    mes = month
+
+    return render(request, 'gaeladmin/unico-mes.html', {
+                                                        'rp_comisiones':mess,
+                                                        'mes':mes,})
 def ver_resumencom(request,year, month, day):
-    sacar_asesor_db=get_list_or_404(RelacionP, fecha__year=2016,
-                                        fecha__month=2,
-                                        fecha__day=23,)
+    if request.method == 'POST':
+        if 'referencia_pago' in request.POST:
+            form = CReferenciaForm(request.POST)
+            if form.is_valid():
+                aseso = form.cleaned_data['asesor']
+                asesorr = ComisionAsesor.objects.get(Q(asesor=aseso)& Q(fecha__year=year,
+                                            fecha__month=month,
+                                            fecha__day=day))
+                asesorr.ref_p = form.cleaned_data['ref_p']
+                asesorr.save(update_fields=['ref_p'])
+                return redirect('ver_resumencom', year, month, day)
+                #return redirect('ver_resumencom', kwargs={day,month,year})
+        elif 'cheque_cobrado' in request.POST:
+            form = CReferenciaBoolForm(request.POST)
+            if form.is_valid():
+                aseso = form.cleaned_data['asesorb']
+                asesorr = ComisionAsesor.objects.get(Q(asesor=aseso)& Q(fecha__year=year,
+                                            fecha__month=month,
+                                            fecha__day=day))
+                asesorr.crdb_rpago = form.cleaned_data['crdb_rpago']
+                asesorr.save(update_fields=['crdb_rpago'])
+                return redirect('ver_resumencom', year, month, day)
+            pass
+    sacar_asesor = RelacionP.objects.filter(fecha__year=year,
+                                            fecha__month=month,
+                                            fecha__day=day,).order_by('asesor')
 
-    sacar_asesor = RelacionP.objects.filter(fecha__year=2016,
-                                        fecha__month=2,
-                                        fecha__day=23,)
+    #obtenemos el diccionario del cliente
     asesoress = []
     for asesor in sacar_asesor:
-        asesoress.append((asesor.asesor))
+        asesoress.append((asesor.asesor.id))
 
-    asesoressd = []
-    for asesord in sacar_asesor:
-        asesoressd.append({
-                    'asesor': asesord.asesor,
-                    'total': RelacionP.objects.filter(Q(asesor__username =asesord.asesor) & Q(fecha__year=2016,
-                                        fecha__month=2,
-                                        fecha__day=23,)).aggregate(Sum('com_t')),
-                         })
+    #crear asesores en comision con referncia de pago
+    eliminar_duplicados = list(set(asesoress))
+    for asesordr in eliminar_duplicados:
+        if ComisionAsesor.objects.filter(Q(fecha__year=year,fecha__month=month,fecha__day=day)&Q(asesor__id= asesordr)).exists():
+            pass
+        else:
+            total =RelacionP.objects.filter(
+                                    Q(asesor__id =asesordr) &
+                                    Q(fecha__year=year,fecha__month=month,fecha__day=day)).aggregate(Sum('com_t'))
 
-    sumar_tot_ase = RelacionP.objects.filter(Q(asesor__username__in =asesoress) & Q(fecha__year=2016,
-                                        fecha__month=2,
-                                        fecha__day=23,)).aggregate(Sum('com_t'))
-    sumar_tot_ase1 = RelacionP.objects.filter(Q(asesor__username__in =asesoress) & Q(fecha__year=2016,
-                                        fecha__month=2,
-                                        fecha__day=23,))
-
+            totalu = int(total['com_t__sum'])
+            asesordrr = ComisionAsesor(
+                                    asesor =User.objects.get(id=asesordr),
+                                    fecha = year+"-"+month+"-"+day,
+                                    comision_t= totalu,)
+            asesordrr.save()
+    #*total de las operaciones del dia
+    com_asesor = ComisionAsesor.objects.filter(Q(fecha__year=year, fecha__month=month, fecha__day=day))
+    frm = CReferenciaForm()
+    b_rform = CReferenciaBoolForm(initial={'crdb_rpago':False})
     return render(request, 'gaeladmin/resumen_dia_comision.html', {'diass': sacar_asesor,
-                                                                   'sumar_tot_ase':sumar_tot_ase,
-                                                                   'sumar_tot_ase1':sumar_tot_ase1,
-                                                                    'asesoressd':asesoressd  ,
+                                                                    'asesoressd':com_asesor,
+                                                                    'r_form':frm,
+                                                                    'b_rform':b_rform,
+
                                                                    })

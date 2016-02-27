@@ -36,23 +36,23 @@ body{
 }
 .uno>.panel-heading {
     color: #ffffff;
-    background-color: #CC922F;
+    background-color: #E73D44;
 }
 .dos>.panel-heading {
     color: #ffffff;
-    background-color: #997A45;
+    background-color: #F19C3F;
 }
 .tres>.panel-heading {
     color: #ffffff;
-    background-color: #FF9254;
+    background-color: #608EC7;
 }
 .cuatro>.panel-heading {
     color: #ffffff;
-    background-color: #ff35a5;
+    background-color: #74C16C;
 }
 .cinco>.panel-heading {
     color: #ffffff;
-    background-color: #52c1cc;
+    background-color: #AAABAD;
 }
 </style>
     <div class="row row-offcanvas row-offcanvas-right">
@@ -81,7 +81,7 @@ body{
                                                 <div class="modal-content">
                                                   <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="myModalLabel"><strong>ASESORES</strong></h4>
+                                                    <h4 class="modal-title" id="myModalLabel"><strong>Asesores</strong></h4>
                                                   </div>
                                                   <div class="modal-body">
                                                       <table class="table">
@@ -117,13 +117,13 @@ body{
 
 
                                          <!-- Modal -->
-                                            <button type="button" class="btn btn-Default btn-lg" data-toggle="modal" data-target="#myModal{{ sucursal.id }}{{ sucursal.telefono }}">Recomienda y Gana</button>
+                                            <button type="button" class="btn btn-Default btn-lg" data-toggle="modal" data-target="#myModal{{ sucursal.id }}{{ sucursal.telefono }}">Asistentes</button>
                                              <div class="modal fade" id="myModal{{ sucursal.id }}{{ sucursal.telefono }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                               <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                   <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="myModalLabel"><strong>RECOMIENDA Y GANA</strong></h4>
+                                                    <h4 class="modal-title" id="myModalLabel"><strong>Asistentes</strong></h4>
                                                   </div>
                                                   <div class="modal-body">
                                                       <table class="table">
@@ -156,12 +156,6 @@ body{
                                             </div>
                                              <hr>
                                              <!-- Modal -->
-                                            Ingresos Mes: Febrero 120000.00
-                                            <hr/>
-                                            Egresos Mes: Febrero 100000.00
-                                            <hr/>
-                                            Ganancias: 20000.00
-                                            <hr/>
                                             <a class="btn btn-default" href="{% url 'sucursal_unica' sucursal.id %}" role="button">Ver Detalles &raquo;</a>
                                         </div>
                                     </div>

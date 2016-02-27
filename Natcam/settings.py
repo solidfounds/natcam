@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',
     'usuarios',
-    'storages',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -121,32 +121,11 @@ LOGIN_REDIRECT_URL = 'agregar_clientes'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-
+MEDIA_URL = '/media/'
+STATIC_URL = '/static/'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'soldiddfouns@gmail.com'
 EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
-AWS_STORAGE_BUCKET_NAME = 'natcamuserr'
-AWS_ACCESS_KEY_ID = ''
-AWS_SECRET_ACCESS_KEY = ''
-
-#STATIC_URL = 'https://%s/' %os.getenv('catem.s3-website-us-west-2.amazonaws.com')
-#MEDIA_URL = 'https://%s/' %os.getenv('catem.s3-website-us-west-2.amazonaws.com')
-#STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-STATICFILES_LOCATION = 'static'
-MEDIAFILES_LOCATION = 'media'
-
-import custom_storages
-
-STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-STATIC_URL = 'https://%s/%s/' % ('catem.s3-website-us-west-2.amazonaws.com', STATICFILES_LOCATION)
-
-MEDIA_URL = "https://%s/%s/" % ('catem.s3-website-us-west-2.amazonaws.com', MEDIAFILES_LOCATION)
-DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
