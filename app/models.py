@@ -36,13 +36,24 @@ class PrimerRegistro(models.Model):
     def get_absolute_url(self):
         return reverse('editar_primer_registro', kwargs={'pk': self.pk})
 
+def guardar_ife(instance, filename):
+    #file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'media/{0}/{1}'.format(instance.cliente, filename)
+
+def guardar_caratula(instance, filename):
+    #file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'media/{0}/{1}'.format(instance.cliente, filename)
+
+def guardar_tarjeta(instance, filename):
+    #file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'media/{0}/{1}'.format(instance.cliente, filename)
 
 class SegundoRegistro(models.Model):
     cliente = models.ForeignKey(PrimerRegistro)
     fecha = models.DateField(auto_now_add=True)
-    ife = models.FileField(upload_to='ifes/', blank=True, null=True)
-    caratula = models.FileField(upload_to='caratula/', blank=True, null=True)
-    tarjeta_de_mejoravit = models.FileField(upload_to='targeta_infonavit/', blank=True, null=True)
+    ife = models.FileField(upload_to=guardar_ife, blank=True, null=True)
+    caratula = models.FileField(upload_to=guardar_caratula, blank=True, null=True)
+    tarjeta_de_mejoravit = models.FileField(upload_to=guardar_tarjeta, blank=True, null=True)
     credito = models.DecimalField('crédito', max_digits=7, decimal_places=2, blank=True, null=True)
     operador = models.ForeignKey(User, null=True, blank=True)
 
@@ -142,8 +153,7 @@ class RelacionP(models.Model):
     #     return self.fecha
     def get_absolute_url(self):
         return reverse('post_detail', args=[self.fecha.year,
-                                                 self.fecha.strftime('%m'),
-                                                 self.fecha.strftime('%d'),])
+                                                 self.fecha.strftime('%m')])
 
 class CargarPdfs(models.Model):
     cliente = models.ForeignKey(PrimerRegistro)

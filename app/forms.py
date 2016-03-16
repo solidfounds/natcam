@@ -44,14 +44,14 @@ class OrderForm(ModelForm):
 
 class EmailOdcsForm(forms.Form):
     to = forms.EmailField(label='Destinatario')
-    comments = forms.CharField(label='Comentario',required=False, widget=forms.Textarea)
-    url_archivos = forms.URLField()
+    comments = forms.CharField(label='Comentario',required=False, widget=forms.Textarea(attrs={'rows':'5', 'cols':'50'}))
+    url_archivos = forms.URLField(widget=forms.Textarea(attrs={'rows':'5', 'cols':'50'}))
     # ord1 = forms.CharField(widget=forms.TextInput(attrs={"type":'hidden', 'value': '{{ foo.total_amount }}'}))
     # ord2 = forms.CharField(widget=forms.TextInput(attrs={"type":'hidden', 'value': '{{foo.total_amount }}'}))
     # ord3 = forms.CharField(widget=forms.TextInput(attrs={}))
 
 class BuscarDiaForm(forms.Form):
-    fecha = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    fecha = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
 
 class PReferenciaForm(forms.Form):
     cliente = forms.IntegerField(widget=forms.NumberInput(attrs={'readonly':'readonly'}))

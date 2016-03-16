@@ -1,5 +1,6 @@
-{% extends "base/base-asesor.html" %}
 
+{% extends "base/base-gael.html" %}
+{% load poll_extras %}
 
 	{% block css_add %}
 	<style>
@@ -22,24 +23,9 @@
         text-align: left;
 	}
 	</style>
+		
+	{% endblock css_add %}
 
-    {% load staticfiles %}
-    <script src="{% static 'js/datatables.min.js' %}"></script>
-
-    <script type="text/javascript">
-   // For demo to fit into DataTables site builder...
-   $('#example')
-      .removeClass( 'display' )
-      .addClass('table table-striped table-bordered');
-</script>
-{% endblock css_add %}
-
-
-
-{% block sucursal %}
-    {{ datos.sucursal }}
-    {{ datos.get_tipo_display }}
-{% endblock %}
 {% block contenido %}
     <div class="container">
 	            <div class="row">
@@ -51,8 +37,8 @@
                                         <div class="fa fa-comments fa-5x"></div>
                                     </div>
                                     <div class="col-xs-9 col-sm-9 text-right">
-                                        <div class="huge" align="center">{{ total_clientes }}</div>
-                                        <hr><div>Total de clientes registrados!</div><br>
+                                        <div class="huge" align="center">{{ sum_relacionpt.importe__sum  }}</div>
+                                        <hr><div>Importes Pagados!</div><br>
                                     </div>
                                 </div>
                             </div>
@@ -73,8 +59,8 @@
                                         <i class="fa fa-tasks fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge" align="center">%</div>
-                                        <hr><div>Porcentaje de Comisión!</div><br>
+                                        <div class="huge" align="center">{{ sum_fact.pag_clie__sum  }}.00</div>
+                                        <hr><div>Suma Facturacion</div><br>
                                     </div>
                                 </div>
                             </div>
@@ -95,8 +81,8 @@
                                         <i class="fa fa-shopping-cart fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge" align="center">$212332</div>
-                                        <hr><div>Promedio de Percepción Semanal!</div>
+                                        <div class="huge" align="center">{{ sum_com_t.com_t__sum  }}.00</div>
+                                        <hr><div>Comsiones Totales Pagadas!</div>
                                     </div>
                                 </div>
                             </div>
@@ -134,45 +120,111 @@
                 </div>
                 <hr>
                 </div>
-                    <div class="col-lg-4">
-                        <div class=" panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i></h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-hover table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Id #</th>
-                                                <th>Comisión</th>
-                                                <th>% Comisión</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for micomision in micomision %}
-                                            <tr>
-                                                <td>{{ micomision.id }}</td>
-                                                <td>{{ micomision.comision }}</td>
-                                                {% for ass in micomiscionAsesor %}
-                                                    {% if ass.cliente.id == micomision.id   %}
-                                                      <td>{{ass.comisiona}}</td>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#"><i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+
+                {{ prm }}
+                {{ lrm }}
+                {{ pry }}
+                {{ lry }}
+                {{ meses_padados }}
+
+                <table class="table">
+                 <thead>
+                  <tr>
+                     <th>Mes</th>
+                     <th>Monto</th>
+                  </tr>
+                 </thead>
+                 <tbody>
+                    {% for i in lrm|get_range %}
+                    {% if  i  ==  0 %}
+                        <tr>
+                            <td>Enero</td>
+                            <td>$100</td>
+                        </tr>
+                    {% endif %}
+                    {% if i == 1 %}
+                        <tr>
+                            <td> Febrero</td>
+                            <td>$100</td>
+                        </tr>
+                    {% endif %}
+                    {% if i == 2 %}
+                        <tr>
+                            <td> Marzo</td>
+                            <td>$100</td>
+                        </tr>
+                    {% endif %}
+                    {% if i == 3 %}
+                        <tr>
+                            <td> Abril</td>
+                            <td>$100</td>
+                        </tr>
+                    {% endif %}
+                    {% if i == 4 %}
+                        <tr>
+                            <td> Mayo</td>
+                            <td>$100</td>
+                        </tr>
+                    {% endif %}
+                    {% if i == 5 %}
+                        <tr>
+                            <td> Junio</td>
+                            <td>$100</td>
+                        </tr>
+                        Junio
+                    {% endif %}
+                    {% if i == 6 %}
+                        <tr>
+                            <td> Julio</td>
+                            <td>$100</td>
+                        </tr>
+                    {% endif %}
+                    {% if i == 7 %}
+                        <tr>
+                            <td> Agost</td>
+                            <td>$100</td>
+                        </tr>
+                    {% endif %}
+                    {% if i == 8 %}
+                        <tr>
+                            <td> Septiembre</td>
+                            <td>$100</td>
+                        </tr>
+                    {% endif %}
+                    {% if i == 9 %}
+                        <tr>
+                            <td> Octubre</td>
+                            <td>$100</td>
+                        </tr>
+                    {% endif %}
+                    {% if i == 10 %}
+                        <tr>
+                            <td> Noviembre</td>
+                            <td>$100</td>
+                        </tr>
+                    {% endif %}
+                    {% if i == 11 %}
+                        <tr>
+                            <td> Diciembre</td>
+                            <td>$100</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                 </tbody>
+                    <tfoot>
+                  <tr>
+                     <td>Sum</td>
+                     <td>$180</td>
+                  </tr>
+                 </tfoot>
+                </table>
+
+
+
 
                 <!-- /.row -->
 {% endblock contenido %}
 {% block javascript %}
-
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 {% endblock %}

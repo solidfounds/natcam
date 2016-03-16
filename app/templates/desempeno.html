@@ -1,29 +1,21 @@
 {% extends "base.html" %}
 
 
-	{% block css_add %}
-	<style>
-	.color{
-		background-color: #e74c3c;
-		font-size: 4rem;
-	}
-	.numero{
-		text-align: center;
-		color: #fff;
-		margin-left: 10px;
-		margin-right: 10px;
-	}
-	.huge{
-		font-size: 2rem;
-	}
-	.panel{
-		background-color: #e74c3c;
-		color: #fff;
-        text-align: left;
-	}
-	</style>
-		
-	{% endblock css_add %}
+	 {% block css_add %}
+     {% load staticfiles %}
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $('#example').DataTable();
+        } );
+    </script>
+    <script type="text/javascript">
+	// For demo to fit into DataTables site builder...
+	$('#example')
+		.removeClass( 'display' )
+		.addClass('table table-striped table-bordered');
+</script>
+ {% endblock %}
 
 {% block contenido %}
     <div class="container">

@@ -1,4 +1,8 @@
 {% extends 'base/base-asistente.html' %}
+{% block sucursal %}
+    {{ datos.sucursal }}
+    {{ datos.get_tipo_display }}
+{% endblock %}
 {% block contenido %}
 
     <table class="table">
@@ -25,6 +29,28 @@
           </tr>
          </tfoot>
     </table>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{ segundorr.id }} {{ segundorr.cliente.nombre }} {{ segundorr.cliente.apellidos }}</h3>
+      </div>
+      <div class="panel-body">
+          <td>
+              <ul class="nav nav-pills">
+                  <li role="presentation"><a href="{{ MEDIA_URL }}{{ segundorr.caratula.url }}"  target="_blank">caratula</a></li>
+              </ul>
+          </td>
+          <td>
+              <ul class="nav nav-pills">
+                  <li role="presentation"><a href="{{ MEDIA_URL }}{{ segundorr.tarjeta_de_mejoravit.url }}"  target="_blank">tarjeta</a></li>
+              </ul>
+          </td>
+          <td>
+              <ul class="nav nav-pills">
+                  <li role="presentation"><a href="{{ MEDIA_URL }}{{ segundorr.ife.url }}"  target="_blank">Ife</a></li>
+              </ul>
+          </td>
+      </div>
+    </div>
 
     {% if sent %}
         <h1>Email fue coorectamente enviado</h1>
@@ -42,7 +68,7 @@
                 {{ form.url_archivos }}
             </div>
             <div>
-                {{ form.comments.label_tag }}
+                Comentario:
                 {{ form.comments }}
             </div>
             <hr>

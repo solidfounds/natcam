@@ -1,121 +1,397 @@
 {% extends 'base/base-gael.html' %}
-
 {% block css_add %}
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Carrito de compras con AngularJS</title>
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     {% load staticfiles %}
+    <style>
+        .None span{
+            display: none;
+        }
+    .None:after{
+        content: "Falta A.";
+    }
+    .False{
+        background-color: #e51c23 ;
+    }
+        .True{
+        background-color: #4caf50;
+        color: black;
+    }
+    td#noMostrar{
+        display: none;
+    }
+
+    </style>
+
+
 
 {% endblock %}
 {% block contenido %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-              <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
-                  <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                      Sucursal Toluca 1
-                    </a>
-                  </h4>
+    <div class="modal fade" id="paso2" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2">
+                        </div>
+                        <div class="col-md-5 col-sm-4 " >
+                            <div class="text-danger mr"><h4 class="ma">Agrega Referencia de Pago.</h4>
+                            </div>
+                                <form method="post"  role="form" >
+                                     {% csrf_token %}
+                                    {{ r_form.cliente.label }} id:
+                                    {{ r_form.cliente }}
+                                    <hr/>
+                                    {{ r_form.ref_pago.label }}
+                                    {{ r_form.ref_pago }}
+                                    <hr/>
+                                    <button type="submit" class="btn btn-success" name="referencia_pago">Guardar</button>
+                                    <hr>
+                                </form>
+                        </div>
+                        <div class="col-md-4 col-sm-2"></div>
+                    </div>
                 </div>
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                  <div class="panel-body">
-                    <table class="table">
-             <thead>
-              <tr>
-                 <th>Cliente</th>
-                 <th>Compra 1</th>
-                  <th>Compra 2</th>
-                  <th>Compra 3</th>
-                  <th>Pago Cliente</th>
-                  <th>% Asesor</th>
-                  <th>Comisión</th>
-                  <th>Com. Total</th>
-                  <th>Asesor</th>
-                  <th>Ref. Pago</th>
-                  <th>Importe</th>
-              </tr>
-             </thead>
-             <tbody>
-                 {% for foo in diass  %}
-                     <tr>
-                         <td><a href="{% url 'cliente_perfil' id=foo.id %}">{{ foo.cliente }}{{ foo.cliente.apellidos }}</a></td>
-                         <td>{{ foo.odc1 }}</td>
-                         <td>{{ foo.odc2  }}</td>
-                         <td>{{ foo.odc3 }}</td>
-                         <td>{{ foo.pag_clie }}</td>
-                         <td>{{ foo.p_asesor }}</td>
-                         <td>{{ foo.comision }}</td>
-                         <td>{{ foo.com_t }}</td>
-                         <td>{{ foo.asesor }}</td>
-                         <td>{{ foo.ref_pago }}</td>
-                         <td>{{ foo.importe }}</td>
-                     </tr>
-                 {% endfor %}
-             </tbody>
-                <tfoot>
-                  <tr>
-                     <th>Cliente</th>
-                     <th>Compra 1</th>
-                      <th>Compra 2</th>
-                      <th>Compra 3</th>
-                      <th>Pago Cliente</th>
-                      <th>% Asesor</th>
-                      <th>Comisión</th>
-                      <th>Com. Total</th>
-                      <th>Asesor</th>
-                      <th>Ref. Pago</th>
-                      <th>Importe</th>
-                  </tr>
-             </tfoot>
-            </table>
-                  </div>
-                </div>
-              </div>
-              <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingTwo">
-                  <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                      Sucursal Toluca 2
-                    </a>
-                  </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                  <div class="panel-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                  </div>
-                </div>
-              </div>
-              <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingThree">
-                  <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                      Sucursal Aguas Calientes
-                    </a>
-                  </h4>
-                </div>
-                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                  <div class="panel-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                  </div>
-                </div>
-              </div>
             </div>
         </div>
     </div>
-
-
-            <form action method="POST" class="checkout-form" >
-                {% csrf_token %}
-                <input type="hidden" name="cartJSONdata"  id="nombre3">
-                    <div class="noedit">
-                        <label for="">Tipo de Orden de Compra </label>
-                        {{ form.orden_compra }}
+    <div class="modal fade" id="paso3" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2">
+                        </div>
+                        <div class="col-md-5 col-sm-4 " >
+                            <div class="text-danger mr"><h4 class="ma">Agrega Referencia de Pago.</h4>
+                            </div>
+                                <form method="post"  role="form" >
+                                     {% csrf_token %}
+                                    {{ b_rform.clienteb.label }} id:
+                                    {{ b_rform.clienteb }}
+                                    <hr/>
+                                    cheque cobrado
+                                    {{ b_rform.crbd_rpago }}
+                                    <hr/>
+                                    <button type="submit" class="btn btn-success" name="cheque_cobrado">Guardar</button>
+                                    <hr>
+                                </form>
+                        </div>
+                        <div class="col-md-4 col-sm-2"></div>
                     </div>
-                   <button type="submit" class="btn btn-primary" name="boton02" id="boton02">Enviar</button>
-            </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="paso4" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2">
+                        </div>
+                        <div class="col-md-5 col-sm-4 " >
+                            <div class="text-danger mr"><h4 class="ma">Agrega Ordenes de Compra Ya Pagadas.</h4>
+                            </div>
+                                <form method="post"  role="form" >
+                                     {% csrf_token %}
+                                    {{ odcs_p.clientec.label }}
+                                    {{ odcs_p.clientec }}
+                                    <hr/>
+                                    {{ odcs_p.odc1p.label }}
+                                    {{ odcs_p.odc1p }}
+                                    <hr/>
+                                    {{ odcs_p.odc2p.label }}
+                                    {{ odcs_p.odc2p }}
+                                    <hr/>
+                                    {{ odcs_p.odc3p.label }}
+                                    {{ odcs_p.odc3p }}
+                                    <hr/>
+                                    <button type="submit" class="btn btn-success" name="ordenes_pagadas">Guardar</button>
+                                    <hr>
+                                </form>
+                        </div>
+                        <div class="col-md-4 col-sm-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <form action="" method="post" >
+        {% csrf_token %}
+                {{ form.as_p }}
+                <input class="btn btn-success" type="submit" name="fecha_calendario"/>
+        </form>
+    <button id='hideshow' value='hide/show' class="btn btn-danger">Cerrar</button>
+    <div class="row">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">Año : {{ anio }} Mes:{{ mes}} </div>
+    </div>
+
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              2016
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default" value="2016-02-01">Febrero</button>
+              <button type="button" class="btn btn-default" value="2016-03-01">Marzo</button>
+              <button type="button" class="btn btn-default" value="2016-04-01">Abril</button>
+              <button type="button" class="btn btn-default" value="2016-05-01">Mayo</button>
+              <button type="button" class="btn btn-default" value="2016-06-01">Junio</button>
+              <button type="button" class="btn btn-default" value="2016-07-01">Julio</button>
+              <button type="button" class="btn btn-default" value="2016-08-01">Agosto</button>
+              <button type="button" class="btn btn-default" value="2016-09-01">Semptiembre</button>
+              <button type="button" class="btn btn-default" value="2016-10-01">Octubre</button>
+              <button type="button" class="btn btn-default" value="2016-11-01">Noviembre</button>
+              <button type="button" class="btn btn-default" value="2016-12-01">Diciembre</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              2017
+            </a>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+              <button type="button" class="btn btn-default" value="2017-01-01">Enero</button>
+              <button type="button" class="btn btn-default" value="2017-02-01">Febrero</button>
+              <button type="button" class="btn btn-default" value="2017-03-01">Marzo</button>
+              <button type="button" class="btn btn-default" value="2017-04-01">Abril</button>
+              <button type="button" class="btn btn-default" value="2017-05-01">Mayo</button>
+              <button type="button" class="btn btn-default" value="2017-06-01">Junio</button>
+              <button type="button" class="btn btn-default" value="2017-07-01">Julio</button>
+              <button type="button" class="btn btn-default" value="2017-08-01">Agosto</button>
+              <button type="button" class="btn btn-default" value="2017-09-01">Semptiembre</button>
+              <button type="button" class="btn btn-default" value="2017-10-01">Octubre</button>
+              <button type="button" class="btn btn-default" value="2017-11-01">Noviembre</button>
+              <button type="button" class="btn btn-default" value="2017-12-01">Diciembre</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            2018
+            </a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+              <button type="button" class="btn btn-default" value="2018-01-01">Enero</button>
+              <button type="button" class="btn btn-default" value="2018-02-01">Febrero</button>
+              <button type="button" class="btn btn-default" value="2018-03-01">Marzo</button>
+              <button type="button" class="btn btn-default" value="2018-04-01">Abril</button>
+              <button type="button" class="btn btn-default" value="2018-05-01">Mayo</button>
+              <button type="button" class="btn btn-default" value="2018-06-01">Junio</button>
+              <button type="button" class="btn btn-default" value="2018-06-01">Julio</button>
+              <button type="button" class="btn btn-default" value="2018-08-01">Agosto</button>
+              <button type="button" class="btn btn-default" value="2018-09-01">Semptiembre</button>
+              <button type="button" class="btn btn-default" value="2018-10-01">Octubre</button>
+              <button type="button" class="btn btn-default" value="2018-11-01">Noviembre</button>
+              <button type="button" class="btn btn-default" value="2018-12-01">Diciembre</button>
+          </div>
+        </div>
+      </div>
+        <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+            2019
+            </a>
+          </h4>
+        </div>
+        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+          <div class="panel-body">
+              <button type="button" class="btn btn-default" value="2019-01-01">aEnero</button>
+              <button type="button" class="btn btn-default" value="2019-02-01">Febrero</button>
+              <button type="button" class="btn btn-default" value="2019-03-01">Marzo</button>
+              <button type="button" class="btn btn-default" value="2019-04-01">Abril</button>
+              <button type="button" class="btn btn-default" value="2019-05-01">Mayo</button>
+              <button type="button" class="btn btn-default" value="2019-06-01">Junio</button>
+              <button type="button" class="btn btn-default" value="2019-07-01">Julio</button>
+              <button type="button" class="btn btn-default" value="2019-08-01">Agosto</button>
+              <button type="button" class="btn btn-default" value="2019-09-01">Semptiembre</button>
+              <button type="button" class="btn btn-default" value="2019-10-01">Octubre</button>
+              <button type="button" class="btn btn-default" value="2019-11-01">Noviembre</button>
+              <button type="button" class="btn btn-default" value="2019-12-01">Diciembre</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingFive">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
+            2020
+            </a>
+          </h4>
+        </div>
+        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+          <div class="panel-body">
+              <button type="button" class="btn btn-default" value="2020-01-01">Enero</button>
+              <button type="button" class="btn btn-default" value="2020-02-01">Febrero</button>
+              <button type="button" class="btn btn-default" value="2020-03-01">Marzo</button>
+              <button type="button" class="btn btn-default" value="2020-04-01">Abril</button>
+              <button type="button" class="btn btn-default" value="2020-05-01">Mayo</button>
+              <button type="button" class="btn btn-default" value="2020-06-01">Junio</button>
+              <button type="button" class="btn btn-default" value="2020-07-01">Julio</button>
+              <button type="button" class="btn btn-default" value="2020-08-01">Agosto</button>
+              <button type="button" class="btn btn-default" value="2020-09-01">Semptiembre</button>
+              <button type="button" class="btn btn-default" value="2020-10-01">Octubre</button>
+              <button type="button" class="btn btn-default" value="2020-11-01">Noviembre</button>
+              <button type="button" class="btn btn-default" value="2020-12-01">Diciembre</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                    <table class="table" id="example">
+                        <thead>
+                          <tr>
+                             <th>Cliente</th>
+                             <th>Compra 1</th>
+                              <th>Compra 2</th>
+                              <th>Compra 3</th>
+                              <th>Facturación</th>
+                              <th>% Asesor</th>
+                              <th>Comisión</th>
+                              <th>Com. Total</th>
+                              <th>Asesor</th>
+                              <th>Ref. Pago</th>
+                              <th>Importe</th>
+                              <th>Asignar R. Pago</th>
+                          </tr>
+                     </thead>
+                        <tbody>
+                            {% for foo in diass  %}
+                     <tr>
+                         <td><a href="{% url 'cliente_perfil' id=foo.id%}" >  <button  class="btn btn-success">{{ foo.cliente }} {{ foo.cliente.apellidos }}</button></a></td>
+                         <td class="{{ foo.odc1p }}">{{ foo.odc1 }}.00</td>
+                         <td class="{{ foo.odc2p }}">{{ foo.odc2  }}.00</td>
+                         <td class="{{ foo.odc3p }}">{{ foo.odc3 }}.00</td>
+                         <td>{{ foo.pag_clie }}.00</td>
+                         <td>{{ foo.p_asesor }}.00</td>
+                         <td>{{ foo.comision }}.00</td>
+                         <td>{{ foo.com_t }}.00</td>
+                         <td>{{ foo.asesor }}</td>
+                         <td class="{{ foo.ref_pago }} {{ foo.crbd_rpago }}"> <span>{{ foo.ref_pago }}</span></td>
+                         <td>{{ foo.importe }}</td>
+                         <td>
+                            <div class="dropdown">
+                              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Asignar
+                                <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                  <li>
+                                      <a  data-toggle="modal" data-target="#paso2" id="boton02">
+                                          <button id="{{foo.cliente.id}}" value="{{foo.cliente.id }}" class="btn btn-success boton_perfil">Asignar
+                                          </button>
+                                      </a>
+                                  </li>
+                                  <li>
+                                      <a  data-toggle="modal" data-target="#paso3" id="boton03">
+                                          <button id="{{foo.cliente.id }}" value="{{foo.cliente.id }}" class="btn btn-success boton_perfib">cheque Cobrado
+                                          </button>
+                                      </a>
+                                  </li>
+                                  <li>
+                                      <a  data-toggle="modal" data-target="#paso4" id="boton04">
+                                          <button id="{{foo.cliente.id }}" value="{{foo.cliente.id }}" class="btn btn-success boton_perfic">odcs pagadas
+                                          </button>
+                                      </a>
+                                  </li>
+                              </ul>
+                            </div>
+                         </td>
+                     </tr>
+                 {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr class="totalColumn" >
+                                <td><span >Cliente</span></td>
+                                <td>Compra 1</td>
+                                <td>Compra 2</td>
+                                <td>Compra 3</td>
+                                <td>Pago Cliente</td>
+                                <td>% Asesor</td>
+                                <td>Comisión</td>
+                                <td>Com. Total</td>
+                                <td> <span id="noMostrar">Asesor</span> </td>
+                                <td > <span id="noMostrar"></span>Ref. Pago</td>
+                                <td>Importe</td>
+                                <td id="noMostrar">Asignar R. Pago</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#hideshow').on('click', function(event) {
+                $('#accordion').toggle('hide');
+            });
+            $('#example').DataTable();
+            var $theButtons = $(".boton_perfil");
+            var $theinput = $("#id_cliente");
+            $theButtons.click(function(){
+               $theinput.val(this.value);
+            });
+
+            var $theButtonsb = $(".boton_perfib");
+            var $theinputb = $("#id_clienteb");
+            $theButtonsb.click(function(){
+               $theinputb.val(this.value);
+            });
+
+            var $theButtonsc = $(".boton_perfic");
+            var $theinputc = $("#id_clientec");
+            $theButtonsc.click(function(){
+               $theinputc.val(this.value);
+            });
+            var $theButtonsd = $(".btn-default");
+            var $theinputd = $("#id_fecha");
+            $theButtonsd.click(function(){
+               $theinputd.val(this.value);
+            });
+
+            $('table thead th').each(function(i) {
+                calculateColumn(i);
+            });
+        });
+        function calculateColumn(index) {
+            var total = 0;
+            $('table tr').each(function () {
+                var value = parseInt($('td', this).eq(index).text());
+                if (!isNaN(value)) {
+                    total += value;
+                }
+            });
+            $('table tfoot td').eq(index).text('Total: ' + total);
+        }
+
+
+    </script>
+
+
 
 {% endblock %}
-
+    {% block javascript %}
+        <script type="text/javascript" src="{% static 'moment/min/moment.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js' %}"></script>
+    {% endblock %}

@@ -5,9 +5,29 @@
     <style>
         .imagene{
         vertical-align: middle;
-            margin-bottom: 5px;
-            margin-top: 20px;
+            margin-bottom: 0px;
+            margin-top: 0px;
             margin-left: 20px;
+    }
+    body {
+        font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 11px;
+        /* line-height: 1.846; */
+        color: #666666;
+        background-color: #ffffff;
+    }
+    body {
+        font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+        /* font-size: 11px; */
+        /* line-height: 1.846; */
+        color: #666666;
+        background-color: #ffffff;
+    }
+    .derecha{
+        margin-left: 370px;
+    }
+    .derechas{
+        margin-left: 100px;
     }
     </style>
 {% endblock %}
@@ -21,8 +41,9 @@
               <!-- Default panel contents -->
                     {% for foo in ordencliente %}
                           <div class="panel-heading">
-                                <div class="alinl .col-md-6"><h5><strong>{{ foo.user.nombre }} {{ foo.user.apellidos }}</strong></h5></div>
-                                <div class="alinr .col-md-6" align="right"><strong><h5><font color="red"> Folio: {{ foo.id }}-AGS</font></h5></strong></div>
+                          <strong></strong>
+
+                                <div class="alinl .col-md-6"><h5><strong>{{ foo.user.nombre }} {{ foo.user.apellidos }}<label class="derecha"><font color="red"> No. {{ foo.id }}-GH-G</font></label></strong></h5></div>
                                 <div class="alinl .col-md-6"><h6><strong>Calle:</strong>  {{ foo.user.calle }}{{ foo.user.numero }}</h6></div>
                                 <div class="alinl .col-md-6"><h6><strong>Col: CP. </strong> {{ foo.user.colonia_fraccionamiento }}, C.P. {{ foo.user.cp }}</h6></div>
                                 <div class="alinl .col-md-6"><h6><strong>Municipio: </strong>{{ foo.user.municipio_delegacion}}</h6></div>
@@ -30,11 +51,8 @@
                           </div>
                           <div class="panel-body">
 
-                                  <div class=" col-xs-4">
                                     <label for="exampleInputEmail1"><b>Telefono:</b>  {{ foo.user.telefono }} </label>
-                                  </div>
-                                  <div class=" col-xs-4">
-                                    <label for="exampleInputPassword1"><b>Fecha:</b> {{ foo.order_date }}</label>
+                                    <label for="exampleInputPassword1" class="derechas"><b>Fecha:</b> {{ foo.order_date }}</label>
                                   </div>
 
                           </div>
@@ -71,6 +89,13 @@
                                   </tr>
                      </table>
                  {% endfor %}
+
+             <div style="text-align: center">
+                 <br><br>
+                 <label for="">____________________________________________</label>
+                 <br>
+                 <label for="">Nombre y Firma</label>
+             </div>
              <div class="row">
                  <div class="col-md-9">
                  </div>
@@ -80,6 +105,5 @@
              </div>
 
          </div>
-      </div>
 
 {% endblock %}

@@ -18,6 +18,26 @@
     td#noMostrar{
         display: none;
     }
+    .uno>.panel-heading {
+        color: #ffffff;
+        background-color: #CC922F;
+    }
+    .dos>.panel-heading {
+        color: #ffffff;
+        background-color: #997A45;
+    }
+    .tres>.panel-heading {
+        color: #ffffff;
+        background-color: #FF9254;
+    }
+    .cuatro>.panel-heading {
+        color: #ffffff;
+        background-color: #ff35a5;
+    }
+    .cinco>.panel-heading {
+        color: #ffffff;
+        background-color: #52c1cc;
+    }
 
     </style>
 
@@ -25,7 +45,6 @@
 
 {% endblock %}
 {% block contenido %}
-    <button class="btn btn-danger"></button>
     <div class="modal fade" id="paso2" >
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -116,20 +135,160 @@
             </div>
         </div>
     </div>
-    <form action="" method="post" >
+    <div class="row">
+    <div class="col-md-5"></div>
+    <div class="col-md-2">
+        <form action="" method="post" >
         {% csrf_token %}
-          <div class="form-group">
-            {{ form.as_p }}
+                {{ form.as_p }}
+                <input class="btn btn-success" type="submit" name="fecha_calendario"/>
+        </form>
+    </div>
+    <div class="col-md-5"></div>
+    </div>
+
+    <button id='hideshow' value='hide/show' class="btn btn-danger">Cerrar</button>
+    <div class="row">
+        <div class="col-md-10"></div>
+        <div class="col-md-2">Mes:{{ mes_actual }} </div>
+    </div>
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              2016
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default" value="2016-02-01">Febrero</button>
+              <button type="button" class="btn btn-default" value="2016-03-01">Marzo</button>
+              <button type="button" class="btn btn-default" value="2016-04-01">Abril</button>
+              <button type="button" class="btn btn-default" value="2016-05-01">Mayo</button>
+              <button type="button" class="btn btn-default" value="2016-06-01">Junio</button>
+              <button type="button" class="btn btn-default" value="2016-07-01">Julio</button>
+              <button type="button" class="btn btn-default" value="2016-08-01">Agosto</button>
+              <button type="button" class="btn btn-default" value="2016-09-01">Semptiembre</button>
+              <button type="button" class="btn btn-default" value="2016-10-01">Octubre</button>
+              <button type="button" class="btn btn-default" value="2016-11-01">Noviembre</button>
+              <button type="button" class="btn btn-default" value="2016-12-01">Diciembre</button>
+            </div>
           </div>
-        <input class="btn btn-success btn-lg btn-block" type="submit" name="fecha_calendario"/>
-        <hr/>
-    </form>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              2017
+            </a>
+          </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+              <button type="button" class="btn btn-default" value="2017-01-01">Enero</button>
+              <button type="button" class="btn btn-default" value="2017-02-01">Febrero</button>
+              <button type="button" class="btn btn-default" value="2017-03-01">Marzo</button>
+              <button type="button" class="btn btn-default" value="2017-04-01">Abril</button>
+              <button type="button" class="btn btn-default" value="2017-05-01">Mayo</button>
+              <button type="button" class="btn btn-default" value="2017-06-01">Junio</button>
+              <button type="button" class="btn btn-default" value="2017-07-01">Julio</button>
+              <button type="button" class="btn btn-default" value="2017-08-01">Agosto</button>
+              <button type="button" class="btn btn-default" value="2017-09-01">Semptiembre</button>
+              <button type="button" class="btn btn-default" value="2017-10-01">Octubre</button>
+              <button type="button" class="btn btn-default" value="2017-11-01">Noviembre</button>
+              <button type="button" class="btn btn-default" value="2017-12-01">Diciembre</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            2018
+            </a>
+          </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+              <button type="button" class="btn btn-default" value="2018-01-01">Enero</button>
+              <button type="button" class="btn btn-default" value="2018-02-01">Febrero</button>
+              <button type="button" class="btn btn-default" value="2018-03-01">Marzo</button>
+              <button type="button" class="btn btn-default" value="2018-04-01">Abril</button>
+              <button type="button" class="btn btn-default" value="2018-05-01">Mayo</button>
+              <button type="button" class="btn btn-default" value="2018-06-01">Junio</button>
+              <button type="button" class="btn btn-default" value="2018-06-01">Julio</button>
+              <button type="button" class="btn btn-default" value="2018-08-01">Agosto</button>
+              <button type="button" class="btn btn-default" value="2018-09-01">Semptiembre</button>
+              <button type="button" class="btn btn-default" value="2018-10-01">Octubre</button>
+              <button type="button" class="btn btn-default" value="2018-11-01">Noviembre</button>
+              <button type="button" class="btn btn-default" value="2018-12-01">Diciembre</button>
+          </div>
+        </div>
+      </div>
+        <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingThree">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+            2019
+            </a>
+          </h4>
+        </div>
+        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+          <div class="panel-body">
+              <button type="button" class="btn btn-default" value="2019-01-01">aEnero</button>
+              <button type="button" class="btn btn-default" value="2019-02-01">Febrero</button>
+              <button type="button" class="btn btn-default" value="2019-03-01">Marzo</button>
+              <button type="button" class="btn btn-default" value="2019-04-01">Abril</button>
+              <button type="button" class="btn btn-default" value="2019-05-01">Mayo</button>
+              <button type="button" class="btn btn-default" value="2019-06-01">Junio</button>
+              <button type="button" class="btn btn-default" value="2019-07-01">Julio</button>
+              <button type="button" class="btn btn-default" value="2019-08-01">Agosto</button>
+              <button type="button" class="btn btn-default" value="2019-09-01">Semptiembre</button>
+              <button type="button" class="btn btn-default" value="2019-10-01">Octubre</button>
+              <button type="button" class="btn btn-default" value="2019-11-01">Noviembre</button>
+              <button type="button" class="btn btn-default" value="2019-12-01">Diciembre</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingFive">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
+            2020
+            </a>
+          </h4>
+        </div>
+        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+          <div class="panel-body">
+              <button type="button" class="btn btn-default" value="2020-01-01">Enero</button>
+              <button type="button" class="btn btn-default" value="2020-02-01">Febrero</button>
+              <button type="button" class="btn btn-default" value="2020-03-01">Marzo</button>
+              <button type="button" class="btn btn-default" value="2020-04-01">Abril</button>
+              <button type="button" class="btn btn-default" value="2020-05-01">Mayo</button>
+              <button type="button" class="btn btn-default" value="2020-06-01">Junio</button>
+              <button type="button" class="btn btn-default" value="2020-07-01">Julio</button>
+              <button type="button" class="btn btn-default" value="2020-08-01">Agosto</button>
+              <button type="button" class="btn btn-default" value="2020-09-01">Semptiembre</button>
+              <button type="button" class="btn btn-default" value="2020-10-01">Octubre</button>
+              <button type="button" class="btn btn-default" value="2020-11-01">Noviembre</button>
+              <button type="button" class="btn btn-default" value="2020-12-01">Diciembre</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                     <table class="table" id="example">
                         <thead>
                           <tr>
+                              <th>Fecha</th>
                              <th>Cliente</th>
                              <th>Compra 1</th>
                               <th>Compra 2</th>
@@ -147,7 +306,8 @@
                         <tbody>
                             {% for foo in diass  %}
                      <tr>
-                         <td><a href="{% url 'cliente_perfil' id=foo.id%}" >  <button  class="btn btn-success">{{ foo.cliente }} {{ foo.cliente.apellidos }}</button></a></td>
+                         <td>{{ foo.fecha.day }}</td>
+                         <td><a href="{% url 'cliente_perfil' id=foo.cliente.id%}" >  <button  class="btn btn-success">{{ foo.cliente }} {{ foo.cliente.apellidos }}</button></a></td>
                          <td class="{{ foo.odc1p }}">{{ foo.odc1 }}.00</td>
                          <td class="{{ foo.odc2p }}">{{ foo.odc2  }}.00</td>
                          <td class="{{ foo.odc3p }}">{{ foo.odc3 }}.00</td>
@@ -155,7 +315,7 @@
                          <td>{{ foo.p_asesor }}.00</td>
                          <td>{{ foo.comision }}.00</td>
                          <td>{{ foo.com_t }}.00</td>
-                         <td>{{ foo.asesor }}</td>
+                         <td id="{{ foo.asesor }}">{{ foo.asesor }}</td>
                          <td class="{{ foo.ref_pago }} {{ foo.crbd_rpago }}"> <span>{{ foo.ref_pago }}</span></td>
                          <td>{{ foo.importe }}</td>
                          <td>
@@ -212,6 +372,9 @@
     <script src="{% static 'js/datatables.min.js' %}"></script>
     <script type="text/javascript">
         $(document).ready(function(){
+            $('#hideshow').on('click', function(event) {
+                $('#accordion').toggle('hide');
+            });
             $('#example').DataTable();
             var $theButtons = $(".boton_perfil");
             var $theinput = $("#id_cliente");
@@ -229,6 +392,11 @@
             var $theinputc = $("#id_clientec");
             $theButtonsc.click(function(){
                $theinputc.val(this.value);
+            });
+            var $theButtonsd = $(".btn-default");
+            var $theinputd = $("#id_fecha");
+            $theButtonsd.click(function(){
+               $theinputd.val(this.value);
             });
 
             $('table thead th').each(function(i) {
@@ -248,8 +416,12 @@
 
 
     </script>
-    <script>
 
-    </script>
+
 
 {% endblock %}
+    {% block javascript %}
+        <script type="text/javascript" src="{% static 'moment/min/moment.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js' %}"></script>
+    </div>
+    {% endblock %}

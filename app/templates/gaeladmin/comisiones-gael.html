@@ -1,0 +1,84 @@
+
+{% extends "base/base-gael.html" %}
+{% load poll_extras %}
+
+
+
+	{% block css_add %}
+    {% load staticfiles %}
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#example').DataTable();
+        });
+    </script>
+	<style>
+	.color{
+		background-color: #e74c3c;
+		font-size: 4rem;
+	}
+	.numero{
+		text-align: center;
+		color: #fff;
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	.huge{
+		font-size: 2rem;
+	}
+	.panel{
+		background-color: #e74c3c;
+		color: #fff;
+        text-align: left;
+	}
+	</style>
+
+	{% endblock css_add %}
+
+{% block contenido %}
+    <div class="container">
+        <table class="table" id="example">
+             <thead>
+              <tr>
+                 <th>Fecha</th>
+                 <th>Asesor</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                 <th>Total</th>
+              </tr>
+             </thead>
+             <tfoot>
+              <tr>
+                  <th>Fecha</th>
+                 <th>Asesor</th>
+                 <th>%comision</th>
+                 <th>Comision</th>
+                 <th>Total</th>
+              </tr>
+             </tfoot>
+             <tbody>
+                {% for rp_c in rp_comisiones %}
+                    <tr>
+                        <td>{{ rp_c.fecha.day }}</td>
+                        <td>{{ rp_c.asesor }}</td>
+                        <td>{{ rp_c.p_asesor }}</td>
+                        <td>{{ rp_c.comision }}</td>
+                        <td>{{ rp_c.com_t }}</td>
+                    </tr>
+                {% endfor %}
+
+
+             </tbody>
+            </table>
+    </div>
+
+
+
+
+
+                <!-- /.row -->
+{% endblock contenido %}
+{% block javascript %}
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+{% endblock %}

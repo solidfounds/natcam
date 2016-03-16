@@ -45,13 +45,14 @@ urlpatterns = [
     url(r'^(?P<cliente_id>\d+)$', views.enviar_email, name='enviar_email'),
     url(r'^calendario/$', views.calendario, name='calendario'),
 
-    url(r'^dia/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$',views.dia, name='post_detail'),
+    url(r'^calendario/mes/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/$',views.dia, name='post_detail'),
 
     #cargar pdfs
     url(r'^cargar_pds/(?P<id>\d+)', views.cargar_pdfs, name='cargar_pdfs'),
     url(r'^cliente/perfil/(?P<id>\d+)', views.cliente_perfil, name='cliente_perfil'),
     url(r'^gael/admin/(?P<id>\d+)', views.empleado_perfil, name='empleado_perfil'),
     url(r'^gael/admin/sucursales', views.sucursales, name='sucursales'),
+    url(r'^gael/admin/comisiones', views.comisiones_admingael, name='comisiones_admingael'),
 
     #asistente
     url(r'^gastos_oficina/', views.gastos_oficina, name='gastos_oficina'),

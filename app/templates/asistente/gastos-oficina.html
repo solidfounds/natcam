@@ -1,4 +1,33 @@
 {% extends 'base/base-asistente.html' %}
+{% block css_add %}
+   <style>
+        .False {
+            color: red;
+
+        }
+        .True {
+            color: rgba(76, 224, 62, 0.97);
+
+        }
+   </style>
+    {% load staticfiles %}
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+
+    <script type="text/javascript">
+   // For demo to fit into DataTables site builder...
+   $('#example')
+      .removeClass( 'display' )
+      .addClass('table table-striped table-bordered');
+</script>
+{% endblock css_add %}
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >
+{% load staticfiles %}
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'js/jquery.js' %}" >
 {% block sucursal %}
     {{ datos.sucursal }}
     {{ datos.get_tipo_display }}

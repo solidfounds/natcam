@@ -6,6 +6,7 @@ class Sucursal(models.Model):
     direccion = models.CharField(max_length=50)
     estado = models.CharField(max_length=50)
     telefono = models.SmallIntegerField()
+    color = models.CharField(max_length=6, default='#2FCC71')
     renta = models.DecimalField(max_digits=7, decimal_places=2)
     luz = models.DecimalField(max_digits=7, decimal_places=2)
     agua = models.DecimalField(max_digits=7, decimal_places=2)

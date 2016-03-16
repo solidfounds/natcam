@@ -12,9 +12,9 @@
     {% load staticfiles %}
   <script type="text/javascript" src="{% static  'cart.js' %}"></script>
     <style>
-    .noedit{
-        display: none;
-    }
+        .noedit{
+            display: none;
+        }
     </style>
 {% endblock %}
 {% block contenido %}
@@ -69,7 +69,7 @@
                   <td><a class="button alert" data-ng-click="remove(prod.id)">Eliminar</a></td>
                 </tr>
                 <tr>
-                  <td colspan="6">Precio total del carrito: {$  roundCurrency(udpShopTotalPrice) $}</td>
+                  <td colspan="6" ><input type="text" id="valor_carrito" value="{$  roundCurrency(udpShopTotalPrice) $}"/> Total del carrito: {$  roundCurrency(udpShopTotalPrice) $}</td>
                 <tr>
                 <tr>
                   <td colspan="6" id="hola">Número total de artículos: {$  udpShopTotalProducts $}  </td>
@@ -113,6 +113,10 @@
             $("#boton02").click(function () {
             //saco el valor accediendo a un input de tipo text y name = nombre2 y lo asigno a uno con name = nombre3
             $("#nombre3").val($("#nombre2").val());
+            var va = $("#valor_carrito").val();
+                if (va > 20000 ){
+                    alert("la orden de compra deve ser menor a 20000.00");
+                }
 
             });
         });

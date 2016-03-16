@@ -34,6 +34,26 @@
 body{
     line-height: .006;
 }
+.uno>.panel-heading {
+    color: #ffffff;
+    background-color: #CC922F;
+}
+.dos>.panel-heading {
+    color: #ffffff;
+    background-color: #997A45;
+}
+.tres>.panel-heading {
+    color: #ffffff;
+    background-color: #FF9254;
+}
+.cuatro>.panel-heading {
+    color: #ffffff;
+    background-color: #ff35a5;
+}
+.cinco>.panel-heading {
+    color: #ffffff;
+    background-color: #52c1cc;
+}
 </style>
     <div class="row row-offcanvas row-offcanvas-right">
 
@@ -42,14 +62,14 @@ body{
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
           </p>
           <div class="list-group-item active">
-                <h1 class="blanco-colore">Datos Relevantes</h1>
+
 
           </div><div><p><p></div>
 
        <div class="row">
                    {% for sucursal in sucursales %}
                         <div class="col-xs-6 col-lg-4 col-md-4">
-                          <div class="panel panel-warning">
+                          <div class="panel {{ sucursal.color}}">
                                     <div class="panel-heading">
                                         <h4 class="blanco-color">Sucursal: {{ sucursal.nombre }}</h4></div>
                                          <div class="panel-body">

@@ -3,6 +3,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+    {% load staticfiles %}
     <meta charset="UTF-8">
     <title>Natcam</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -19,6 +20,7 @@
                 {{ form.as_p }}
                 {% csrf_token %}
                 <p><input type="submit" class="btn btn-primary"  value="Enviar"></p>
+                <img src="{% static 'img/logo.png' %}" height="400" width="400" >
             </form>
         </div>
         <div class="col-md-4">
