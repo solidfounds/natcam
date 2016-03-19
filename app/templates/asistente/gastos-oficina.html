@@ -33,65 +33,68 @@
     {{ datos.get_tipo_display }}
 {% endblock %}
 {% block contenido %}
-   <div class="row">
-        <div class="col-lg-4">
-          <h2>Agua</h2>
-            <div class="list-group">
-            <a href="#" class="list-group-item active">Enero: $1200</a>
-            <a href="#" class="list-group-item">Febrero: $1200</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-          </div>
-          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-lg-4">
-          <h2>Telefono</h2>
-            <div class="list-group">
-            <a href="#" class="list-group-item active">Enero: $1200</a>
-            <a href="#" class="list-group-item">Febrero: $1200</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-          </div>
-          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-lg-4">
-          <h2>Luz Bimestral</h2>
-           <div class="list-group">
-            <a href="#" class="list-group-item active">Enero: $1200</a>
-            <a href="#" class="list-group-item">Febrero: $1200</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-          </div>
-          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
-        </div>
-   </div>
-    <div class="row">
-       <div class="col-lg-4">
-          <h2>Papeleria</h2>
-           <div class="list-group">
-            <a href="#" class="list-group-item active">Enero: $1200</a>
-            <a href="#" class="list-group-item">Febrero: $1200</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-          </div>
-           <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-lg-4">
-          <h2>Varios</h2>
-            <div class="list-group">
-            <a href="#" class="list-group-item active">Enero: $1200</a>
-            <a href="#" class="list-group-item">Febrero: $1200</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-          </div>
-          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
-        </div>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+      Agregar Nueva Mensualidad de Gatos
+    </button>
 
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Agregar Mensualidad {{ datos.sucursal }}</h4>
+          </div>
+          <div class="modal-body">
+              <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+              </form>
+          </div>
+
+        </div>
+      </div>
     </div>
+    <hr/>
+    <hr/>
+{% for g in gs %}
+
+{% endfor %}
+
+
+   <div class="row">
+        <div id="columnchart_material" style="width: 900px; height: 500px;"></div>
+   </div>
+     <script type="text/javascript">
+             google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Mes', 'Agua', 'Luz', 'Telefono', 'Renta', 'Varios'],
+          {% for g in gs %}
+            ['{{ g.fecha.month }}', {{ g.agua|default_if_none:'000' }}, {{ g.luz|default_if_none:'000' }},{{ g.telefono }} ,{{ g.renta }}, {{ g.varios }}],
+          {% endfor %}
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Egresos Sucursal',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+{% endblock %}
+{% block javascript %}
 
 {% endblock %}

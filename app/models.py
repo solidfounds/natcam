@@ -59,6 +59,7 @@ class SegundoRegistro(models.Model):
 
     class Meta:
         verbose_name_plural = 'Segundo Registro'
+        verbose_name = 'Segundo Registro'
 
     def __str__(self):
         return self.cliente.nombre

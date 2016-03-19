@@ -147,13 +147,13 @@
     <div class="col-md-5"></div>
     </div>
 
-    <button id='hideshow' value='hide/show' class="btn btn-danger">Cerrar</button>
+    <button id='hideshow' value='show/hide' class="btn btn-danger">Abrir meses</button>
     <div class="row">
         <div class="col-md-10"></div>
         <div class="col-md-2">Mes:{{ mes_actual }} </div>
     </div>
 
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="display: none">
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
           <h4 class="panel-title">
@@ -290,9 +290,9 @@
                           <tr>
                               <th>Fecha</th>
                              <th>Cliente</th>
-                             <th>Compra 1</th>
-                              <th>Compra 2</th>
-                              <th>Compra 3</th>
+                             <th>Odc 1</th>
+                              <th>Odc 2</th>
+                              <th>Odc 3</th>
                               <th>Facturación</th>
                               <th>% Asesor</th>
                               <th>Comisión</th>
@@ -327,13 +327,13 @@
                               <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                   <li>
                                       <a  data-toggle="modal" data-target="#paso2" id="boton02">
-                                          <button id="{{foo.cliente.id}}" value="{{foo.cliente.id }}" class="btn btn-success boton_perfil">Asignar
+                                          <button id="{{foo.cliente.id}}" value="{{foo.cliente.id }}" class="btn btn-success boton_perfil">cheque
                                           </button>
                                       </a>
                                   </li>
                                   <li>
                                       <a  data-toggle="modal" data-target="#paso3" id="boton03">
-                                          <button id="{{foo.cliente.id }}" value="{{foo.cliente.id }}" class="btn btn-success boton_perfib">cheque Cobrado
+                                          <button id="{{foo.cliente.id }}" value="{{foo.cliente.id }}" class="btn btn-success boton_perfib">cheque cobrado
                                           </button>
                                       </a>
                                   </li>

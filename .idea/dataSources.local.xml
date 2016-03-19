@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="PostgreSQL - d9f730bskj26pa@ec2-107-20-153-141.compute-1.amazonaws.com" uuid="99ea3a2c-5247-4e16-abe2-9ef4d164c9f0">
+      <secret-storage>master_key</secret-storage>
+      <first-sync>true</first-sync>
+      <user-name>frbghfsvforebx</user-name>
+    </data-source>
+    <data-source name="db" uuid="aea26730-f4e4-462e-829b-bd7375e19ab6" />
+  </component>
+</project>

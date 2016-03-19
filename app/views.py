@@ -1,18 +1,19 @@
 from itertools import chain
+import json
+import datetime
+
+from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.db.models import Q
-from django.db.models import Sum
 from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
-import monthdelta as monthdelta
+from django.utils import timezone
+from django.contrib.auth.models import User
+
 from .forms import PrimerRegistroFORM, SegundoRegistroForm, OrderForm, EmailOdcsForm, CargarPdfsForm,\
     PReferenciaForm,  BuscarDiaForm, PRBoleanPagoForm, OdcsPagadasForm
 from .models import PrimerRegistro, SegundoRegistro, Productos, ProductOrder, Order, RelacionP
-import json
-import datetime, timedelta
-from django.utils import timezone
-from decimal import Decimal
-from django.contrib.auth.models import User
-from usuarios.models import Datos, Sucursal
+from usuarios.models import Datos, Sucursal, GatosSucursal
+from usuarios.forms import GatosSucursalForm
 
 
 def index(request):
@@ -20,7 +21,7 @@ def index(request):
 
 
 
-#@login_required(login_url='/')
+@login_required(login_url='/')
 def clientes(request):
     usuario = request.user
     if request.method == 'POST':
@@ -396,6 +397,7 @@ def enviaryael(request, cliente_id):
 
     if contars3.count() > 0:
         infocliente  = PrimerRegistro.objects.get(id=cliente_id)
+        asesor = infocliente.operador
         segundor = SegundoRegistro.objects.get(cliente__id=cliente_id)
         odc1 = Order.objects.get(user__id =cliente_id, orden_compra__contains =1)
         od1 = float(odc1.total_amount)
@@ -410,8 +412,8 @@ def enviaryael(request, cliente_id):
         com = float(comision)
         p_comision = segundor.comisiona()
         pcom = float(p_comision)
-        suma = com + pcom
-        sumaimporte = totalodcs_menos_20 -suma
+        suma =  com + pcom - 100
+        sumaimporte = totalodcs_menos_20 - suma
         nombre = infocliente.id
         o_cliente = PrimerRegistro.objects.get(id=nombre)
         fecha = timezone.now()
@@ -425,13 +427,14 @@ def enviaryael(request, cliente_id):
                     p_asesor = pcom ,
                     comision = com,
                     com_t = suma,
-                    asesor = request.user,
+                    asesor = asesor,
                     # ref_pago = request.POST['ref_pago'],
                     importe = sumaimporte,
                 )
     contars2 =Order.objects.filter(user__id =cliente_id, orden_compra__contains =2)
     if contars2.count() > 0:
         infocliente  = PrimerRegistro.objects.get(id=cliente_id)
+        asesor = infocliente.operador
         segundor = SegundoRegistro.objects.get(cliente__id=cliente_id)
         odc1 = Order.objects.get(user__id =cliente_id, orden_compra__contains =1)
         od1 = float(odc1.total_amount)
@@ -444,8 +447,8 @@ def enviaryael(request, cliente_id):
         com = float(comision)
         p_comision = segundor.comisiona()
         pcom = float(p_comision)
-        suma = com + pcom
-        sumaimporte = totalodcs_menos_20 -suma
+        suma =  com + pcom -100
+        sumaimporte = totalodcs_menos_20 - suma
         nombre = infocliente.id
         o_cliente = PrimerRegistro.objects.get(id=nombre)
         fecha = timezone.now()
@@ -459,12 +462,13 @@ def enviaryael(request, cliente_id):
                     p_asesor = pcom ,
                     comision = com,
                     com_t = suma,
-                    asesor = request.user,
+                    asesor = asesor,
                     # ref_pago = request.POST['ref_pago'],
                     importe = sumaimporte,
                 )
     else:
         infocliente  = PrimerRegistro.objects.get(id=cliente_id)
+        asesor = infocliente.operador
         segundor = SegundoRegistro.objects.get(cliente__id=cliente_id)
         odc1 = Order.objects.get(user__id =cliente_id, orden_compra__contains =1)
         od1 = float(odc1.total_amount)
@@ -475,8 +479,8 @@ def enviaryael(request, cliente_id):
         com = float(comision)
         p_comision = segundor.comisiona()
         pcom = float(p_comision)
-        suma = com + pcom
-        sumaimporte = totalodcs_menos_20 -suma
+        suma =  com + pcom - 100
+        sumaimporte = totalodcs_menos_20 - suma
         nombre = infocliente.id
         o_cliente = PrimerRegistro.objects.get(id=nombre)
         fecha = timezone.now()
@@ -489,7 +493,7 @@ def enviaryael(request, cliente_id):
                     p_asesor = pcom ,
                     comision = com,
                     com_t = suma,
-                    asesor = request.user,
+                    asesor = asesor,
                     # ref_pago = request.POST['ref_pago'],
                     importe = sumaimporte,
                 )
@@ -573,11 +577,9 @@ def calendario(request):
                                                         'b_rform':boleanRefePagform,
                                                         'odcs_p':odcsPagadas,
                                                         'mes_actual':mes_actual,})
-
 def cargar_pdfs(request, id):
     form = CargarPdfsForm
     return render(request, 'cargar-pdf/cargar-pdfs.html', {'form':form})
-
 
 def cliente_perfil(request, id):
     obtenerClientePR = PrimerRegistro.objects.get(id=id)
@@ -596,7 +598,21 @@ def sucursales(request):
 def gastos_oficina(request):
     usuario = request.user
     datos = Datos.objects.get(usuario=usuario)
-    return  render(request,'asistente/gastos-oficina.html', {'datos':datos})
+    sucursal = datos.sucursal
+
+    if request.method == 'POST':
+        form = GatosSucursalForm(request.POST)
+        if form.is_valid():
+            gasto = form.save(commit=False)
+            gasto.sucursal =sucursal
+            gasto.save()
+            return redirect('gastos_oficina')
+
+    form = GatosSucursalForm()
+    gs = GatosSucursal.objects.filter(sucursal=sucursal)
+    return  render(request,'asistente/gastos-oficina.html', {'datos':datos,
+                                                             'form':form,
+                                                             'gs':gs})
 
 def empleado_perfil(request, id):
     obtenerEmpleado = Datos.objects.get(id=id)

@@ -115,18 +115,25 @@
             </div>
         </div>
     </div>
-        <form action="" method="post" >
-        {% csrf_token %}
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <form action="" method="post" >
+            {% csrf_token %}
                 {{ form.as_p }}
                 <input class="btn btn-success" type="submit" name="fecha_calendario"/>
         </form>
-    <button id='hideshow' value='hide/show' class="btn btn-danger">Cerrar</button>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+    <button id='hideshow' value='hide/show' class="btn btn-danger">Abrir Meses</button>
     <div class="row">
         <div class="col-md-10"></div>
         <div class="col-md-2">Año : {{ anio }} Mes:{{ mes}} </div>
     </div>
 
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="display: none">
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
           <h4 class="panel-title">

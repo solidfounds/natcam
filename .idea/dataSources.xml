@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="2858898034">
+    <data-source source="LOCAL" name="PostgreSQL - d9f730bskj26pa@ec2-107-20-153-141.compute-1.amazonaws.com" uuid="99ea3a2c-5247-4e16-abe2-9ef4d164c9f0">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ec2-107-20-153-141.compute-1.amazonaws.com:5432/d9f730bskj26pa</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="db" uuid="aea26730-f4e4-462e-829b-bd7375e19ab6">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\mrk2\Desktop\Natcam\db.sqlite3</jdbc-url>
+      <libraries>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/xerial-sqlite-license.txt</url>
+        </library>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/sqlite-jdbc-3.7.6.3-20110609.081603-3.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>

@@ -1,7 +1,7 @@
 {% extends 'base/base-asesor.html' %}
 {% block contenido %}
             <div class="container jumbotron">
-            <div class="text-danger mr"><h4 class="ma">Agrega un nuevo cliente.</h4></div>
+            <div class="text-danger mr"><h4 class="ma">Editar Cliente.</h4></div>
             <form  method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
@@ -70,11 +70,6 @@
                 <label class="col-sm-2 form-control-label">Comisión:</label>
                 <div class="col-sm-4">{{ form.comision }}
                 {{ form.comision.errors }}</div>
-              </div>
-              <div class="form-group row ">
-                <label class="col-sm-2 form-control-label">INE:</label>
-                <div class="col-sm-4">{{ form.ife }}
-                {{ form.ife.errors }}</div>
               </div>
               <div class="form-group row ">
                 <label class="col-sm-2 form-control-label">Correo electrónico:</label>

@@ -43,8 +43,10 @@
               <tr>
                  <th>Fecha</th>
                  <th>Asesor</th>
+                  <th>Cliente</th>
                  <th>%comision</th>
                  <th>Comision</th>
+                 <th>Baucheo</th>
                  <th>Total</th>
               </tr>
              </thead>
@@ -52,19 +54,23 @@
               <tr>
                   <th>Fecha</th>
                  <th>Asesor</th>
+                  <th>Cliente</th>
                  <th>%comision</th>
                  <th>Comision</th>
+                  <th>Baucheo</th>
                  <th>Total</th>
               </tr>
              </tfoot>
              <tbody>
                 {% for rp_c in rp_comisiones %}
                     <tr>
-                        <td>{{ rp_c.fecha.day }}</td>
+                        <td>{{ rp_c.fecha.month }}/{{ rp_c.fecha.day }}</td>
                         <td>{{ rp_c.asesor }}</td>
+                        <td>{{ rp_c.cliente.nombre }}{{ rp_c.cliente.apellidos }}</td>
                         <td>{{ rp_c.p_asesor }}</td>
                         <td>{{ rp_c.comision }}</td>
-                        <td>{{ rp_c.com_t }}</td>
+                        <td>- 100.00</td>
+                        <td>{{ rp_c.com_t}}</td>
                     </tr>
                 {% endfor %}
 

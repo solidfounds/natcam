@@ -6,7 +6,7 @@ from django.forms import ModelForm
 class PrimerRegistroFORM(ModelForm):
     class Meta:
         model = PrimerRegistro
-        fields = ('nombre', 'apellidos', 'calle','numero','colonia_fraccionamiento','municipio_delegacion','endidad','cp', 'nss','telefono','empresa','registro_patronal','comision','numero_de_cuenta','banco')
+        fields = ('nombre', 'apellidos', 'calle','numero','colonia_fraccionamiento','municipio_delegacion','endidad','cp', 'nss','telefono','empresa','registro_patronal','comision','email','numero_de_cuenta','banco')
         #exclude = ['operador_que_lo_registro',]
         widgets={
             'nombre': forms.TextInput(attrs={'type':'text','required':'true','class':'form-control form-control-sm  col-md-2'}),
@@ -21,7 +21,7 @@ class PrimerRegistroFORM(ModelForm):
             'telefono': forms.TextInput(attrs={'type':'number','required':'true','class':'form-control form-control-sm','placeholder':'Lada - digitos', 'max':"9999000000"}),
             'empresa': forms.TextInput(attrs={'type':'text','required':'true','class':'form-control form-control-sm','placeholder':'Nombre de la empresa'}),
             'registro_patronal': forms.TextInput(attrs={'type':'text','required':'true','class':'form-control form-control-sm','placeholder':'Número de registro patronal'}),
-            'comision': forms.TextInput(attrs={'type':'number','required':'true','class':'form-control form-control-sm','placeholder':'Ejemplo: 15000.00','max':"50000"}),
+            'comision': forms.TextInput(attrs={'type':'number','required':'true','class':'form-control form-control-sm','placeholder':'Ejemplo: 15000.00','max':"1500"}),
             'email': forms.EmailInput(attrs={'type':'email','required':'true','class':'form-control form-control-sm','placeholder':'ejemplo@hotmail.com'}),
             'numero_de_cuenta': forms.TextInput(attrs={'type':'number','required':'true','class':'form-control form-control-sm','placeholder':'ejemplo: 4465-5487-5986-3215', 'max':"9999999999999999"}),
             'banco': forms.TextInput(attrs={'type':'text','required':'true','class':'form-control form-control-sm'}),
